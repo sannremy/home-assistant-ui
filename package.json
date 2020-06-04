@@ -1,0 +1,24 @@
+{
+  "name": "home-assistant-ui",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^9.4.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.2.0",
+    "autoprefixer": "^9.7.6",
+    "tailwindcss": "^1.4.5",
+    "typeface-muli": "^1.1.3"
+  }
+}
