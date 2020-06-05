@@ -5,40 +5,17 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from '../reducers'
+import { init, updateStates } from '../lib/ha-websocket-api'
 
 if (process.browser) {
-  const socket = new WebSocket(process.env.haWebsocketAPI)
-
-  socket.addEventListener('open', event => {
-    // Listen for messages
-    socket.addEventListener('message', event => {
-      let data = null
-      if (event.data) {
-        data = JSON.parse(event.data)
-      }
-
-      if (data) {
-        let message = {}
-
-        switch (data.type) {
-          case 'auth_required':
-            message = {
-              'type': 'auth',
-              'access_token': process.env.haAccessToken,
-            }
-            break
-          case 'auth_ok':
-            message = {
-              'id': 1,
-              'type': 'get_states',
-            }
-            break
-        }
-
-        socket.send(JSON.stringify(message));
-      }
-    })
-  })
+  (async () => {
+    try {
+      await init()
+      updateStates()
+    } catch (err) {
+      console.error(err)
+    }
+  })()
 }
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
