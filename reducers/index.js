@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import DarkMode from './dark_mode'
+import HAResult from './ha-result'
+import Weather from './weather'
 
 export default combineReducers({
-  DarkMode,
+  HAResult,
+  Weather,
 })

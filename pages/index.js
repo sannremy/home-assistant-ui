@@ -1,7 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
-import { toggleDarkMode } from '../actions'
 
 class Home extends React.Component {
   constructor(props) {
@@ -9,6 +8,10 @@ class Home extends React.Component {
   }
 
   render() {
+    const {
+      weather,
+    } = this.props
+
     const title = `Home`
 
     return (
@@ -27,12 +30,20 @@ class Home extends React.Component {
               backgroundImage: 'url(/home.png)',
               backgroundSize: '90%',
             }}>
-              <div className="bg-gray-500 w-10 h-10 absolute rounded-full p-1" style={{
-                top: '80%',
+              <div className="w-10 h-10 absolute" style={{
+                top: '50%',
                 left: '20%',
               }}>
-                <div className="flex items-center justify-center bg-gray-200 w-full h-full text-xs rounded-full p-1">
+                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded-full p-1 shadow">
                   <span>20&deg;C</span>
+                </div>
+              </div>
+              <div className="w-10 h-10 absolute" style={{
+                top: '20%',
+                left: '50%',
+              }}>
+                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded-full p-1 shadow">
+                  <span>19&deg;C</span>
                 </div>
               </div>
             </div>
@@ -49,60 +60,20 @@ class Home extends React.Component {
 
               {/* Weather forecast */}
               <div className="flex -mx-2 mb-4">
-                <div className="w-1/5 px-2">
-                  <div className="text-center">
-                    <div>dim</div>
-                    <div>
-                      <img src="/sun.svg" className="p-1" />
+                {weather.forecast && weather.forecast.map(item => (
+                  <div className="w-1/5 px-2">
+                    <div className="text-center">
+                      <div>{item.datetime.getDate()}/{item.datetime.getMonth() + 1}</div>
+                      <div>
+                        <img src={'/weather/' + item.condition + '.svg'} className="p-1" />
+                      </div>
+                      <div>{item.temperature}&deg;C</div>
+                      {item.precipitation && (
+                        <div className="text-xs">{item.precipitation} mm</div>
+                      )}
                     </div>
-                    <div>28&deg;C</div>
-                    <div className="text-xs">12,8 mm</div>
                   </div>
-                </div>
-
-                <div className="w-1/5 px-2">
-                  <div className="text-center">
-                    <div>lun</div>
-                    <div>
-                      <img src="/sun.svg" className="p-1" />
-                    </div>
-                    <div>28&deg;C</div>
-                    <div className="text-xs">12,8 mm</div>
-                  </div>
-                </div>
-
-                <div className="w-1/5 px-2">
-                  <div className="text-center">
-                    <div>mar</div>
-                    <div>
-                      <img src="/sun.svg" className="p-1" />
-                    </div>
-                    <div>28&deg;C</div>
-                    <div className="text-xs">12,8 mm</div>
-                  </div>
-                </div>
-
-                <div className="w-1/5 px-2">
-                  <div className="text-center">
-                    <div>mer</div>
-                    <div>
-                      <img src="/sun.svg" className="p-1" />
-                    </div>
-                    <div>28&deg;C</div>
-                    <div className="text-xs">12,8 mm</div>
-                  </div>
-                </div>
-
-                <div className="w-1/5 px-2">
-                  <div className="text-center">
-                    <div>jeu</div>
-                    <div>
-                      <img src="/sun.svg" className="p-1" />
-                    </div>
-                    <div>28&deg;C</div>
-                    <div className="text-xs">12,8 mm</div>
-                  </div>
-                </div>
+                ))}
               </div>
 
               {/* Traffic */}
@@ -159,7 +130,7 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    darkMode: state.DarkMode,
+    weather: state.Weather,
   }
 }
 

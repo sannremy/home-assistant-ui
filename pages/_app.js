@@ -2,23 +2,12 @@ import 'typeface-muli'
 import '../styles.css'
 
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import rootReducer from '../reducers'
-import { init, updateStates } from '../lib/ha-websocket-api'
+import { init, getStates } from '../lib/ha-websocket-api'
+import { store } from '../lib/store'
 
 if (process.browser) {
-  (async () => {
-    try {
-      await init()
-      updateStates()
-    } catch (err) {
-      console.error(err)
-    }
-  })()
+  init()
 }
-
-const store = createStore(rootReducer, applyMiddleware(thunk))
 
 // This default export is required in a new `pages/_app.js` file.
 export default function App({ Component, pageProps }) {
