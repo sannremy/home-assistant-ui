@@ -1,6 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
+import { formatDateTime } from '../lib/datetime'
 
 class Home extends React.Component {
   constructor(props) {
@@ -53,8 +54,15 @@ class Home extends React.Component {
               {/* Date and Time */}
               <div className="flex -mx-2 mb-4">
                 <div className="w-full px-2 leading-tight text-right">
-                  <div className="text-3xl">9:14</div>
-                  <div className="text-lg font-light">mardi 12 septembre</div>
+                  <div className="text-3xl">{formatDateTime(new Date(), {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                  })}</div>
+                  <div className="text-lg font-light">{formatDateTime(new Date(), {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric'
+                  })}</div>
                 </div>
               </div>
 
@@ -63,7 +71,9 @@ class Home extends React.Component {
                 {weather.forecast && weather.forecast.map(item => (
                   <div className="w-1/5 px-2">
                     <div className="text-center">
-                      <div>{item.datetime.getDate()}/{item.datetime.getMonth() + 1}</div>
+                      <div>{formatDateTime(item.datetime, {
+                        weekday: 'short',
+                      })}</div>
                       <div>
                         <img src={'/weather/' + item.condition + '.svg'} className="p-1" />
                       </div>
@@ -82,19 +92,19 @@ class Home extends React.Component {
               {/* Lights */}
               <div className="flex -mx-2 mb-4">
                 <div className="w-1/3 px-2">
-                  <div className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
                     Salon 1
                   </div>
                 </div>
 
                 <div className="w-1/3 px-2">
-                  <div className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
                     Salon 2
                   </div>
                 </div>
 
                 <div className="w-1/3 px-2">
-                  <div className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
                     Chambre
                   </div>
                 </div>
@@ -103,19 +113,19 @@ class Home extends React.Component {
               {/* Plugs */}
               <div className="flex -mx-2 mb-4">
                 <div className="w-1/3 px-2">
-                  <div className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
                     on/off
                   </div>
                 </div>
 
                 <div className="w-1/3 px-2">
-                  <div className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
                     on/off
                   </div>
                 </div>
 
                 <div className="w-1/3 px-2">
-                  <div className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
                     on/off
                   </div>
                 </div>
