@@ -3,7 +3,7 @@ const Weather = (state = {}, action) => {
     case 'UPDATE_WEATHER':
       return {
         ...state,
-        state: action.state,
+        condition: action.state,
         temperature: action.attributes.temperature,
         humidity: action.attributes.humidity,
         pressure: action.attributes.pressure,
@@ -16,8 +16,6 @@ const Weather = (state = {}, action) => {
           const date = new Date()
           date.setTime(item.datetime)
           item.datetime = date
-
-          item.temperature = Math.round(item.temperature)
 
           return item
         }),

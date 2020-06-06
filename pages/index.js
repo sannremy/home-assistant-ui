@@ -1,7 +1,10 @@
 import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
-import { formatDateTime } from '../lib/datetime'
+import { formatDateTime, formatTemperature } from '../lib/text'
+import WeatherForecast from '../components/weather-forecast'
+import DateTime from '../components/date-time'
+import SwitchPlug from '../components/switch-plug'
 
 class Home extends React.Component {
   constructor(props) {
@@ -10,6 +13,8 @@ class Home extends React.Component {
 
   render() {
     const {
+      sensor,
+      switchPlug,
       weather,
     } = this.props
 
@@ -31,19 +36,44 @@ class Home extends React.Component {
               backgroundImage: 'url(/home.png)',
               backgroundSize: '90%',
             }}>
-              <div className="w-10 h-10 absolute" style={{
+              <div className="relative bg-gray-400 py-2 px-4">
+                <ul className="flex items-center">
+                  <li className="mr-4">
+                    <span className="flex items-center">
+                      {weather.hasOwnProperty('condition') && (
+                        <span>
+                          <img src={'/weather/' + weather.condition + '.svg'} className="w-8" />
+                        </span>
+                      )}
+                      {sensor.outdoor && sensor.outdoor.hasOwnProperty('temperature') && (
+                        <span>
+                          {formatTemperature(sensor.outdoor.temperature)}
+                        </span>
+                      )}
+                    </span>
+                  </li>
+                  <li className="mr-4">
+                    {sensor.outdoor && sensor.outdoor.hasOwnProperty('humidity') && (
+                      <span>
+                        {sensor.outdoor.humidity}%
+                      </span>
+                    )}
+                  </li>
+                </ul>
+              </div>
+              <div className="w-auto h-auto absolute" style={{
                 top: '50%',
                 left: '20%',
               }}>
-                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded-full p-1 shadow">
+                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
                   <span>20&deg;C</span>
                 </div>
               </div>
-              <div className="w-10 h-10 absolute" style={{
+              <div className="w-auto h-auto absolute" style={{
                 top: '20%',
                 left: '50%',
               }}>
-                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded-full p-1 shadow">
+                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
                   <span>19&deg;C</span>
                 </div>
               </div>
@@ -52,38 +82,13 @@ class Home extends React.Component {
             {/* Panels */}
             <div className="w-5/12 px-4 py-4 bg-gray-100">
               {/* Date and Time */}
-              <div className="flex -mx-2 mb-4">
-                <div className="w-full px-2 leading-tight text-right">
-                  <div className="text-3xl">{formatDateTime(new Date(), {
-                    hour: 'numeric',
-                    minute: 'numeric',
-                  })}</div>
-                  <div className="text-lg font-light">{formatDateTime(new Date(), {
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric'
-                  })}</div>
-                </div>
+              <div className="-mx-2 mb-4">
+                <DateTime date={new Date()} />
               </div>
 
               {/* Weather forecast */}
-              <div className="flex -mx-2 mb-4">
-                {weather.forecast && weather.forecast.map(item => (
-                  <div className="w-1/5 px-2">
-                    <div className="text-center">
-                      <div>{formatDateTime(item.datetime, {
-                        weekday: 'short',
-                      })}</div>
-                      <div>
-                        <img src={'/weather/' + item.condition + '.svg'} className="p-1" />
-                      </div>
-                      <div>{item.temperature}&deg;C</div>
-                      {item.precipitation && (
-                        <div className="text-xs">{item.precipitation} mm</div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+              <div className="-mx-2 mb-4">
+                <WeatherForecast {...weather} />
               </div>
 
               {/* Traffic */}
@@ -110,25 +115,13 @@ class Home extends React.Component {
                 </div>
               </div>
 
-              {/* Plugs */}
+              {/* Switches */}
               <div className="flex -mx-2 mb-4">
-                <div className="w-1/3 px-2">
-                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-                    on/off
+                {Object.entries(switchPlug).map(([key, item], index) => (
+                  <div key={index} className="w-1/2 px-2">
+                    <SwitchPlug {...item} />
                   </div>
-                </div>
-
-                <div className="w-1/3 px-2">
-                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-                    on/off
-                  </div>
-                </div>
-
-                <div className="w-1/3 px-2">
-                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-                    on/off
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -140,6 +133,8 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    sensor: state.Sensor,
+    switchPlug: state.SwitchPlug,
     weather: state.Weather,
   }
 }
