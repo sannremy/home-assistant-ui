@@ -66,7 +66,19 @@ class Home extends React.Component {
                 left: '20%',
               }}>
                 <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
-                  <span>20&deg;C</span>
+                  <ul>
+                    <li className="font-semibold">Living room</li>
+                    <li>
+                      {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('temperature') && (
+                        <span>{sensor.livingRoom.temperature}&deg;C</span>
+                      )}
+                    </li>
+                    <li>
+                      {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('co2') && (
+                        <span>{sensor.livingRoom.co2} ppm</span>
+                      )}
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div className="w-auto h-auto absolute" style={{
@@ -74,7 +86,19 @@ class Home extends React.Component {
                 left: '50%',
               }}>
                 <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
-                  <span>19&deg;C</span>
+                  <ul>
+                    <li className="font-semibold">Attic</li>
+                    <li>
+                      {sensor.attic && sensor.attic.hasOwnProperty('temperature') && (
+                        <span>{sensor.attic.temperature}&deg;C</span>
+                      )}
+                    </li>
+                    <li>
+                      {sensor.attic && sensor.attic.hasOwnProperty('co2') && (
+                        <span>{sensor.attic.co2} ppm</span>
+                      )}
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
