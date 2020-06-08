@@ -5,6 +5,7 @@ import { formatDateTime, formatTemperature } from '../lib/text'
 import WeatherForecast from '../components/weather-forecast'
 import DateTime from '../components/date-time'
 import SwitchPlug from '../components/switch-plug'
+import Thermostat from '../components/thermostat'
 
 class Home extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class Home extends React.Component {
 
   render() {
     const {
+      climate,
       sensor,
       switchPlug,
       weather,
@@ -21,7 +23,7 @@ class Home extends React.Component {
     const title = `Home`
 
     return (
-      <div className="h-full">
+      <div className="h-full text-gray-800">
         <Head>
           <title>{title}</title>
           <meta name="title" content={title} />
@@ -36,7 +38,7 @@ class Home extends React.Component {
               backgroundImage: 'url(/home.png)',
               backgroundSize: '90%',
             }}>
-              <div className="relative bg-gray-400 py-2 px-4">
+              <div className="relative bg-gray-200 py-2 px-4">
                 <ul className="flex items-center">
                   <li className="mr-4">
                     <span className="flex items-center">
@@ -59,7 +61,29 @@ class Home extends React.Component {
                       </span>
                     )}
                   </li>
+                  <li className="mr-4">
+                    {sensor.rainGauge && sensor.rainGauge.hasOwnProperty('rain') && (
+                      <span>
+                        rain: {sensor.rainGauge.rain} mm
+                      </span>
+                    )}
+                  </li>
+                  <li className="mr-4">
+                    {sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_strength') && (
+                      <span>
+                        wind: {sensor.anemometer.gust_strength} km/h
+                      </span>
+                    )}
+                    {sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_angle') && (
+                      <span>
+                        angle: {sensor.anemometer.gust_angle}
+                      </span>
+                    )}
+                  </li>
                 </ul>
+              </div>
+              <div className="relative py-2 px-4 text-right">
+                <Thermostat {...climate} />
               </div>
               <div className="w-auto h-auto absolute" style={{
                 top: '50%',
@@ -157,6 +181,7 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    climate: state.Climate,
     sensor: state.Sensor,
     switchPlug: state.SwitchPlug,
     weather: state.Weather,

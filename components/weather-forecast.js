@@ -21,10 +21,14 @@ class WeatherForecast extends React.Component {
                   weekday: 'short',
                 })}
               </div>
-              <div>
-                <img src={'/weather/' + item.condition + '.svg'} className="p-1" />
+              <div className="flex items-center justify-center">
+                <img src={'/weather/' + item.condition + '.svg'} />
               </div>
-              <div>{formatTemperature(item.temperature)}</div>
+              <div className="text-sm flex items-center justify-center w-full">
+                <div>{item.templow}</div>
+                <div className="text-gray-400">｜</div>
+                <div>{item.temperature}</div>
+              </div>
               {item.precipitation && (
                 <div className="text-xs">{item.precipitation} mm</div>
               )}

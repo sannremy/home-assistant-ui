@@ -6,7 +6,7 @@ const receiveSuccessResult = (result) => {
     for (let i = 0; i < result.length; i++) {
       // Weather
       if (
-        result[i].entity_id === 'weather.openweathermap'
+        result[i].entity_id === 'weather.meteofrance'
       ) {
         dispatch(updateWeather(result[i]))
       } else if (

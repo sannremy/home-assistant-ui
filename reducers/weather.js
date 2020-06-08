@@ -5,17 +5,14 @@ const Weather = (state = {}, action) => {
         ...state,
         condition: action.state,
         temperature: action.attributes.temperature,
-        humidity: action.attributes.humidity,
-        pressure: action.attributes.pressure,
+        nextRain: action.attributes.next_rain,
         wind: {
           bearing: action.attributes.wind_bearing,
           speed: action.attributes.wind_speed,
         },
         forecast: action.attributes.forecast.map(item => {
           // Format date as object
-          const date = new Date()
-          date.setTime(item.datetime)
-          item.datetime = date
+          item.datetime = new Date(item.datetime)
 
           return item
         }),
