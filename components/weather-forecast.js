@@ -1,5 +1,6 @@
 import React from 'react'
-import { formatDateTime, formatTemperature } from '../lib/text'
+import { formatDateTime } from '../lib/text'
+import { weatherIconMap } from '../lib/icon'
 
 class WeatherForecast extends React.Component {
   constructor(props) {
@@ -16,15 +17,17 @@ class WeatherForecast extends React.Component {
         {forecast && forecast.map((item, index) => (
           <div key={index} className="w-1/5 px-2">
             <div className="text-center">
-              <div className="font-light">
+              <div>
                 {formatDateTime(item.datetime, {
                   weekday: 'short',
                 })}
               </div>
               <div className="flex items-center justify-center">
-                <img src={'/weather/' + item.condition + '.svg'} />
+                <div className="w-10 my-2">
+                  {weatherIconMap[item.condition]}
+                </div>
               </div>
-              <div className="text-sm flex items-center justify-center w-full">
+              <div className="flex items-center justify-center w-full">
                 <div>{item.templow}</div>
                 <div className="text-gray-400">｜</div>
                 <div>{item.temperature}</div>

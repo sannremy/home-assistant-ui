@@ -12,7 +12,7 @@ class DateTime extends React.Component {
     } = this.props
 
     return (
-      <div className="w-full px-2 leading-tight text-right">
+      <div className="leading-tight">
         <div className="text-3xl">{formatDateTime(date, {
           hour: 'numeric',
           minute: 'numeric',

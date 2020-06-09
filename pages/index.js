@@ -6,6 +6,9 @@ import WeatherForecast from '../components/weather-forecast'
 import DateTime from '../components/date-time'
 import SwitchPlug from '../components/switch-plug'
 import Thermostat from '../components/thermostat'
+import Travel from '../components/travel'
+import { weatherIconMap } from '../lib/icon'
+import { Droplet, Navigation } from '@styled-icons/boxicons-regular'
 
 class Home extends React.Component {
   constructor(props) {
@@ -19,6 +22,15 @@ class Home extends React.Component {
       switchPlug,
       weather,
     } = this.props
+
+    // Gust angle
+    let gustAngle = null
+    if (sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_angle')) {
+      const angleExtracted = sensor.anemometer.gust_angle.match(/\d+/)
+      if (angleExtracted.length) {
+        gustAngle = parseInt(angleExtracted[0], 10)
+      }
+    }
 
     const title = `Home`
 
@@ -40,43 +52,54 @@ class Home extends React.Component {
             }}>
               <div className="relative bg-gray-200 py-2 px-4">
                 <ul className="flex items-center">
-                  <li className="mr-4">
-                    <span className="flex items-center">
-                      {weather.hasOwnProperty('condition') && (
-                        <span>
-                          <img src={'/weather/' + weather.condition + '.svg'} className="w-8" />
+                  <li className="mr-5">
+                    {sensor.outdoor
+                    && sensor.outdoor.hasOwnProperty('temperature')
+                    && weather.hasOwnProperty('condition')
+                    && (
+                      <span className="flex items-center">
+                        <span className="w-5 mr-1">
+                          {weatherIconMap[weather.condition]}
                         </span>
-                      )}
-                      {sensor.outdoor && sensor.outdoor.hasOwnProperty('temperature') && (
                         <span>
                           {formatTemperature(sensor.outdoor.temperature)}
                         </span>
-                      )}
-                    </span>
+                        {sensor.rainGauge
+                        && sensor.rainGauge.hasOwnProperty('rain')
+                        && sensor.rainGauge.rain > 0
+                        && (
+                          <span className="ml-1">
+                            ({sensor.rainGauge.rain} mm)
+                          </span>
+                        )}
+                      </span>
+                    )}
                   </li>
-                  <li className="mr-4">
+                  <li className="mr-5">
                     {sensor.outdoor && sensor.outdoor.hasOwnProperty('humidity') && (
-                      <span>
-                        {sensor.outdoor.humidity}%
+                      <span className="flex items-center">
+                        <span className="w-5 mr-1">
+                          <Droplet />
+                        </span>
+                        <span>
+                          {sensor.outdoor.humidity}%
+                        </span>
                       </span>
                     )}
                   </li>
-                  <li className="mr-4">
-                    {sensor.rainGauge && sensor.rainGauge.hasOwnProperty('rain') && (
-                      <span>
-                        rain: {sensor.rainGauge.rain} mm
-                      </span>
-                    )}
-                  </li>
-                  <li className="mr-4">
+                  <li className="mr-5">
                     {sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_strength') && (
-                      <span>
-                        wind: {sensor.anemometer.gust_strength} km/h
-                      </span>
-                    )}
-                    {sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_angle') && (
-                      <span>
-                        angle: {sensor.anemometer.gust_angle}
+                      <span className="flex items-center">
+                        {gustAngle !== null &&
+                          <span className="w-5 mr-1">
+                            <Navigation style={{
+                              transform: `rotate(${gustAngle}deg)`
+                            }} />
+                          </span>
+                        }
+                        <span>
+                          {sensor.anemometer.gust_strength} km/h
+                        </span>
                       </span>
                     )}
                   </li>
@@ -131,7 +154,9 @@ class Home extends React.Component {
             <div className="w-5/12 px-4 py-4 bg-gray-100">
               {/* Date and Time */}
               <div className="-mx-2 mb-4">
-                <DateTime date={new Date()} />
+                <div className="px-2 text-right">
+                  <DateTime date={new Date()} />
+                </div>
               </div>
 
               {/* Weather forecast */}
@@ -139,7 +164,12 @@ class Home extends React.Component {
                 <WeatherForecast {...weather} />
               </div>
 
-              {/* Traffic */}
+              {/* Travel */}
+              <div className="-mx-2 mb-4">
+                <div className="px-2">
+                  <Travel />
+                </div>
+              </div>
 
 
               {/* Lights */}

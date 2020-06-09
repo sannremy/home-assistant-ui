@@ -1,5 +1,6 @@
 import React from 'react'
 import { formatTemperature } from '../lib/text'
+import { MinusCircle, PlusCircle } from '@styled-icons/boxicons-regular'
 
 class Thermostat extends React.Component {
   constructor(props) {
@@ -17,8 +18,14 @@ class Thermostat extends React.Component {
 
     return (
       <div>
-        <div>
-          - {formatTemperature(temperature)} ({formatTemperature(currentTemperature)}) +
+        <div className="flex items-center justify-end">
+          <div className="w-5 mr-1">
+            <MinusCircle />
+          </div>
+          {formatTemperature(temperature)} ({formatTemperature(currentTemperature)})
+          <div className="w-5 ml-1">
+            <PlusCircle />
+          </div>
         </div>
         <div>
           {state}
