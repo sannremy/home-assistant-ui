@@ -1,4 +1,5 @@
 import React from 'react'
+import { Plug } from '@styled-icons/boxicons-regular'
 
 class SwitchPlug extends React.Component {
   constructor(props) {
@@ -12,8 +13,11 @@ class SwitchPlug extends React.Component {
     } = this.props
 
     return (
-      <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-        {name} - {state}
+      <div className="flex items-center bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
+        <Plug className="w-5 mr-2" />
+        <div>
+          {name} - {state}
+        </div>
       </div>
     )
   }

@@ -8,7 +8,7 @@ import SwitchPlug from '../components/switch-plug'
 import Thermostat from '../components/thermostat'
 import Travel from '../components/travel'
 import { weatherIconMap } from '../lib/icon'
-import { Droplet, Navigation } from '@styled-icons/boxicons-regular'
+import { Droplet, Navigation, Bulb } from '@styled-icons/boxicons-regular'
 
 class Home extends React.Component {
   constructor(props) {
@@ -58,7 +58,7 @@ class Home extends React.Component {
                     && weather.hasOwnProperty('condition')
                     && (
                       <span className="flex items-center">
-                        <span className="w-5 mr-1">
+                        <span className="w-5 mr-2">
                           {weatherIconMap[weather.condition]}
                         </span>
                         <span>
@@ -78,7 +78,7 @@ class Home extends React.Component {
                   <li className="mr-5">
                     {sensor.outdoor && sensor.outdoor.hasOwnProperty('humidity') && (
                       <span className="flex items-center">
-                        <span className="w-5 mr-1">
+                        <span className="w-5 mr-2">
                           <Droplet />
                         </span>
                         <span>
@@ -91,7 +91,7 @@ class Home extends React.Component {
                     {sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_strength') && (
                       <span className="flex items-center">
                         {gustAngle !== null &&
-                          <span className="w-5 mr-1">
+                          <span className="w-5 mr-2">
                             <Navigation style={{
                               transform: `rotate(${gustAngle}deg)`
                             }} />
@@ -175,20 +175,29 @@ class Home extends React.Component {
               {/* Lights */}
               <div className="flex -mx-2 mb-4">
                 <div className="w-1/3 px-2">
-                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-                    Salon 1
+                  <div className="flex items-center bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
+                    <Bulb className="w-5 mr-2" />
+                    <div>
+                      Salon 1
+                    </div>
                   </div>
                 </div>
 
                 <div className="w-1/3 px-2">
-                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-                    Salon 2
+                  <div className="flex items-center bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
+                    <Bulb className="w-5 mr-2" />
+                    <div>
+                      Salon 2
+                    </div>
                   </div>
                 </div>
 
                 <div className="w-1/3 px-2">
-                  <div className="bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-                    Chambre
+                  <div className="flex items-center bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
+                    <Bulb className="w-5 mr-2" />
+                    <div>
+                      Chambre
+                    </div>
                   </div>
                 </div>
               </div>

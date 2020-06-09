@@ -13,7 +13,7 @@ class DateTime extends React.Component {
 
     return (
       <div className="leading-tight">
-        <div className="text-3xl">{formatDateTime(date, {
+        <div className="text-3xl tracking-wide">{formatDateTime(date, {
           hour: 'numeric',
           minute: 'numeric',
         })}</div>
