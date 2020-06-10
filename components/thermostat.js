@@ -17,18 +17,13 @@ class Thermostat extends React.Component {
     } = this.props
 
     return (
-      <div>
-        <div className="flex items-center justify-end">
-          <div className="w-5 mr-1">
-            <MinusCircle />
-          </div>
-          {formatTemperature(temperature)} ({formatTemperature(currentTemperature)})
-          <div className="w-5 ml-1">
-            <PlusCircle />
-          </div>
+      <div className="flex items-center">
+        <div className="w-5 mr-1">
+          <MinusCircle />
         </div>
-        <div>
-          {state}
+        {formatTemperature(temperature)}
+        <div className="w-5 ml-1">
+          <PlusCircle />
         </div>
       </div>
     )

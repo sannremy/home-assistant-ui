@@ -9,6 +9,7 @@ import Thermostat from '../components/thermostat'
 import Travel from '../components/travel'
 import { weatherIconMap } from '../lib/icon'
 import { Droplet, Navigation, Bulb } from '@styled-icons/boxicons-regular'
+import FloorMap from '../components/floor-map'
 
 class Home extends React.Component {
   constructor(props) {
@@ -46,19 +47,64 @@ class Home extends React.Component {
         <main className="h-full">
           <div className="flex items-stretch h-full">
             {/* Home */}
-            <div className="relative w-7/12 bg-gray-300 bg-center bg-no-repeat" style={{
-              backgroundImage: 'url(/home.png)',
-              backgroundSize: '90%',
-            }}>
-              <div className="relative bg-gray-200 py-2 px-4">
+            <div className="relative w-7/12 px-4 py-4">
+              <div className="absolute w-full h-full top-0 left-0">
+                <FloorMap number={3}>
+                  <div className="w-auto h-auto absolute" style={{
+                    top: '50%',
+                    left: '50%',
+                  }}>
+                    <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
+                      <ul>
+                        <li className="font-semibold">Attic</li>
+                        <li>
+                          {sensor.attic && sensor.attic.hasOwnProperty('temperature') && (
+                            <span>{sensor.attic.temperature}&deg;C</span>
+                          )}
+                        </li>
+                        <li>
+                          {sensor.attic && sensor.attic.hasOwnProperty('co2') && (
+                            <span>{sensor.attic.co2} ppm</span>
+                          )}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </FloorMap>
+                <FloorMap number={2}></FloorMap>
+                <FloorMap number={1}>
+                  <div className="w-auto h-auto absolute" style={{
+                    top: '50%',
+                    left: '20%',
+                  }}>
+                    <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
+                      <ul>
+                        <li className="font-semibold">Living room</li>
+                        <li>
+                          {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('temperature') && (
+                            <span>{sensor.livingRoom.temperature}&deg;C</span>
+                          )}
+                        </li>
+                        <li>
+                          {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('co2') && (
+                            <span>{sensor.livingRoom.co2} ppm</span>
+                          )}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </FloorMap>
+              </div>
+
+              <div className="relative">
                 <ul className="flex items-center">
-                  <li className="mr-5">
+                  <li className="block mr-4 rounded bg-gray-200 px-2 py-2">
                     {sensor.outdoor
                     && sensor.outdoor.hasOwnProperty('temperature')
                     && weather.hasOwnProperty('condition')
                     && (
                       <span className="flex items-center">
-                        <span className="w-5 mr-2">
+                        <span className="w-5 mr-2 flex items-center">
                           {weatherIconMap[weather.condition]}
                         </span>
                         <span>
@@ -75,23 +121,23 @@ class Home extends React.Component {
                       </span>
                     )}
                   </li>
-                  <li className="mr-5">
+                  <li className="mr-4 rounded bg-gray-200 px-2 py-2">
                     {sensor.outdoor && sensor.outdoor.hasOwnProperty('humidity') && (
                       <span className="flex items-center">
-                        <span className="w-5 mr-2">
+                        <span className="w-5 mr-2 flex items-center">
                           <Droplet />
                         </span>
                         <span>
-                          {sensor.outdoor.humidity}%
+                          {sensor.outdoor.humidity} %
                         </span>
                       </span>
                     )}
                   </li>
-                  <li className="mr-5">
+                  <li className="mr-4 rounded bg-gray-200 px-2 py-2">
                     {sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_strength') && (
                       <span className="flex items-center">
                         {gustAngle !== null &&
-                          <span className="w-5 mr-2">
+                          <span className="w-5 mr-2 flex items-center">
                             <Navigation style={{
                               transform: `rotate(${gustAngle}deg)`
                             }} />
@@ -105,53 +151,13 @@ class Home extends React.Component {
                   </li>
                 </ul>
               </div>
-              <div className="relative py-2 px-4 text-right">
+              <div className="relative mt-4 text-right">
                 <Thermostat {...climate} />
-              </div>
-              <div className="w-auto h-auto absolute" style={{
-                top: '50%',
-                left: '20%',
-              }}>
-                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
-                  <ul>
-                    <li className="font-semibold">Living room</li>
-                    <li>
-                      {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('temperature') && (
-                        <span>{sensor.livingRoom.temperature}&deg;C</span>
-                      )}
-                    </li>
-                    <li>
-                      {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('co2') && (
-                        <span>{sensor.livingRoom.co2} ppm</span>
-                      )}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="w-auto h-auto absolute" style={{
-                top: '20%',
-                left: '50%',
-              }}>
-                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
-                  <ul>
-                    <li className="font-semibold">Attic</li>
-                    <li>
-                      {sensor.attic && sensor.attic.hasOwnProperty('temperature') && (
-                        <span>{sensor.attic.temperature}&deg;C</span>
-                      )}
-                    </li>
-                    <li>
-                      {sensor.attic && sensor.attic.hasOwnProperty('co2') && (
-                        <span>{sensor.attic.co2} ppm</span>
-                      )}
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
 
             {/* Panels */}
-            <div className="w-5/12 px-4 py-4 bg-gray-100">
+            <div className="w-5/12 px-4 py-4">
               {/* Date and Time */}
               <div className="-mx-2 mb-4">
                 <div className="px-2 text-right">
