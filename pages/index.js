@@ -48,7 +48,7 @@ class Home extends React.Component {
           <div className="flex items-stretch h-full">
             {/* Home */}
             <div className="relative w-7/12 px-4 py-4">
-              <div className="absolute w-full h-full top-0 left-0">
+              <div className="absolute w-full h-full">
                 <FloorMap number={3}>
                   <div className="w-auto h-auto absolute" style={{
                     top: '50%',

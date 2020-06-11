@@ -9,8 +9,7 @@ class FloorMap extends React.Component {
     } = this.props
 
     this.colorIntensity = 200 + 200 * number
-    this.marginTop = number === 3 ? 0 : -42
-
+    this.marginTop = number === 3 ? 0 : -116
   }
 
   render() {
@@ -21,18 +20,23 @@ class FloorMap extends React.Component {
 
     return (
       <div className="relative" style={{
-        left: '50%',
-        transform: 'translateX(-50%)',
-        paddingTop: '70%',
-        width: '62%',
-        height: '0',
-        marginTop: `${this.marginTop}%`,
+        // left: '50%',
+        // transform: 'translateX(-50%)',
+        // width: '60%',
+        height: '33%',
+        // paddingTop: 'calc(1000 / 685 * 100%)',
+        // height: '100px',
+        // marginTop: `${this.marginTop}%`,
         zIndex: number,
       }}>
-        <div className={`absolute w-full h-full top-0 left-0 bg-gray-${this.colorIntensity}`} style={{
+        <div className="absolute w-full h-full top-0 left-0" style={{
           transform: 'perspective(600px) rotateX(70deg)',
-        }} />
-        {children}
+        }}>
+          <img className="w-full h-full" src={`/floor-${number}.svg`} />
+        </div>
+        <div className="absolute w-full h-full top-0 left-0">
+          {children}
+        </div>
       </div>
     )
   }
