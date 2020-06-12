@@ -3,13 +3,6 @@ import React from 'react'
 class FloorMap extends React.Component {
   constructor(props) {
     super(props)
-
-    const {
-      number,
-    } = this.props
-
-    this.colorIntensity = 200 + 200 * number
-    this.marginTop = number === 3 ? 0 : -116
   }
 
   render() {
@@ -20,20 +13,11 @@ class FloorMap extends React.Component {
 
     return (
       <div className="relative" style={{
-        // left: '50%',
-        // transform: 'translateX(-50%)',
-        // width: '60%',
-        height: '33%',
-        // paddingTop: 'calc(1000 / 685 * 100%)',
-        // height: '100px',
-        // marginTop: `${this.marginTop}%`,
+        paddingTop: 'calc(9 / 16 * 100%)',
+        marginTop: `${number === 3 ? 0 : -40}%`,
         zIndex: number,
       }}>
-        <div className="absolute w-full h-full top-0 left-0" style={{
-          transform: 'perspective(600px) rotateX(70deg)',
-        }}>
-          <img className="w-full h-full" src={`/floor-${number}.svg`} />
-        </div>
+        <img className="w-full h-full absolute top-0 left-0" src={`/floor-1.svg`} />
         <div className="absolute w-full h-full top-0 left-0">
           {children}
         </div>
