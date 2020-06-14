@@ -48,52 +48,45 @@ class Home extends React.Component {
           <div className="flex items-stretch h-full">
             {/* Home */}
             <div className="relative w-7/12 px-4 py-4">
-              <div className="absolute w-full top-0 left-0 px-4 pt-20">
-                <FloorMap number={3}>
-                  <div className="w-auto h-auto absolute" style={{
-                    top: '50%',
-                    left: '50%',
-                  }}>
-                    <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
-                      <ul>
-                        <li className="font-semibold">Attic</li>
-                        <li>
-                          {sensor.attic && sensor.attic.hasOwnProperty('temperature') && (
-                            <span>{sensor.attic.temperature}&deg;C</span>
-                          )}
-                        </li>
-                        <li>
-                          {sensor.attic && sensor.attic.hasOwnProperty('co2') && (
-                            <span>{sensor.attic.co2} ppm</span>
-                          )}
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </FloorMap>
-                <FloorMap number={2}></FloorMap>
-                <FloorMap number={1}>
-                  <div className="w-auto h-auto absolute" style={{
-                    top: '50%',
-                    left: '20%',
-                  }}>
-                    <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
-                      <ul>
-                        <li className="font-semibold">Living room</li>
-                        <li>
-                          {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('temperature') && (
-                            <span>{sensor.livingRoom.temperature}&deg;C</span>
-                          )}
-                        </li>
-                        <li>
-                          {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('co2') && (
-                            <span>{sensor.livingRoom.co2} ppm</span>
-                          )}
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </FloorMap>
+              <div className="w-auto h-auto absolute" style={{
+                top: '50%',
+                left: '50%',
+              }}>
+                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
+                  <ul>
+                    <li className="font-semibold">Attic</li>
+                    <li>
+                      {sensor.attic && sensor.attic.hasOwnProperty('temperature') && (
+                        <span>{sensor.attic.temperature}&deg;C</span>
+                      )}
+                    </li>
+                    <li>
+                      {sensor.attic && sensor.attic.hasOwnProperty('co2') && (
+                        <span>{sensor.attic.co2} ppm</span>
+                      )}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="w-auto h-auto absolute" style={{
+                top: '50%',
+                left: '20%',
+              }}>
+                <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
+                  <ul>
+                    <li className="font-semibold">Living room</li>
+                    <li>
+                      {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('temperature') && (
+                        <span>{sensor.livingRoom.temperature}&deg;C</span>
+                      )}
+                    </li>
+                    <li>
+                      {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('co2') && (
+                        <span>{sensor.livingRoom.co2} ppm</span>
+                      )}
+                    </li>
+                  </ul>
+                </div>
               </div>
 
               <div className="relative">
