@@ -49,20 +49,30 @@ class Home extends React.Component {
             <div className="w-3/12 px-2">
               <ul>
                 {['livingRoom', 'attic', 'masterBedroom', 'bedroom1'].map(area => (
-                  <li key={area} className="flex items-center justify-between p-2 border border-gray-300 rounded mb-2">
-                    <span className="flex items-center">
-                      <img className="w-5 h-5" src="/icons/netatmo-indoor-module.svg" />
-                      <span className="ml-1">{area}</span>
+                  <li key={area} className="flex flex-col mb-4 border-l-4 border-gray-200">
+                    <span className="flex items-center justify-between px-2 mb-1">
+                      <span className="flex items-center">
+                        <img className="w-5 h-5 mr-1" src="/icons/netatmo-indoor-module.svg" />
+                        <span>{area}</span>
+                      </span>
+                      <span>
+                        {sensor[area] && sensor[area].hasOwnProperty('temperature') && (
+                          <span className="text-lg font-semibold">
+                            {formatTemperature(sensor[area].temperature)}
+                          </span>
+                        )}
+                      </span>
                     </span>
-                    <span>
-                      {sensor[area] && sensor[area].hasOwnProperty('temperature') && (
-                        <span className="mr-1">
-                          {formatTemperature(sensor[area].temperature)}
+
+                    <span className="px-2 py-1 text-xs">
+                      {sensor[area] && sensor[area].hasOwnProperty('co2') && (
+                        <span className="bg-gray-200 rounded p-1 mr-1">
+                          {sensor[area].co2} ppm
                         </span>
                       )}
-                      {sensor[area] && sensor[area].hasOwnProperty('co2') && (
-                        <span className="font-light text-xs">
-                          {sensor[area].co2} ppm
+                      {sensor[area] && sensor[area].hasOwnProperty('humidity') && (
+                        <span className="bg-gray-200 rounded p-1">
+                          {sensor[area].humidity} %
                         </span>
                       )}
                     </span>

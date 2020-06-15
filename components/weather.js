@@ -11,8 +11,6 @@ class WeatherForecast extends React.Component {
     const {
       condition,
       temperature,
-      nextRain,
-      wind,
       forecast,
 
       // sensor meteofrance
