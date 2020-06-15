@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
 import { formatDateTime, formatTemperature } from '../lib/text'
-import WeatherForecast from '../components/weather-forecast'
+import Weather from '../components/weather'
 import DateTime from '../components/date-time'
 import SwitchPlug from '../components/switch-plug'
 import Thermostat from '../components/thermostat'
@@ -51,20 +51,20 @@ class Home extends React.Component {
                 {['livingRoom', 'attic', 'masterBedroom', 'bedroom1'].map(area => (
                   <li key={area} className="flex items-center justify-between p-2 border border-gray-300 rounded mb-2">
                     <span className="flex items-center">
-                      <img className="w-8 h-8" src="/icons/netatmo-indoor-module.svg" />
+                      <img className="w-5 h-5" src="/icons/netatmo-indoor-module.svg" />
                       <span className="ml-1">{area}</span>
                     </span>
                     <span>
                       {sensor[area] && sensor[area].hasOwnProperty('temperature') && (
-                        <span className="ml-1 text-lg">
+                        <span className="mr-1">
                           {formatTemperature(sensor[area].temperature)}
                         </span>
                       )}
-                      {/* {sensor[area] && sensor[area].hasOwnProperty('co2') && (
+                      {sensor[area] && sensor[area].hasOwnProperty('co2') && (
                         <span className="font-light text-xs">
                           {sensor[area].co2} ppm
                         </span>
-                      )} */}
+                      )}
                     </span>
                   </li>
                 ))}
@@ -73,7 +73,12 @@ class Home extends React.Component {
             <div className="w-6/12 px-2">
               <div>
                 <DateTime date={new Date()} />
-                <WeatherForecast {...weather} />
+              </div>
+              <div>
+                <Weather
+                  {...weather}
+                  sensor={sensor.meteofrance}
+                />
               </div>
             </div>
             <div className="w-3/12 px-2">
@@ -206,7 +211,7 @@ class Home extends React.Component {
 
       //         {/* Weather forecast */}
       //         <div className="-mx-2 mb-4">
-      //           <WeatherForecast {...weather} />
+      //           <Weather {...weather} />
       //         </div>
 
       //         {/* Travel */}

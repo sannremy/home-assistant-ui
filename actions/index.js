@@ -129,6 +129,23 @@ const receiveSuccessResult = (result) => {
         result[i].entity_id === 'climate.netatmo_home'
       ) {
         dispatch(updateClimate(result[i]))
+      } else if (
+        [
+          // Weather meteofrance
+          'sensor.weather_meteofrance_rain_chance',
+          'sensor.weather_meteofrance_freeze_chance',
+          'sensor.weather_meteofrance_thunder_chance',
+          'sensor.weather_meteofrance_snow_chance',
+          'sensor.weather_meteofrance_weather',
+          'sensor.weather_meteofrance_wind_speed',
+          'sensor.weather_meteofrance_next_rain',
+          'sensor.weather_meteofrance_temperature',
+          'sensor.weather_meteofrance_uv',
+          'sensor.weather_meteofrance_weather_alert',
+        ].includes(result[i].entity_id)
+      ) {
+        const metric = result[i].entity_id.replace('sensor.weather_meteofrance_', '')
+        dispatch(updateSensor(result[i], 'meteofrance', metric))
       }
     }
   }

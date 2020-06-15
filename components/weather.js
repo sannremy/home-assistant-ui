@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatDateTime } from '../lib/text'
+import { formatDateTime, formatTemperature } from '../lib/text'
 import { weatherIconMap } from '../lib/icon'
 
 class WeatherForecast extends React.Component {
@@ -9,11 +9,34 @@ class WeatherForecast extends React.Component {
 
   render() {
     const {
+      condition,
+      temperature,
+      nextRain,
+      wind,
       forecast,
+
+      // sensor meteofrance
+      sensor,
     } = this.props
 
     return (
       <div className="flex">
+        {/* Current weather */}
+        <div>
+          <div className="flex items-center">
+            <div className="text-3xl">
+              {formatTemperature(temperature)}
+            </div>
+            <div>
+              {weatherIconMap[condition]}
+            </div>
+          </div>
+          {sensor && sensor.hasOwnProperty('weather') && (
+            <div>{sensor.weather}</div>
+          )}
+        </div>
+
+        {/* Forecast */}
         {forecast && forecast.map((item, index) => (
           <div key={index} className="w-1/5 px-2">
             <div className="text-center">
@@ -28,9 +51,9 @@ class WeatherForecast extends React.Component {
                 </div>
               </div>
               <div className="flex items-center justify-center w-full">
-                <div>{item.templow}</div>
+                <div>{formatTemperature(item.templow)}</div>
                 <div className="text-gray-400">｜</div>
-                <div>{item.temperature}</div>
+                <div>{formatTemperature(item.temperature)}</div>
               </div>
               {item.precipitation && (
                 <div className="text-xs">{item.precipitation} mm</div>
