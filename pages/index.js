@@ -10,6 +10,7 @@ import Travel from '../components/travel'
 import { weatherIconMap } from '../lib/icon'
 import { Droplet, Navigation, Bulb } from '@styled-icons/boxicons-regular'
 import FloorMap from '../components/floor-map'
+import WeatherForecast from '../components/weather-forecast'
 
 class Home extends React.Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class Home extends React.Component {
             <div className="w-3/12 px-2">
               <ul>
                 {['livingRoom', 'attic', 'masterBedroom', 'bedroom1'].map(area => (
-                  <li key={area} className="flex flex-col mb-4 border-l-4 border-gray-200">
+                  <li key={area} className="flex flex-col mb-4">
                     <span className="flex items-center justify-between px-2 mb-1">
                       <span className="flex items-center">
                         <img className="w-5 h-5 mr-1" src="/icons/netatmo-indoor-module.svg" />
@@ -57,7 +58,7 @@ class Home extends React.Component {
                       </span>
                       <span>
                         {sensor[area] && sensor[area].hasOwnProperty('temperature') && (
-                          <span className="text-lg font-semibold">
+                          <span className="font-semibold">
                             {formatTemperature(sensor[area].temperature)}
                           </span>
                         )}
@@ -81,13 +82,21 @@ class Home extends React.Component {
               </ul>
             </div>
             <div className="w-6/12 px-2">
-              <div>
-                <DateTime date={new Date()} />
+              <div className="mb-4 flex items-start">
+                <div className="flex-1">
+                  <DateTime date={new Date()} />
+                </div>
+
+                <div className="flex-1">
+                  <Weather
+                    {...weather}
+                    sensor={sensor.meteofrance}
+                  />
+                </div>
               </div>
-              <div>
-                <Weather
-                  {...weather}
-                  sensor={sensor.meteofrance}
+              <div className="mb-4">
+                <WeatherForecast
+                  forecast={weather.forecast}
                 />
               </div>
             </div>

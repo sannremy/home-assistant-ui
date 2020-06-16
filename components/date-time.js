@@ -13,14 +13,15 @@ class DateTime extends React.Component {
 
     return (
       <div>
-        <span className="tracking-wide">{formatDateTime(date, {
+        <div className="tracking-wide font-semibold">{formatDateTime(date, {
           hour: 'numeric',
           minute: 'numeric',
-        })}</span>, <span>{formatDateTime(date, {
+        })}</div>
+        <div className="leading-tight font-light">{formatDateTime(date, {
           weekday: 'long',
           month: 'long',
           day: 'numeric'
-        })}</span>
+        })}</div>
       </div>
     )
   }
