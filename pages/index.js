@@ -8,7 +8,7 @@ import SwitchPlug from '../components/switch-plug'
 import Thermostat from '../components/thermostat'
 import Travel from '../components/travel'
 import { weatherIconMap } from '../lib/icon'
-import { Droplet, Navigation, Bulb } from '@styled-icons/boxicons-regular'
+import { Droplet, Navigation, Bulb, Bed, Plug } from '@styled-icons/boxicons-regular'
 import FloorMap from '../components/floor-map'
 import WeatherForecast from '../components/weather-forecast'
 
@@ -37,7 +37,7 @@ class Home extends React.Component {
     const title = `Home`
 
     return (
-      <div className="h-full text-gray-800">
+      <div className="h-full text-indigo-900">
         <Head>
           <title>{title}</title>
           <meta name="title" content={title} />
@@ -45,63 +45,118 @@ class Home extends React.Component {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className="h-full px-2 py-2">
+        <main className="h-full px-4 py-4">
           <div className="flex items-stretch h-full -mx-2">
             <div className="w-3/12 px-2">
-              <ul>
-                {['livingRoom', 'attic', 'masterBedroom', 'bedroom1'].map(area => (
-                  <li key={area} className="flex flex-col mb-4">
-                    <span className="flex items-center justify-between px-2 mb-1">
-                      <span className="flex items-center">
-                        <img className="w-5 h-5 mr-1" src="/icons/netatmo-indoor-module.svg" />
-                        <span>{area}</span>
-                      </span>
-                      <span>
-                        {sensor[area] && sensor[area].hasOwnProperty('temperature') && (
-                          <span className="font-semibold">
-                            {formatTemperature(sensor[area].temperature)}
-                          </span>
-                        )}
-                      </span>
-                    </span>
-
-                    <span className="px-2 py-1 text-xs">
-                      {sensor[area] && sensor[area].hasOwnProperty('co2') && (
-                        <span className="bg-gray-200 rounded p-1 mr-1">
-                          {sensor[area].co2} ppm
-                        </span>
-                      )}
-                      {sensor[area] && sensor[area].hasOwnProperty('humidity') && (
-                        <span className="bg-gray-200 rounded p-1">
-                          {sensor[area].humidity} %
-                        </span>
-                      )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="w-6/12 px-2">
-              <div className="mb-4 flex items-start">
-                <div className="flex-1">
+              <div>
+                <div>
                   <DateTime date={new Date()} />
                 </div>
 
-                <div className="flex-1">
+                <div className="mt-4">
                   <Weather
                     {...weather}
                     sensor={sensor.meteofrance}
                   />
                 </div>
               </div>
+            </div>
+            <div className="w-6/12 px-2">
               <div className="mb-4">
                 <WeatherForecast
                   forecast={weather.forecast}
                 />
               </div>
+              <div className="mb-4">
+                <ul className="flex">
+                  <li className="flex items-center bg-gray-200 rounded px-2 py-1 mr-4">
+                    <Droplet className="w-4 h-4 mr-1" />
+                    <span>12&deg;</span>
+                  </li>
+                  <li className="flex items-center bg-gray-200 rounded px-2 py-1 mr-4">
+                    <Droplet className="w-4 h-4 mr-1" />
+                    <span>3 mm</span>
+                  </li>
+                  <li className="flex items-center bg-gray-200 rounded px-2 py-1 mr-4">
+                    <Droplet className="w-4 h-4 mr-1" />
+                    <span>4 km/h</span>
+                  </li>
+                  <li className="flex items-center bg-gray-200 rounded px-2 py-1">
+                    <Droplet className="w-4 h-4 mr-1" />
+                    <span>0,35 m</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <div className="mb-2">
+                  <h1 className="text-2xl text-indigo-800">Lights</h1>
+                </div>
+                <div className="flex">
+                  <div className="rounded-lg bg-white p-6 w-1/3 mr-6">
+                    <div className="w-12"><Bulb /></div>
+                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
+                    <div className="mt-4 font-light">On</div>
+                  </div>
+                  <div className="rounded-lg bg-white p-6 w-1/3 mr-6">
+                    <div className="w-12"><Bulb /></div>
+                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
+                    <div className="mt-4 font-light">On</div>
+                  </div>
+                  <div className="rounded-lg bg-white p-6 w-1/3">
+                    <div className="w-12"><Bulb /></div>
+                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
+                    <div className="mt-4 font-light">On</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <div className="mb-2">
+                  <h1 className="text-2xl text-indigo-800">Plugs</h1>
+                </div>
+                <div className="flex">
+                  <div className="rounded-lg bg-yellow-400 p-6 w-1/3 mr-6">
+                    <div className="w-12"><Plug /></div>
+                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
+                    <div className="mt-4 font-light">On</div>
+                  </div>
+                  <div className="rounded-lg bg-white p-6 w-1/3 mr-6">
+                    <div className="w-12"><Plug /></div>
+                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
+                    <div className="mt-4 font-light">On</div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="w-3/12 px-2">
-              <div>kl</div>
+              <div>
+                <ul>
+                  {['livingRoom', 'attic', 'masterBedroom', 'bedroom1'].map(area => (
+                    <li key={area} className="mb-4 text-right">
+                      <span className="font-semibold">{area}</span>
+                      <ul className="flex items-center justify-end font-light mt-1">
+                        {sensor[area] && sensor[area].hasOwnProperty('temperature') && (
+                          <li className="mr-2">
+                            {formatTemperature(sensor[area].temperature)}
+                          </li>
+                        )}
+                        {sensor[area] && sensor[area].hasOwnProperty('co2') && (
+                          <li className="mr-2">
+                            {sensor[area].co2} ppm
+                          </li>
+                        )}
+                        {sensor[area] && sensor[area].hasOwnProperty('humidity') && (
+                          <li className="flex items-center">
+                            <Droplet className="w-4 h-4 mr-2" />
+                            <span>{sensor[area].humidity} %</span>
+                          </li>
+                        )}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </main>

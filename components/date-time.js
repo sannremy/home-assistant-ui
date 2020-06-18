@@ -13,7 +13,7 @@ class DateTime extends React.Component {
 
     return (
       <div>
-        <div className="tracking-wide font-semibold">{formatDateTime(date, {
+        <div className="text-2xl tracking-wide font-semibold">{formatDateTime(date, {
           hour: 'numeric',
           minute: 'numeric',
         })}</div>

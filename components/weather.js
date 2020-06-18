@@ -19,16 +19,16 @@ class Weather extends React.Component {
     return (
       <div>
         {/* Current weather */}
-        <div className="flex items-center justify-end">
-          <div className="font-semibold mr-1">
+        <div className="flex items-center">
+          <div className="text-2xl font-semibold mr-1">
             {formatTemperature(temperature)}
           </div>
-          <div className="w-6">
+          <div className="flex items-center w-8 h-8">
             {weatherIconMap[condition]}
           </div>
         </div>
         {sensor && sensor.hasOwnProperty('weather') && (
-          <div className="font-light leading-tight text-right">
+          <div className="font-light leading-tight">
             {sensor.weather}
           </div>
         )}

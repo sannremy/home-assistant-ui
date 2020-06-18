@@ -6,7 +6,13 @@
 @tailwind utilities;
 
 body {
-  font-family: Muli, sans-serif;
+  font-family: Montserrat, sans-serif;
+  background-image: url(/bg.svg);
+  background-size: cover;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Patua One', serif;
 }
 
 #__next {

@@ -1,4 +1,5 @@
-import 'typeface-muli'
+import 'typeface-montserrat'
+import 'typeface-patua-one'
 import '../styles.css'
 
 import { Provider } from 'react-redux'
