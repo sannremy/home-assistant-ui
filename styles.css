@@ -5,6 +5,10 @@
 
 @tailwind utilities;
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   font-family: Montserrat, sans-serif;
   /* background-image: url(/bg.svg); */

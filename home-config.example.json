@@ -1,0 +1,10 @@
+{
+  "areas": {
+    "room1": {
+      "name": "Living Room"
+    },
+    "room2": {
+      "name": "Bedroom"
+    }
+  }
+}

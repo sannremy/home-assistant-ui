@@ -2,22 +2,47 @@ import React from 'react'
 import { Plug } from '@styled-icons/boxicons-regular'
 
 class SwitchPlug extends React.Component {
+  state = {
+    enabled: false,
+  }
+
   constructor(props) {
     super(props)
+
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentDidMount() {
+    this.setState({
+      enabled: this.props.state === 'on',
+    })
+  }
+
+  handleClick() {
+    this.setState({
+      enabled: !this.state.enabled,
+    })
   }
 
   render() {
     const {
       name,
-      state,
     } = this.props
 
+    const {
+      enabled,
+    } = this.state
+
+    let backgroundColor = 'bg-white'
+    if (enabled) {
+      backgroundColor = 'bg-yellow-400'
+    }
+
     return (
-      <div className="flex items-center bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-        <Plug className="w-5 mr-2" />
-        <div>
-          {name} - {state}
-        </div>
+      <div className={`rounded-lg ${backgroundColor} p-6 cursor-pointer transition duration-150 ease-in-out`} onClick={this.handleClick}>
+        <div className="w-12"><Plug /></div>
+        <div className="mt-6 font-semibold h-12">{name}</div>
+        <div className="mt-4 font-light">{enabled ? 'On' : 'Off'}</div>
       </div>
     )
   }

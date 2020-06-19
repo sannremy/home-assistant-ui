@@ -1,16 +1,15 @@
 import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
-import { formatDateTime, formatTemperature } from '../lib/text'
 import Weather from '../components/weather'
 import DateTime from '../components/date-time'
 import SwitchPlug from '../components/switch-plug'
 import Thermostat from '../components/thermostat'
 import Travel from '../components/travel'
-import { weatherIconMap } from '../lib/icon'
-import { Droplet, Navigation, Bulb, Bed, Plug } from '@styled-icons/boxicons-regular'
-import FloorMap from '../components/floor-map'
+import { Bulb } from '@styled-icons/boxicons-regular'
 import WeatherForecast from '../components/weather-forecast'
+import AreaSensor from '../components/area-sensor'
+import homeConfig from '../home-config.json'
 
 class Home extends React.Component {
   constructor(props) {
@@ -45,65 +44,52 @@ class Home extends React.Component {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className="h-full px-4 py-4">
+        <main className="h-full px-6 py-6">
           {/* Header */}
           <div className="h-auto flex">
-            <div className="w-1/4">
+            <div className="w-4/12">
               <DateTime date={new Date()} />
             </div>
 
-            <div className="w-3/4">
-              <div className="flex items-center">
-                <Weather
-                  {...weather}
-                  sensor={sensor.meteofrance}
-                />
-                <WeatherForecast
-                  forecast={weather.forecast}
-                />
+            <div className="w-8/12">
+              <div className="flex items-start">
+                <div className="mr-4">
+                  <Weather
+                    {...weather}
+                    sensor={sensor.meteofrance}
+                  />
+                </div>
+                <div>
+                  <WeatherForecast
+                    forecast={weather.forecast}
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* Cols */}
-          <div className="flex items-stretch -mx-2">
-            <div className="w-4/12 px-2">
+          <div className="flex items-stretch -mx-3 mt-4">
+            <div className="w-4/12 px-3">
               <div>
-                <div className="mt-4">
-                  {/* <ul>
-                    {['livingRoom', 'attic', 'masterBedroom', 'bedroom1'].map(area => (
-                      <li key={area} className="mt-4">
-                        <span className="text-2xl font-semibold">{area}</span>
-                        <ul className="flex items-center font-light mt-1">
-                          {sensor[area] && sensor[area].hasOwnProperty('temperature') && (
-                            <li className="mr-2">
-                              {formatTemperature(sensor[area].temperature)}
-                            </li>
-                          )}
-                          {sensor[area] && sensor[area].hasOwnProperty('co2') && (
-                            <li className="mr-2">
-                              {sensor[area].co2} ppm
-                            </li>
-                          )}
-                          {sensor[area] && sensor[area].hasOwnProperty('humidity') && (
-                            <li className="flex items-center">
-                              <Droplet className="w-4 h-4 mr-2" />
-                              <span>{sensor[area].humidity} %</span>
-                            </li>
-                          )}
-                        </ul>
-                      </li>
-                    ))}
-                  </ul> */}
-                </div>
+                <Thermostat {...climate} />
+              </div>
+              <div className="mt-4">
+                <ul>
+                  {Object.keys(homeConfig.areas).map(area => (
+                    <li key={area} className="mt-4">
+                      {sensor[area] && (
+                        <AreaSensor
+                          config={homeConfig.areas[area]}
+                          data={sensor[area]}
+                        />
+                      )}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-            <div className="w-6/12 px-2">
-              {/* <div className="mb-4">
-                <WeatherForecast
-                  forecast={weather.forecast}
-                />
-              </div> */}
+            <div className="w-6/12 px-3">
               {/* <div className="mb-4">
                 <ul className="flex">
                   <li className="flex items-center bg-gray-200 rounded px-2 py-1 mr-4">
@@ -126,21 +112,21 @@ class Home extends React.Component {
               </div> */}
 
               <div className="mb-4">
-                <div className="mb-2">
+                <div>
                   <h1 className="text-2xl text-indigo-800">Lights</h1>
                 </div>
-                <div className="flex">
-                  <div className="rounded-lg bg-white p-6 w-1/3 mr-6">
+                <div className="flex mt-2 -mx-3">
+                  <div className="rounded-lg bg-white p-6 w-1/3 mx-3">
                     <div className="w-12"><Bulb /></div>
                     <div className="mt-6 font-semibold">Room<br />Light 1</div>
                     <div className="mt-4 font-light">On</div>
                   </div>
-                  <div className="rounded-lg bg-white p-6 w-1/3 mr-6">
+                  <div className="rounded-lg bg-white p-6 w-1/3 mx-3">
                     <div className="w-12"><Bulb /></div>
                     <div className="mt-6 font-semibold">Room<br />Light 1</div>
                     <div className="mt-4 font-light">On</div>
                   </div>
-                  <div className="rounded-lg bg-white p-6 w-1/3">
+                  <div className="rounded-lg bg-white p-6 w-1/3 mx-3">
                     <div className="w-12"><Bulb /></div>
                     <div className="mt-6 font-semibold">Room<br />Light 1</div>
                     <div className="mt-4 font-light">On</div>
@@ -149,209 +135,29 @@ class Home extends React.Component {
               </div>
 
               <div className="mb-4">
-                <div className="mb-2">
+                <div>
                   <h1 className="text-2xl text-indigo-800">Plugs</h1>
                 </div>
-                <div className="flex">
-                  <div className="rounded-lg bg-yellow-400 p-6 w-1/3 mr-6">
-                    <div className="w-12"><Plug /></div>
-                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
-                    <div className="mt-4 font-light">On</div>
-                  </div>
-                  <div className="rounded-lg bg-white p-6 w-1/3 mr-6">
-                    <div className="w-12"><Plug /></div>
-                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
-                    <div className="mt-4 font-light">On</div>
-                  </div>
-                  <div className="w-1/3">
-                    {/* Empty */}
+                <div className="flex mt-2 -mx-3">
+                  {Object.entries(switchPlug).map(([key, item], index) => (
+                    <div key={index} className="w-1/3 mx-3">
+                      <SwitchPlug {...item} />
+                    </div>
+                  ))}
+                  <div className="w-1/3 mx-3">
                   </div>
                 </div>
               </div>
             </div>
-            <div className="w-2/12 px-2">
-              23
+            <div className="w-2/12 px-3">
+              <div className="mb-2">
+                <h1 className="text-2xl text-indigo-800">Travel times</h1>
+              </div>
+              <Travel />
             </div>
           </div>
         </main>
       </div>
-      // <div className="h-full text-gray-800">
-      //   <Head>
-      //     <title>{title}</title>
-      //     <meta name="title" content={title} />
-
-      //     <link rel="icon" href="/favicon.ico" />
-      //   </Head>
-
-      //   <main className="h-full">
-      //     <div className="flex items-stretch h-full">
-      //       {/* Home */}
-      //       <div className="relative w-7/12 px-4 py-4">
-      //         <div className="w-auto h-auto absolute" style={{
-      //           top: '50%',
-      //           left: '50%',
-      //         }}>
-      //           <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
-      //             <ul>
-      //               <li className="font-semibold">Attic</li>
-      //               <li>
-      //                 {sensor.attic && sensor.attic.hasOwnProperty('temperature') && (
-      //                   <span>{sensor.attic.temperature}&deg;C</span>
-      //                 )}
-      //               </li>
-      //               <li>
-      //                 {sensor.attic && sensor.attic.hasOwnProperty('co2') && (
-      //                   <span>{sensor.attic.co2} ppm</span>
-      //                 )}
-      //               </li>
-      //             </ul>
-      //           </div>
-      //         </div>
-      //         <div className="w-auto h-auto absolute" style={{
-      //           top: '50%',
-      //           left: '20%',
-      //         }}>
-      //           <div className="flex items-center justify-center bg-gray-100 w-full h-full text-xs rounded py-1 px-2 shadow">
-      //             <ul>
-      //               <li className="font-semibold">Living room</li>
-      //               <li>
-      //                 {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('temperature') && (
-      //                   <span>{sensor.livingRoom.temperature}&deg;C</span>
-      //                 )}
-      //               </li>
-      //               <li>
-      //                 {sensor.livingRoom && sensor.livingRoom.hasOwnProperty('co2') && (
-      //                   <span>{sensor.livingRoom.co2} ppm</span>
-      //                 )}
-      //               </li>
-      //             </ul>
-      //           </div>
-      //         </div>
-
-      //         <div className="relative">
-      //           <ul className="flex items-center">
-      //             <li className="block mr-4 rounded bg-gray-200 px-2 py-2">
-      //               {sensor.outdoor
-      //               && sensor.outdoor.hasOwnProperty('temperature')
-      //               && weather.hasOwnProperty('condition')
-      //               && (
-      //                 <span className="flex items-center">
-      //                   <span className="w-5 mr-2 flex items-center">
-      //                     {weatherIconMap[weather.condition]}
-      //                   </span>
-      //                   <span>
-      //                     {formatTemperature(sensor.outdoor.temperature)}
-      //                   </span>
-      //                   {sensor.rainGauge
-      //                   && sensor.rainGauge.hasOwnProperty('rain')
-      //                   && sensor.rainGauge.rain > 0
-      //                   && (
-      //                     <span className="ml-1">
-      //                       ({sensor.rainGauge.rain} mm)
-      //                     </span>
-      //                   )}
-      //                 </span>
-      //               )}
-      //             </li>
-      //             <li className="mr-4 rounded bg-gray-200 px-2 py-2">
-      //               {sensor.outdoor && sensor.outdoor.hasOwnProperty('humidity') && (
-      //                 <span className="flex items-center">
-      //                   <span className="w-5 mr-2 flex items-center">
-      //                     <Droplet />
-      //                   </span>
-      //                   <span>
-      //                     {sensor.outdoor.humidity} %
-      //                   </span>
-      //                 </span>
-      //               )}
-      //             </li>
-      //             <li className="mr-4 rounded bg-gray-200 px-2 py-2">
-      //               {sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_strength') && (
-      //                 <span className="flex items-center">
-      //                   {gustAngle !== null &&
-      //                     <span className="w-5 mr-2 flex items-center">
-      //                       <Navigation style={{
-      //                         transform: `rotate(${gustAngle}deg)`
-      //                       }} />
-      //                     </span>
-      //                   }
-      //                   <span>
-      //                     {sensor.anemometer.gust_strength} km/h
-      //                   </span>
-      //                 </span>
-      //               )}
-      //             </li>
-      //           </ul>
-      //         </div>
-      //         <div className="relative mt-4 text-right">
-      //           <Thermostat {...climate} />
-      //         </div>
-      //       </div>
-
-      //       {/* Panels */}
-      //       <div className="w-5/12 px-4 py-4">
-      //         {/* Date and Time */}
-      //         <div className="-mx-2 mb-4">
-      //           <div className="px-2 text-right">
-      //             <DateTime date={new Date()} />
-      //           </div>
-      //         </div>
-
-      //         {/* Weather forecast */}
-      //         <div className="-mx-2 mb-4">
-      //           <Weather {...weather} />
-      //         </div>
-
-      //         {/* Travel */}
-      //         <div className="-mx-2 mb-4">
-      //           <div className="px-2">
-      //             <Travel />
-      //           </div>
-      //         </div>
-
-
-      //         {/* Lights */}
-      //         <div className="flex -mx-2 mb-4">
-      //           <div className="w-1/3 px-2">
-      //             <div className="flex items-center bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-      //               <Bulb className="w-5 mr-2" />
-      //               <div>
-      //                 Salon 1
-      //               </div>
-      //             </div>
-      //           </div>
-
-      //           <div className="w-1/3 px-2">
-      //             <div className="flex items-center bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-      //               <Bulb className="w-5 mr-2" />
-      //               <div>
-      //                 Salon 2
-      //               </div>
-      //             </div>
-      //           </div>
-
-      //           <div className="w-1/3 px-2">
-      //             <div className="flex items-center bg-white py-2 px-4 rounded shadow text-center cursor-pointer">
-      //               <Bulb className="w-5 mr-2" />
-      //               <div>
-      //                 Chambre
-      //               </div>
-      //             </div>
-      //           </div>
-      //         </div>
-
-      //         {/* Switches */}
-      //         <div className="flex -mx-2 mb-4">
-      //           {Object.entries(switchPlug).map(([key, item], index) => (
-      //             <div key={index} className="w-1/2 px-2">
-      //               <SwitchPlug {...item} />
-      //             </div>
-      //           ))}
-      //         </div>
-      //       </div>
-      //     </div>
-      //   </main>
-      // </div>
     )
   }
 }

@@ -15,22 +15,23 @@ class WeatherForecast extends React.Component {
     return (
       <div className="flex items-center">
         {forecast && forecast.map((item, index) => (
-          <div key={index} className={`w-1/${forecast.length} px-2 border-r-2 border-indigo-800 last:border-0`}>
-            <div className="flex items-center">
-              <div className="font-light">
-                {formatDateTime(item.datetime, {
-                  weekday: 'short',
-                  day: 'numeric',
-                })}
-              </div>
+          <div key={index} className={`w-20 px-2 text-center`}>
+            <div className="font-light">
+              {formatDateTime(item.datetime, {
+                weekday: 'short',
+                day: 'numeric',
+              })}
             </div>
-            <div className="flex items-center">
-              <div>
-                {formatTemperature(item.templow)}/{formatTemperature(item.temperature)}
-              </div>
-              <div className="w-8">
-                {weatherIconMap[item.condition]}
-              </div>
+            <div className="w-8 mx-auto">
+              {weatherIconMap[item.condition]}
+            </div>
+            <div>
+              <span className="mr-2">
+                {formatTemperature(item.temperature)}
+              </span>
+              <span className="text-indigo-400">
+                {formatTemperature(item.templow)}
+              </span>
             </div>
           </div>
         ))}
