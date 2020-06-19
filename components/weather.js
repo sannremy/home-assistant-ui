@@ -23,7 +23,7 @@ class Weather extends React.Component {
           <div className="text-2xl font-semibold mr-1">
             {formatTemperature(temperature)}
           </div>
-          <div className="flex items-center w-8 h-8">
+          <div className="w-8 h-8">
             {weatherIconMap[condition]}
           </div>
         </div>

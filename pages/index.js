@@ -46,28 +46,65 @@ class Home extends React.Component {
         </Head>
 
         <main className="h-full px-4 py-4">
-          <div className="flex items-stretch h-full -mx-2">
-            <div className="w-3/12 px-2">
-              <div>
-                <div>
-                  <DateTime date={new Date()} />
-                </div>
-
-                <div className="mt-4">
-                  <Weather
-                    {...weather}
-                    sensor={sensor.meteofrance}
-                  />
-                </div>
-              </div>
+          {/* Header */}
+          <div className="h-auto flex">
+            <div className="w-1/4">
+              <DateTime date={new Date()} />
             </div>
-            <div className="w-6/12 px-2">
-              <div className="mb-4">
+
+            <div className="w-3/4">
+              <div className="flex items-center">
+                <Weather
+                  {...weather}
+                  sensor={sensor.meteofrance}
+                />
                 <WeatherForecast
                   forecast={weather.forecast}
                 />
               </div>
-              <div className="mb-4">
+            </div>
+          </div>
+
+          {/* Cols */}
+          <div className="flex items-stretch -mx-2">
+            <div className="w-4/12 px-2">
+              <div>
+                <div className="mt-4">
+                  {/* <ul>
+                    {['livingRoom', 'attic', 'masterBedroom', 'bedroom1'].map(area => (
+                      <li key={area} className="mt-4">
+                        <span className="text-2xl font-semibold">{area}</span>
+                        <ul className="flex items-center font-light mt-1">
+                          {sensor[area] && sensor[area].hasOwnProperty('temperature') && (
+                            <li className="mr-2">
+                              {formatTemperature(sensor[area].temperature)}
+                            </li>
+                          )}
+                          {sensor[area] && sensor[area].hasOwnProperty('co2') && (
+                            <li className="mr-2">
+                              {sensor[area].co2} ppm
+                            </li>
+                          )}
+                          {sensor[area] && sensor[area].hasOwnProperty('humidity') && (
+                            <li className="flex items-center">
+                              <Droplet className="w-4 h-4 mr-2" />
+                              <span>{sensor[area].humidity} %</span>
+                            </li>
+                          )}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul> */}
+                </div>
+              </div>
+            </div>
+            <div className="w-6/12 px-2">
+              {/* <div className="mb-4">
+                <WeatherForecast
+                  forecast={weather.forecast}
+                />
+              </div> */}
+              {/* <div className="mb-4">
                 <ul className="flex">
                   <li className="flex items-center bg-gray-200 rounded px-2 py-1 mr-4">
                     <Droplet className="w-4 h-4 mr-1" />
@@ -86,7 +123,7 @@ class Home extends React.Component {
                     <span>0,35 m</span>
                   </li>
                 </ul>
-              </div>
+              </div> */}
 
               <div className="mb-4">
                 <div className="mb-2">
@@ -126,37 +163,14 @@ class Home extends React.Component {
                     <div className="mt-6 font-semibold">Room<br />Light 1</div>
                     <div className="mt-4 font-light">On</div>
                   </div>
+                  <div className="w-1/3">
+                    {/* Empty */}
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="w-3/12 px-2">
-              <div>
-                <ul>
-                  {['livingRoom', 'attic', 'masterBedroom', 'bedroom1'].map(area => (
-                    <li key={area} className="mb-4 text-right">
-                      <span className="font-semibold">{area}</span>
-                      <ul className="flex items-center justify-end font-light mt-1">
-                        {sensor[area] && sensor[area].hasOwnProperty('temperature') && (
-                          <li className="mr-2">
-                            {formatTemperature(sensor[area].temperature)}
-                          </li>
-                        )}
-                        {sensor[area] && sensor[area].hasOwnProperty('co2') && (
-                          <li className="mr-2">
-                            {sensor[area].co2} ppm
-                          </li>
-                        )}
-                        {sensor[area] && sensor[area].hasOwnProperty('humidity') && (
-                          <li className="flex items-center">
-                            <Droplet className="w-4 h-4 mr-2" />
-                            <span>{sensor[area].humidity} %</span>
-                          </li>
-                        )}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div className="w-2/12 px-2">
+              23
             </div>
           </div>
         </main>
