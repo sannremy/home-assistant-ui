@@ -46,14 +46,14 @@ class Home extends React.Component {
 
         <main className="h-full px-6 py-6">
           {/* Header */}
-          <div className="h-auto flex">
-            <div className="w-4/12">
+          <div className="h-auto flex -mx-3">
+            <div className="w-4/12 px-3">
               <DateTime date={new Date()} />
             </div>
 
-            <div className="w-8/12">
+            <div className="w-8/12 px-3">
               <div className="flex items-start">
-                <div className="mr-4">
+                <div className="mr-6">
                   <Weather
                     {...weather}
                     sensor={sensor.meteofrance}
@@ -72,6 +72,9 @@ class Home extends React.Component {
           <div className="flex items-stretch -mx-3 mt-4">
             <div className="w-4/12 px-3">
               <div>
+                <h1 className="text-2xl text-indigo-800">Thermostat</h1>
+              </div>
+              <div className="mt-2 inline-block">
                 <Thermostat {...climate} />
               </div>
               <div className="mt-4">
