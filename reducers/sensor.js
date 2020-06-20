@@ -7,7 +7,10 @@ const Sensor = (state = {}, action) => {
 
       // Cast and format values
       let value = action.state
-      if (value === 'True') {
+
+      if (value === 'unavailable') {
+        value = null
+      } else if (value === 'True') {
         value = true
       } else if (value === 'False') {
         value = false
@@ -19,7 +22,7 @@ const Sensor = (state = {}, action) => {
 
       if (action.moduleName && newState[action.moduleName] === undefined) {
         newState[action.moduleName] = {
-          [action.metric]: value
+          [action.metric]: value,
         }
       } else {
         newState[action.moduleName][action.metric] = value
