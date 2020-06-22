@@ -65,11 +65,11 @@ class Home extends React.Component {
         <main className="h-full px-6 py-6">
           {/* Header */}
           <div className="h-auto flex -mx-3">
-            <div className="w-4/12 px-3">
+            <div className="w-3/12 px-3">
               <DateTime date={this.state.currentDate} />
             </div>
 
-            <div className="w-8/12 px-3">
+            <div className="w-9/12 px-3">
               <div className="flex items-start">
                 <div className="mr-6">
                   <Weather
