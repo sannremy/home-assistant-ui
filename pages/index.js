@@ -11,9 +11,27 @@ import WeatherForecast from '../components/weather-forecast'
 import AreaSensor from '../components/area-sensor'
 import homeConfig from '../home-config.json'
 
+let interval = null
+
 class Home extends React.Component {
+  state = {
+    currentDate: new Date(),
+  }
+
   constructor(props) {
     super(props)
+  }
+
+  componentDidMount() {
+    interval = setInterval(() => {
+      this.setState({
+        currentDate: new Date()
+      })
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(interval);
   }
 
   render() {
@@ -48,7 +66,7 @@ class Home extends React.Component {
           {/* Header */}
           <div className="h-auto flex -mx-3">
             <div className="w-4/12 px-3">
-              <DateTime date={new Date()} />
+              <DateTime date={this.state.currentDate} />
             </div>
 
             <div className="w-8/12 px-3">
