@@ -29,13 +29,8 @@ class Thermostat extends React.Component {
       isHeating,
     } = this.state
 
-    let backgroundColor = ''
-    if (isHeating) {
-      backgroundColor = 'bg-yellow-400'
-    }
-
     return (
-      <div className={`${backgroundColor}`}>
+      <div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <MinusCircle className="w-5 h-5 mr-2 cursor-pointer" />
@@ -44,7 +39,7 @@ class Thermostat extends React.Component {
             </div>
             <PlusCircle className="w-5 h-5 cursor-pointer" />
           </div>
-          <div>On/off</div>
+          <div>{isHeating ? 'On' : ''}</div>
         </div>
 
         <ul className="flex items-center text-sm font-light">
