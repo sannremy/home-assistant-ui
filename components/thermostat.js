@@ -1,55 +1,113 @@
 import React from 'react'
 import { formatTemperature } from '../lib/text'
-import { MinusCircle, PlusCircle, Battery, Slider } from '@styled-icons/boxicons-regular'
+import { MinusCircle, PlusCircle, Battery, CurrentLocation, SliderAlt } from '@styled-icons/boxicons-regular'
 
 class Thermostat extends React.Component {
   state = {
     isHeating: false,
+    heatingTemperature: null,
+    enableMinus: false,
+    enablePlus: false,
   }
 
   constructor(props) {
     super(props)
+
+    this.increaseHeatingTemperature = this.increaseHeatingTemperature.bind(this)
+    this.decreaseHeatingTemperature = this.decreaseHeatingTemperature.bind(this)
   }
 
   componentDidMount() {
+    const {
+      state,
+      temperature,
+      minTemperatureAllowed,
+      maxTemperatureAllowed,
+    } = this.props
+
+    const enableMinus = temperature > minTemperatureAllowed
+    const enablePlus = temperature < maxTemperatureAllowed
+
     this.setState({
-      isHeating: this.props.state === 'heating',
+      isHeating: state === 'heating',
+      heatingTemperature: temperature,
+      enableMinus,
+      enablePlus,
     })
+  }
+
+  changeHeatingTemperature(addToCurrent) {
+    const {
+      heatingTemperature,
+    } = this.state
+
+    const {
+      minTemperatureAllowed,
+      maxTemperatureAllowed,
+    } = this.props
+
+    let newTemperature = Math.min(heatingTemperature + addToCurrent, maxTemperatureAllowed)
+    newTemperature = Math.max(newTemperature, minTemperatureAllowed)
+
+    const enableMinus = newTemperature > minTemperatureAllowed
+    const enablePlus = newTemperature < maxTemperatureAllowed
+
+    this.setState({
+      heatingTemperature: newTemperature,
+      enableMinus,
+      enablePlus,
+    })
+  }
+
+  increaseHeatingTemperature() {
+    this.changeHeatingTemperature(this.props.temperatureStep)
+  }
+
+  decreaseHeatingTemperature() {
+    this.changeHeatingTemperature(-this.props.temperatureStep)
   }
 
   render() {
     const {
       currentTemperature,
-      temperature,
       batteryPercent,
       presetMode,
     } = this.props
 
     const {
       isHeating,
+      heatingTemperature,
+      enableMinus,
+      enablePlus,
     } = this.state
+
+    const enableStyle = "cursor-pointer"
+    const disableStyle = "opacity-50 cursor-not-allowed"
 
     return (
       <div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <MinusCircle className="w-5 h-5 mr-2 cursor-pointer" />
-            <div className="text-xl font-semibold mr-2">
-              {formatTemperature(temperature, true)}
+            <MinusCircle className={`w-5 h-5 mr-2 ${enableMinus ? enableStyle : disableStyle}`} onClick={this.decreaseHeatingTemperature} />
+            <div className="w-16 text-center text-xl font-semibold mr-2">
+              {formatTemperature(heatingTemperature, 1)}
             </div>
-            <PlusCircle className="w-5 h-5 cursor-pointer" />
+            <PlusCircle className={`w-5 h-5 ${enablePlus ? enableStyle : disableStyle}`} onClick={this.increaseHeatingTemperature} />
           </div>
-          <div>{isHeating ? 'On' : ''}</div>
+          <div className="text-xl font-semibold">{isHeating ? 'On' : 'Off'}</div>
         </div>
 
         <ul className="flex items-center text-sm font-light">
           <li className="flex items-center mr-2">
-            <span>{formatTemperature(currentTemperature, true)}</span>
+            <CurrentLocation className="w-4 h-4 mr-1" />
+            <span>{formatTemperature(currentTemperature, 1)}</span>
           </li>
           <li className="flex items-center mr-2">
+            <SliderAlt className="w-4 h-4 mr-1" />
             <span>{presetMode}</span>
           </li>
           <li className="flex items-center mr-2">
+            <Battery className="w-4 h-4 mr-1" />
             <span>{batteryPercent} %</span>
           </li>
         </ul>

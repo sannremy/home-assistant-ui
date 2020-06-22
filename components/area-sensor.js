@@ -28,7 +28,7 @@ class AreaSensor extends React.Component {
           <div className="font-semibold">{config.name}</div>
           {data && data.hasOwnProperty('temperature') && (
             <div className="text-xl font-semibold">
-              {data.temperature === null ? '-' : formatTemperature(data.temperature)}
+              {data.temperature === null ? '-' : formatTemperature(data.temperature, 1)}
             </div>
           )}
         </div>
