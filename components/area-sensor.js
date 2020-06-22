@@ -13,13 +13,13 @@ class AreaSensor extends React.Component {
       config,
     } = this.props
 
-    let co2Icon = <Happy className="w-3 h-3 mr-1" />
+    let co2Icon = <Happy className="w-4 h-4 mr-1" />
     if (data.co2 >= 1000) {
-      co2Icon = <Meh className="w-3 h-3 mr-1" />
+      co2Icon = <Meh className="w-4 h-4 mr-1" />
     }
 
     if (data.co2 >= 2000) {
-      co2Icon = <Sad className="w-3 h-3 mr-1" />
+      co2Icon = <Sad className="w-4 h-4 mr-1" />
     }
 
     return (
@@ -32,22 +32,22 @@ class AreaSensor extends React.Component {
             </div>
           )}
         </div>
-        <ul className="flex items-center text-xs font-light">
+        <ul className="flex items-center text-sm font-light">
           {data && data.hasOwnProperty('co2') && (
-            <li className="flex items-center mr-2 border border-indigo-900 rounded-full px-2 py-1">
+            <li className="flex items-center mr-2">
               {co2Icon}
               <span>{data.co2 === null ? '-' : data.co2} ppm</span>
             </li>
           )}
           {data && data.hasOwnProperty('humidity') && (
-            <li className="flex items-center mr-2 border border-indigo-900 rounded-full px-2 py-1">
-              <Droplet className="w-3 h-3 mr-1" />
+            <li className="flex items-center mr-2">
+              <Droplet className="w-4 h-4 mr-1" />
               <span>{data.humidity === null ? '-' : data.humidity} %</span>
             </li>
           )}
           {data && data.hasOwnProperty('battery_percent') && (
-            <li className="flex items-center mr-2 border border-indigo-900 rounded-full px-2 py-1">
-              <Battery className="w-3 h-3 mr-1" />
+            <li className="flex items-center mr-2">
+              <Battery className="w-4 h-4 mr-1" />
               <span>{data.battery_percent === null ? '-' : data.battery_percent} %</span>
             </li>
           )}

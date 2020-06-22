@@ -29,32 +29,35 @@ class Thermostat extends React.Component {
       isHeating,
     } = this.state
 
-    let backgroundColor = 'bg-white'
+    let backgroundColor = ''
     if (isHeating) {
       backgroundColor = 'bg-yellow-400'
     }
 
     return (
-      <div className="flex items-center">
-        <div className={`flex items-center ${backgroundColor} rounded-lg py-2 mr-2`}>
-          <div className="flex items-center px-4 py-2">
-            <MinusCircle className="w-5" />
+      <div className={`${backgroundColor}`}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <MinusCircle className="w-5 h-5 mr-2 cursor-pointer" />
+            <div className="text-xl font-semibold mr-2">
+              {formatTemperature(temperature, true)}
+            </div>
+            <PlusCircle className="w-5 h-5 cursor-pointer" />
           </div>
-          <div className="text-2xl font-semibold">
-            {formatTemperature(temperature, true)}
-          </div>
-          <div className="flex items-center px-4 py-2">
-            <PlusCircle className="w-5" />
-          </div>
+          <div>On/off</div>
         </div>
-        <div className="text-xs inline-flex items-center border border-indigo-900 rounded-full px-2 py-1 mr-2">
-          <Slider className="w-3 h-3 mr-1" />
-          <span>{presetMode}</span>
-        </div>
-        <div className="text-xs inline-flex items-center border border-indigo-900 rounded-full px-2 py-1">
-          <Battery className="w-3 h-3 mr-1" />
-          <span>{batteryPercent} %</span>
-        </div>
+
+        <ul className="flex items-center text-sm font-light">
+          <li className="flex items-center mr-2">
+            <span>{formatTemperature(currentTemperature, true)}</span>
+          </li>
+          <li className="flex items-center mr-2">
+            <span>{presetMode}</span>
+          </li>
+          <li className="flex items-center mr-2">
+            <span>{batteryPercent} %</span>
+          </li>
+        </ul>
       </div>
     )
   }

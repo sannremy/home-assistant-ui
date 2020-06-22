@@ -70,14 +70,11 @@ class Home extends React.Component {
 
           {/* Cols */}
           <div className="flex items-stretch -mx-3 mt-4">
-            <div className="w-4/12 px-3">
+            <div className="w-3/12 px-3">
               <div>
-                <h1 className="text-2xl text-indigo-800">Thermostat</h1>
-              </div>
-              <div className="mt-2 inline-block">
                 <Thermostat {...climate} />
               </div>
-              <div className="mt-4">
+              <div>
                 <ul>
                   {Object.keys(homeConfig.areas).map(area => (
                     <li key={area} className="mt-4">
@@ -152,11 +149,20 @@ class Home extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="w-2/12 px-3">
+            <div className="w-3/12 px-3">
               <div className="mb-2">
                 <h1 className="text-2xl text-indigo-800">Travel times</h1>
               </div>
-              <Travel />
+              <div>
+                {sensor.googleTravelTime && Object.entries(sensor.googleTravelTime).map(([key, item], index) => (
+                  <div key={index} className="mb-4">
+                    <Travel
+                      config={homeConfig.travels[item.id]}
+                      data={item}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </main>

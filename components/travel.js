@@ -7,18 +7,23 @@ class Travel extends React.Component {
   }
 
   render() {
+    const {
+      config,
+      data,
+    } = this.props
+
+    let icon = <Car className="w-5 mr-2" />
+    if (data.mode === 'transit') {
+      icon = <Train className="w-5 mr-1" />
+    }
+
     return (
       <div>
-        {Array.from('abc').map(i => (
-          <div key={i} className="mb-4">
-            <div className="font-semibold">Destination {i.toUpperCase()}</div>
-            <div className="flex items-center text-sm">
-              <Car className="w-5 mr-2" />
-              {/* <Train className="w-5 mr-1" /> */}
-              <div>23 mins</div>
-            </div>
-          </div>
-        ))}
+        <div className="font-semibold">{config.name}</div>
+        <div className="flex items-center text-sm">
+          {icon}
+          <div>{data.duration_in_traffic}</div>
+        </div>
       </div>
     )
   }

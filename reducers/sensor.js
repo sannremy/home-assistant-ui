@@ -8,11 +8,11 @@ const Sensor = (state = {}, action) => {
       // Cast and format values
       let value = action.state
 
-      if (value === 'unavailable') {
+      if (value === 'unavailable') { // Netatmo
         value = null
-      } else if (value === 'True') {
+      } else if (value === 'True') { // Netatmo
         value = true
-      } else if (value === 'False') {
+      } else if (value === 'False') { // Netatmo
         value = false
       } else if (/^\-?\d+$/.test(value)) {
         value = parseInt(value, 10)
@@ -20,12 +20,20 @@ const Sensor = (state = {}, action) => {
         value = parseFloat(value, 10)
       }
 
-      if (action.moduleName && newState[action.moduleName] === undefined) {
-        newState[action.moduleName] = {
-          [action.metric]: value,
+      if (action.moduleName && action.metric) {
+        if (newState[action.moduleName] === undefined) {
+          newState[action.moduleName] = {
+            [action.metric]: value,
+          }
+        } else {
+          newState[action.moduleName][action.metric] = value
         }
-      } else {
-        newState[action.moduleName][action.metric] = value
+      }
+
+      // Google travel time
+      if (action.moduleName === 'googleTravelTime') {
+        newState[action.moduleName][action.metric] = action.attributes;
+        newState[action.moduleName][action.metric]['id'] = action.metric;
       }
 
       return newState

@@ -146,6 +146,16 @@ const receiveSuccessResult = (result) => {
       ) {
         const metric = result[i].entity_id.replace('sensor.weather_meteofrance_', '')
         dispatch(updateSensor(result[i], 'meteofrance', metric))
+      } else if (
+        [
+          // Travel times
+          'sensor.google_travel_time_destination_1',
+          'sensor.google_travel_time_destination_2',
+          'sensor.google_travel_time_destination_3',
+        ].includes(result[i].entity_id)
+      ) {
+        const metric = result[i].entity_id.replace('sensor.google_travel_time_', '')
+        dispatch(updateSensor(result[i], 'googleTravelTime', metric))
       }
     }
   }
@@ -164,11 +174,12 @@ const updateSwitchPlug = ({ state, attributes, entity_id }) => ({
   attributes,
 })
 
-const updateSensor = ({ state }, moduleName, metric) => ({
+const updateSensor = ({ state, attributes }, moduleName, metric) => ({
   type: 'UPDATE_SENSOR',
   moduleName,
   metric,
   state,
+  attributes,
 })
 
 const updateClimate = ({ state, attributes }) => ({

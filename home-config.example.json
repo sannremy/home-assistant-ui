@@ -6,5 +6,13 @@
     "room2": {
       "name": "Bedroom"
     }
+  },
+  "travels": {
+    "destination_1": {
+      "name": "Office"
+    },
+    "destination_2": {
+      "name": "Mall"
+    }
   }
 }
