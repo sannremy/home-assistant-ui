@@ -10,6 +10,7 @@ import { Bulb } from '@styled-icons/boxicons-regular'
 import WeatherForecast from '../components/weather-forecast'
 import AreaSensor from '../components/area-sensor'
 import homeConfig from '../home-config.json'
+import SwitchLight from '../components/switch-light'
 
 let interval = null
 
@@ -87,7 +88,7 @@ class Home extends React.Component {
           </div>
 
           {/* Cols */}
-          <div className="flex items-stretch -mx-3 mt-4">
+          <div className="flex items-stretch -mx-3 mt-3">
             <div className="w-3/12 px-3">
               <div>
                 <ul>
@@ -108,55 +109,16 @@ class Home extends React.Component {
               </div>
             </div>
             <div className="w-6/12 px-3">
-              {/* <div className="mb-4">
-                <ul className="flex">
-                  <li className="flex items-center bg-gray-200 rounded px-2 py-1 mr-4">
-                    <Droplet className="w-4 h-4 mr-1" />
-                    <span>12&deg;</span>
-                  </li>
-                  <li className="flex items-center bg-gray-200 rounded px-2 py-1 mr-4">
-                    <Droplet className="w-4 h-4 mr-1" />
-                    <span>3 mm</span>
-                  </li>
-                  <li className="flex items-center bg-gray-200 rounded px-2 py-1 mr-4">
-                    <Droplet className="w-4 h-4 mr-1" />
-                    <span>4 km/h</span>
-                  </li>
-                  <li className="flex items-center bg-gray-200 rounded px-2 py-1">
-                    <Droplet className="w-4 h-4 mr-1" />
-                    <span>0,35 m</span>
-                  </li>
-                </ul>
-              </div> */}
-
-              <div className="mb-4">
-                <div>
-                  <h1 className="text-2xl text-indigo-800">Lights</h1>
-                </div>
-                <div className="flex mt-2 -mx-3">
-                  <div className="rounded-lg bg-white p-6 w-1/3 mx-3">
-                    <div className="w-12"><Bulb /></div>
-                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
-                    <div className="mt-4 font-light">On</div>
-                  </div>
-                  <div className="rounded-lg bg-white p-6 w-1/3 mx-3">
-                    <div className="w-12"><Bulb /></div>
-                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
-                    <div className="mt-4 font-light">On</div>
-                  </div>
-                  <div className="rounded-lg bg-white p-6 w-1/3 mx-3">
-                    <div className="w-12"><Bulb /></div>
-                    <div className="mt-6 font-semibold">Room<br />Light 1</div>
-                    <div className="mt-4 font-light">On</div>
-                  </div>
-                </div>
+              <div className="flex -mx-3">
+                {Object.entries([]).map(([key, item], index) => (
+                    <div key={index} className="w-1/3 mx-3">
+                      <SwitchLight {...item} />
+                    </div>
+                  ))}
               </div>
 
-              <div className="mb-4">
-                <div>
-                  <h1 className="text-2xl text-indigo-800">Plugs</h1>
-                </div>
-                <div className="flex mt-2 -mx-3">
+              <div className="mt-3">
+                <div className="flex mt-3 -mx-3">
                   {Object.entries(switchPlug).map(([key, item], index) => (
                     <div key={index} className="w-1/3 mx-3">
                       <SwitchPlug {...item} />
@@ -168,12 +130,9 @@ class Home extends React.Component {
               </div>
             </div>
             <div className="w-3/12 px-3">
-              <div className="mb-2">
-                <h1 className="text-2xl text-indigo-800">Travel times</h1>
-              </div>
               <div>
                 {sensor.googleTravelTime && Object.entries(sensor.googleTravelTime).map(([key, item], index) => (
-                  <div key={index} className="mb-4">
+                  <div key={index} className="py-2 last:border-0 border-b border-white">
                     <Travel
                       config={homeConfig.travels[item.id]}
                       data={item}
