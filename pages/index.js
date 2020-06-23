@@ -39,6 +39,7 @@ class Home extends React.Component {
     const {
       climate,
       sensor,
+      light,
       switchPlug,
       weather,
     } = this.props
@@ -110,21 +111,21 @@ class Home extends React.Component {
             </div>
             <div className="w-6/12 px-3">
               <div className="flex -mx-3">
-                {Object.entries([]).map(([key, item], index) => (
-                    <div key={index} className="w-1/3 mx-3">
+                {Object.entries(light).map(([key, item], index) => (
+                    <div key={index} className="w-1/3 mx-2">
                       <SwitchLight {...item} />
                     </div>
                   ))}
               </div>
 
-              <div className="mt-3">
-                <div className="flex mt-3 -mx-3">
+              <div className="mt-4">
+                <div className="flex -mx-3 mt-2">
                   {Object.entries(switchPlug).map(([key, item], index) => (
-                    <div key={index} className="w-1/3 mx-3">
+                    <div key={index} className="w-1/3 mx-2">
                       <SwitchPlug {...item} />
                     </div>
                   ))}
-                  <div className="w-1/3 mx-3">
+                  <div className="w-1/3 mx-2">
                   </div>
                 </div>
               </div>
@@ -152,6 +153,7 @@ const mapStateToProps = state => {
   return {
     climate: state.Climate,
     sensor: state.Sensor,
+    light: state.Light,
     switchPlug: state.SwitchPlug,
     weather: state.Weather,
   }

@@ -156,6 +156,15 @@ const receiveSuccessResult = (result) => {
       ) {
         const metric = result[i].entity_id.replace('sensor.google_travel_time_', '')
         dispatch(updateSensor(result[i], 'googleTravelTime', metric))
+      } else if (
+        [
+          // Light Philips Hue
+          'light.shelf_living_room',
+          'light.windows_living_room',
+          'light.master_bedroom',
+        ].includes(result[i].entity_id)
+      ) {
+        dispatch(updateLight(result[i]))
       }
     }
   }
@@ -178,6 +187,13 @@ const updateSensor = ({ state, attributes }, moduleName, metric) => ({
   type: 'UPDATE_SENSOR',
   moduleName,
   metric,
+  state,
+  attributes,
+})
+
+const updateLight = ({ state, attributes, entity_id }) => ({
+  type: 'UPDATE_LIGHT',
+  id: entity_id,
   state,
   attributes,
 })
