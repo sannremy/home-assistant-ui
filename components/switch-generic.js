@@ -9,6 +9,9 @@ class SwitchGeneric extends React.Component {
     super(props)
 
     this.handleClick = this.handleClick.bind(this)
+    this.handleAnimationStart = this.handleAnimationStart.bind(this)
+    this.handleAnimationEnd = this.handleAnimationEnd.bind(this)
+
     this.icon = null
   }
 
@@ -24,6 +27,18 @@ class SwitchGeneric extends React.Component {
     })
   }
 
+  handleAnimationStart() {
+    this.setState({
+      clicking: true,
+    })
+  }
+
+  handleAnimationEnd() {
+    this.setState({
+      clicking: false,
+    })
+  }
+
   render() {
     const {
       name,
@@ -31,15 +46,29 @@ class SwitchGeneric extends React.Component {
 
     const {
       enabled,
+      clicking,
     } = this.state
 
-    let backgroundColor = 'bg-white'
+    let classNames = []
     if (enabled) {
-      backgroundColor = 'bg-yellow-400'
+      classNames.push('bg-yellow-400')
+    } else {
+      classNames.push('bg-white')
+    }
+
+    if (clicking) {
+      classNames.push('scale-90')
     }
 
     return (
-      <div className={`rounded-lg ${backgroundColor} p-6 cursor-pointer transition duration-150 ease-in-out`} onClick={this.handleClick}>
+      <div
+        onTouchStart={this.handleAnimationStart}
+        onTouchEnd={this.handleAnimationEnd}
+        onMouseDown={this.handleAnimationStart}
+        onMouseUp={this.handleAnimationEnd}
+        onMouseLeave={this.handleAnimationEnd}
+        onClick={this.handleClick}
+        className={`${classNames.join(' ')} transform rounded-lg p-6 cursor-pointer transition duration-150 ease-in-out`}>
         <div className="w-12">{this.icon}</div>
         <div className="mt-6 font-semibold h-12">{name}</div>
         <div className="mt-3 font-light">{enabled ? 'On' : 'Off'}</div>
