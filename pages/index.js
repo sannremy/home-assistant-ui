@@ -90,12 +90,12 @@ class Home extends React.Component {
           <div className="flex items-stretch -mx-3 mt-4">
             <div className="w-3/12 px-3">
               <div>
-                <Thermostat {...climate} />
-              </div>
-              <div>
                 <ul>
+                  <li className="pb-2">
+                    <Thermostat {...climate} />
+                  </li>
                   {Object.keys(homeConfig.areas).map(area => (
-                    <li key={area} className="mt-4">
+                    <li key={area} className="py-2 border-t border-white">
                       {sensor[area] && (
                         <AreaSensor
                           config={homeConfig.areas[area]}
