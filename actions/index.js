@@ -1,3 +1,5 @@
+import { dispatch } from "../lib/store"
+
 /**
  * Receive HA result (success or error)
  */
@@ -216,5 +218,31 @@ export const receiveResult = (response) => {
     } else {
       return dispatch(receiveErrorResult(response.error))
     }
+  }
+}
+
+export const switchLight = ({ entity_id, enabled }) => {
+  console.log('switchLight')
+  return {
+    type: 'CALL_SERVICE',
+    domain: 'light',
+    service: enabled ? 'turn_on' : 'turn_off', // check service
+    entity_id,
+  }
+}
+
+export const switchPlug = ({ entity_id,  }) => {
+  console.log('switchPlug')
+  return {
+    type: 'CALL_SERVICE',
+    entity_id,
+  }
+}
+
+export const changeThermostat = ({ entity_id,  }) => {
+  console.log('changeThermostat')
+  return {
+    type: 'CALL_SERVICE',
+    entity_id,
   }
 }

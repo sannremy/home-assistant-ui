@@ -1,4 +1,6 @@
 import React from 'react'
+import { dispatch } from '../lib/store'
+import { switchLight, switchPlug } from '../actions'
 
 class SwitchGeneric extends React.Component {
   state = {
@@ -8,11 +10,12 @@ class SwitchGeneric extends React.Component {
   constructor(props) {
     super(props)
 
+    this.type = null
+    this.icon = null
+
     this.handleClick = this.handleClick.bind(this)
     this.handleAnimationStart = this.handleAnimationStart.bind(this)
     this.handleAnimationEnd = this.handleAnimationEnd.bind(this)
-
-    this.icon = null
   }
 
   componentDidMount() {
@@ -22,9 +25,16 @@ class SwitchGeneric extends React.Component {
   }
 
   handleClick() {
+    const enabled = !this.state.enabled
     this.setState({
-      enabled: !this.state.enabled,
+      enabled,
     })
+
+    if (this.type === 'light') {
+      dispatch(switchLight)
+    } else if (this.type === 'plug') {
+      dispatch(switchPlug)
+    }
   }
 
   handleAnimationStart() {

@@ -9,6 +9,7 @@ class SwitchPlug extends SwitchGeneric {
   constructor(props) {
     super(props)
 
+    this.type = 'plug'
     this.icon = <Plug />
   }
 }
