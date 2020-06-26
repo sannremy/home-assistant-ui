@@ -231,18 +231,22 @@ export const switchLight = ({ entity_id, enabled }) => {
   }
 }
 
-export const switchPlug = ({ entity_id,  }) => {
+export const switchPlug = ({ entity_id, enabled }) => {
   console.log('switchPlug')
   return {
     type: 'CALL_SERVICE',
+    domain: 'switch',
+    service: enabled ? 'turn_on' : 'turn_off', // check service
     entity_id,
   }
 }
 
-export const changeThermostat = ({ entity_id,  }) => {
+export const changeThermostat = ({ entity_id, temperature }) => {
   console.log('changeThermostat')
   return {
     type: 'CALL_SERVICE',
+    domain: 'climate',
+    service: temperature, // check service
     entity_id,
   }
 }

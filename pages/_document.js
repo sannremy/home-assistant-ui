@@ -8,7 +8,7 @@ class AppDocument extends Document {
 
   render() {
     return (
-      <Html lang="en" className="h-full">
+      <Html lang={process.env.locale.substring(0, 2)} className="h-full">
         <Head />
         <body className="bg-indigo-100 h-full">
           <Main />
