@@ -1,6 +1,8 @@
 import React from 'react'
 import { formatTemperature } from '../lib/text'
 import { MinusCircle, PlusCircle, Battery, CurrentLocation, SliderAlt } from '@styled-icons/boxicons-regular'
+import { setThermostatTemperature } from '../actions'
+import { dispatch } from '../lib/store'
 
 class Thermostat extends React.Component {
   state = {
@@ -57,6 +59,11 @@ class Thermostat extends React.Component {
       enableMinus,
       enablePlus,
     })
+
+    dispatch(setThermostatTemperature({
+      entity_id: this.props.entityId,
+      temperature: newTemperature,
+    }))
   }
 
   increaseHeatingTemperature() {

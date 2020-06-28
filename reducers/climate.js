@@ -3,6 +3,7 @@ const Climate = (state = {}, action) => {
     case 'UPDATE_CLIMATE':
       return {
         ...state,
+        entityId: action.id,
         currentTemperature: action.attributes.current_temperature,
         temperature: action.attributes.temperature,
         minTemperatureAllowed: action.attributes.min_temp,

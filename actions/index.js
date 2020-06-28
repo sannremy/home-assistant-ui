@@ -200,8 +200,9 @@ const updateLight = ({ state, attributes, entity_id }) => ({
   attributes,
 })
 
-const updateClimate = ({ state, attributes }) => ({
+const updateClimate = ({ state, attributes, entity_id }) => ({
   type: 'UPDATE_CLIMATE',
+  id: entity_id,
   state,
   attributes,
 })
@@ -257,8 +258,16 @@ export const switchPlug = ({ entity_id, enabled }) => {
   }
 }
 
-export const changeThermostat = ({ entity_id, temperature }) => {
-  console.log('changeThermostat')
+export const setThermostatTemperature = ({ entity_id, temperature }) => {
+  sendMessage({
+    type: 'call_service',
+    domain: 'climate',
+    service: 'set_temperature',
+    service_data: {
+      entity_id,
+      temperature,
+    },
+  })
   return {
     type: 'CALL_SERVICE',
     domain: 'climate',
