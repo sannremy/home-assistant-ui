@@ -1,4 +1,4 @@
-import { dispatch } from "../lib/store"
+import { sendMessage } from '../lib/ha-websocket-api'
 
 /**
  * Receive HA result (success or error)
@@ -222,17 +222,33 @@ export const receiveResult = (response) => {
 }
 
 export const switchLight = ({ entity_id, enabled }) => {
-  console.log('switchLight')
+  sendMessage({
+    type: 'call_service',
+    domain: 'light',
+    service: enabled ? 'turn_on' : 'turn_off',
+    service_data: {
+      entity_id: entity_id
+    },
+  })
+
   return {
     type: 'CALL_SERVICE',
     domain: 'light',
-    service: enabled ? 'turn_on' : 'turn_off', // check service
+    service: enabled ? 'turn_on' : 'turn_off',
     entity_id,
   }
 }
 
 export const switchPlug = ({ entity_id, enabled }) => {
-  console.log('switchPlug')
+  sendMessage({
+    type: 'call_service',
+    domain: 'switch',
+    service: enabled ? 'turn_on' : 'turn_off',
+    service_data: {
+      entity_id: entity_id
+    },
+  })
+
   return {
     type: 'CALL_SERVICE',
     domain: 'switch',

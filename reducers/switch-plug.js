@@ -4,6 +4,7 @@ const SwitchPlug = (state = {}, action) => {
       return {
         ...state,
         [action.id]: {
+          entityId: action.id,
           state: action.state,
           name: action.attributes.friendly_name,
         },

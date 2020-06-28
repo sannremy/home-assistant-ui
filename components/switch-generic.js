@@ -31,9 +31,15 @@ class SwitchGeneric extends React.Component {
     })
 
     if (this.type === 'light') {
-      dispatch(switchLight)
+      dispatch(switchLight({
+        entity_id: this.props.entityId,
+        enabled,
+      }))
     } else if (this.type === 'plug') {
-      dispatch(switchPlug)
+      dispatch(switchPlug({
+        entity_id: this.props.entityId,
+        enabled,
+      }))
     }
   }
 
