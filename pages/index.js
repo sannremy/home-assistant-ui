@@ -3,12 +3,12 @@ import Head from 'next/head'
 import { connect } from 'react-redux'
 import Weather from '../components/weather'
 import DateTime from '../components/date-time'
-import SwitchPlug from '../components/switch-plug'
 import Thermostat from '../components/thermostat'
 import Travel from '../components/travel'
 import WeatherForecast from '../components/weather-forecast'
 import AreaSensor from '../components/area-sensor'
 import homeConfig from '../home-config.json'
+import SwitchPlug from '../components/switch-plug'
 import SwitchLight from '../components/switch-light'
 
 let interval = null
@@ -111,7 +111,7 @@ class Home extends React.Component {
             <div className="w-6/12 px-3">
               <div className="flex -mx-3">
                 {Object.entries(light).map(([key, item], index) => (
-                    <div key={index} className="w-1/3 mx-2">
+                    <div key={`light-${item.name}-${item.state}`} className="w-1/3 mx-2">
                       <SwitchLight {...item} />
                     </div>
                   ))}
@@ -120,7 +120,7 @@ class Home extends React.Component {
               <div className="mt-4">
                 <div className="flex -mx-3 mt-2">
                   {Object.entries(switchPlug).map(([key, item], index) => (
-                    <div key={index} className="w-1/3 mx-2">
+                    <div key={`plug-${item.name}-${item.state}`} className="w-1/3 mx-2">
                       <SwitchPlug {...item} />
                     </div>
                   ))}
