@@ -1,5 +1,4 @@
 import { sendMessage } from '../lib/ha-websocket-api'
-import { dispatch } from '../lib/store'
 
 /**
  * Receive HA result (success or error)
@@ -253,22 +252,34 @@ const receiveStateChangedEvent = (stateChangedEvent) => {
   }
 }
 
+const callService = (message) => {
+  let success = false
+
+  try {
+    sendMessage(message)
+    success = true
+  } catch (err) {
+    console.log('Cannot call service, not connected or authenticated')
+  }
+
+  return {
+    type: 'CALL_SERVICE',
+    message,
+    success,
+  }
+}
+
 export const switchLight = ({ entity_id, enabled }) => {
   const message = {
     type: 'call_service',
     domain: 'light',
     service: enabled ? 'turn_on' : 'turn_off',
     service_data: {
-      entity_id: entity_id
+      entity_id: entity_id,
     },
   }
 
-  sendMessage(message)
-
-  return {
-    type: 'CALL_SERVICE',
-    message,
-  }
+  return callService(message)
 }
 
 export const switchPlug = ({ entity_id, enabled }) => {
@@ -277,16 +288,11 @@ export const switchPlug = ({ entity_id, enabled }) => {
     domain: 'switch',
     service: enabled ? 'turn_on' : 'turn_off',
     service_data: {
-      entity_id: entity_id
+      entity_id: entity_id,
     },
   }
 
-  sendMessage(message)
-
-  return {
-    type: 'CALL_SERVICE',
-    message,
-  }
+  return callService(message)
 }
 
 export const setThermostatTemperature = ({ entity_id, temperature }) => {
@@ -300,10 +306,5 @@ export const setThermostatTemperature = ({ entity_id, temperature }) => {
     },
   }
 
-  sendMessage(message)
-
-  return {
-    type: 'CALL_SERVICE',
-    message,
-  }
+  return callService(message)
 }
