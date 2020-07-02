@@ -31,8 +31,23 @@
     "climate": [
       "climate.home"
     ],
-    "sensor": {
-
-    }
+    "sensor": [
+      {
+        "id": "backyard",
+        "metricPattern": "sensor.backyard_",
+        "entities": [
+          "sensor.backyard_temperature",
+          "sensor.backyard_humidity"
+        ]
+      },
+      {
+        "id": "travel",
+        "metricPattern": "sensor.travel_",
+        "entities": [
+          "sensor.travel_office",
+          "sensor.travel_mall"
+        ]
+      },
+    ]
   }
 }
