@@ -15,6 +15,16 @@
       "name": "Mall"
     }
   },
+  "switchPlugs": {
+    "plug_1": {
+      "name": "Plug 1"
+    }
+  },
+  "lights": {
+    "light_1": {
+      "name": "Light 1"
+    }
+  },
   "entities": {
     "weather": [
       "weather.some_weather_service"

@@ -1,12 +1,20 @@
+import homeConfig from '../home-config.json'
+
 const Light = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_LIGHT':
+      const lightConfig = homeConfig.lights[action.id.replace('light.', '')]
+      let name = action.attributes.friendly_name
+      if (lightConfig && lightConfig.name) {
+        name = lightConfig.name
+      }
+
       return {
         ...state,
         [action.id]: {
           entityId: action.id,
           state: action.state,
-          name: action.attributes.friendly_name,
+          name,
           minMireds: action.attributes.min_mireds,
           maxMireds: action.attributes.max_mireds,
           effectList: action.attributes.effect_list,
