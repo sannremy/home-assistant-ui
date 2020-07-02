@@ -14,5 +14,25 @@
     "destination_2": {
       "name": "Mall"
     }
+  },
+  "entities": {
+    "weather": [
+      "weather.some_weather_service"
+    ],
+    "switchPlug": [
+      "switch.plug_1",
+      "switch.plug_2"
+    ],
+    "light": [
+      "light.living_room_1",
+      "light.living_room_2",
+      "light.bedroom"
+    ],
+    "climate": [
+      "climate.home"
+    ],
+    "sensor": {
+
+    }
   }
 }
