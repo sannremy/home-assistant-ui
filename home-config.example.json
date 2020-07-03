@@ -57,7 +57,7 @@
           "sensor.travel_office",
           "sensor.travel_mall"
         ]
-      },
+      }
     ]
   }
 }
