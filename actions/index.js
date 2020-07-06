@@ -7,10 +7,7 @@ const sensorEntity = {}
 for (let i = 0; i < entities.sensor.length; i++) {
   const sensor = entities.sensor[i];
   sensor.entities.map(entity => {
-    sensorEntity[entity] = {
-      id: sensor.id,
-      metricPattern: sensor.metricPattern,
-    }
+    sensorEntity[entity] = {...sensor}
   })
 }
 
@@ -32,8 +29,7 @@ const receiveSuccessResult = (result) => {
         && sensorEntity[result[i].entity_id]
       ) {
         const entityConfig = sensorEntity[result[i].entity_id]
-        const metric = result[i].entity_id.replace(entityConfig.metricPattern, '')
-        dispatch(updateSensor(result[i], entityConfig.id, metric))
+        dispatch(updateSensor(result[i], entityConfig))
       } else if (
         // Weather
         result[i].entity_id.indexOf('weather.') === 0
@@ -79,12 +75,12 @@ const updateSwitchPlug = ({ state, attributes, entity_id }) => ({
   attributes,
 })
 
-const updateSensor = ({ state, attributes }, moduleName, metric) => ({
+const updateSensor = ({ state, attributes, entity_id }, entityConfig) => ({
   type: 'UPDATE_SENSOR',
-  moduleName,
-  metric,
+  id: entity_id,
   state,
   attributes,
+  entityConfig,
 })
 
 const updateLight = ({ state, attributes, entity_id }) => ({

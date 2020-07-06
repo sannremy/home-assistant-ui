@@ -135,6 +135,15 @@ class Home extends React.Component {
                   <div key={index} className="py-2 last:border-0 border-b border-white">
                     <Travel
                       config={homeConfig.travels[item.id]}
+                      mode="car"
+                      data={item}
+                    />
+                  </div>
+                ))}
+                {sensor.transilien && sensor.transilien.transilien_search && sensor.transilien.transilien_search.nextTrainsList.slice(0, 2).map((item, index) => (
+                  <div key={index} className="py-2 last:border-0 border-b border-white">
+                    <Travel
+                      mode="train"
                       data={item}
                     />
                   </div>

@@ -5,6 +5,9 @@ const Sensor = (state = {}, action) => {
         ...state,
       }
 
+      const moduleName = action.entityConfig.id
+      const metric = action.id.replace(action.entityConfig.metricPattern, '')
+
       // Cast and format values
       let value = action.state
 
@@ -20,20 +23,20 @@ const Sensor = (state = {}, action) => {
         value = parseFloat(value, 10)
       }
 
-      if (action.moduleName && action.metric) {
-        if (newState[action.moduleName] === undefined) {
-          newState[action.moduleName] = {
-            [action.metric]: value,
+      if (moduleName && metric) {
+        if (newState[moduleName] === undefined) {
+          newState[moduleName] = {
+            [metric]: value,
           }
         } else {
-          newState[action.moduleName][action.metric] = value
+          newState[moduleName][metric] = value
         }
       }
 
-      // Google travel time
-      if (action.moduleName === 'googleTravelTime') {
-        newState[action.moduleName][action.metric] = action.attributes;
-        newState[action.moduleName][action.metric]['id'] = action.metric;
+      // Take only attributes
+      if (action.entityConfig.attributesOnly) {
+        newState[moduleName][metric] = action.attributes;
+        newState[moduleName][metric]['id'] = metric;
       }
 
       return newState
