@@ -10,6 +10,7 @@ import AreaSensor from '../components/area-sensor'
 import homeConfig from '../home-config.json'
 import SwitchPlug from '../components/switch-plug'
 import SwitchLight from '../components/switch-light'
+import { formatDateTime } from '../lib/text'
 
 let interval = null
 
@@ -49,6 +50,17 @@ class Home extends React.Component {
       const angleExtracted = sensor.anemometer.gust_angle.match(/\d+/)
       if (angleExtracted.length) {
         gustAngle = parseInt(angleExtracted[0], 10)
+      }
+    }
+
+    // Latest vigicrue
+    let vigicrueHydro = null
+    if (sensor.vigicrue && sensor.vigicrue.hasOwnProperty('vigicrue_hydro_observation')) {
+      const hydroLength = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro.length
+      vigicrueHydro = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro[hydroLength - 1]
+      vigicrueHydro = {
+        date: new Date(vigicrueHydro.DtObsHydro),
+        level: vigicrueHydro.ResObsHydro,
       }
     }
 
@@ -148,6 +160,14 @@ class Home extends React.Component {
                     />
                   </div>
                 ))}
+              </div>
+
+              <div>
+                {vigicrueHydro && (
+                  <div className="py-2 last:border-0 border-b border-white">
+                    {vigicrueHydro.level}m at {formatDateTime(vigicrueHydro.date)}
+                  </div>
+                )}
               </div>
             </div>
           </div>
