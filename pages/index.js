@@ -17,10 +17,13 @@ let interval = null
 class Home extends React.Component {
   state = {
     currentDate: new Date(),
+    fullscreen: false,
   }
 
   constructor(props) {
     super(props)
+
+    this.toggleFullscreen = this.toggleFullscreen.bind(this)
   }
 
   componentDidMount() {
@@ -28,11 +31,40 @@ class Home extends React.Component {
       this.setState({
         currentDate: new Date()
       })
-    }, 1000);
+    }, 1000)
   }
 
   componentWillUnmount() {
-    clearInterval(interval);
+    clearInterval(interval)
+  }
+
+  toggleFullscreen() {
+    if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement) {
+      if (document.cancelFullScreen) {
+        document.cancelFullScreen()
+      } else {
+        if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen()
+        } else {
+          if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen()
+          }
+        }
+      }
+    } else {
+      const _element = document.documentElement;
+      if (_element.requestFullscreen) {
+        _element.requestFullscreen()
+      } else {
+        if (_element.mozRequestFullScreen) {
+          _element.mozRequestFullScreen()
+        } else {
+          if (_element.webkitRequestFullscreen) {
+            _element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
+          }
+        }
+      }
+    }
   }
 
   render() {
@@ -78,7 +110,7 @@ class Home extends React.Component {
         <main className="h-full px-6 py-6">
           {/* Header */}
           <div className="h-auto flex -mx-3">
-            <div className="w-3/12 px-3">
+            <div className="w-3/12 px-3" onClick={this.toggleFullscreen}>
               <DateTime date={this.state.currentDate} />
             </div>
 
