@@ -11,6 +11,7 @@ import homeConfig from '../home-config.json'
 import SwitchPlug from '../components/switch-plug'
 import SwitchLight from '../components/switch-light'
 import { formatDateTime } from '../lib/text'
+import Vigicrue from '../components/vigicrue'
 
 let interval = null
 
@@ -165,7 +166,7 @@ class Home extends React.Component {
               <div>
                 {vigicrueHydro && (
                   <div className="py-2 last:border-0 border-b border-white">
-                    {vigicrueHydro.level}m at {formatDateTime(vigicrueHydro.date)}
+                    <Vigicrue level={vigicrueHydro.level} date={vigicrueHydro.date} />
                   </div>
                 )}
               </div>
