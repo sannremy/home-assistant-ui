@@ -10,7 +10,7 @@ const Weather = (state = {}, action) => {
           bearing: action.attributes.wind_bearing,
           speed: action.attributes.wind_speed,
         },
-        forecast: action.attributes.forecast.map(item => {
+        forecast: action.attributes.forecast.slice(0, 5).map(item => {
           // Format date as object
           item.datetime = new Date(item.datetime)
 
