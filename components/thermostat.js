@@ -76,7 +76,6 @@ class Thermostat extends React.Component {
 
   render() {
     const {
-      temperature,
       currentTemperature,
       batteryPercent,
       presetMode,
@@ -89,8 +88,6 @@ class Thermostat extends React.Component {
       enablePlus,
     } = this.state
 
-    const displayTemperature = heatingTemperature ? heatingTemperature : temperature
-
     const enableStyle = "cursor-pointer"
     const disableStyle = "opacity-50 cursor-not-allowed"
 
@@ -100,7 +97,7 @@ class Thermostat extends React.Component {
           <div className="flex items-center">
             <MinusCircle className={`w-5 h-5 mr-2 ${enableMinus ? enableStyle : disableStyle}`} onClick={this.decreaseHeatingTemperature} />
             <div className="w-16 text-center text-xl font-semibold mr-2">
-              {formatTemperature(displayTemperature, 1)}
+              {formatTemperature(heatingTemperature, 1)}
             </div>
             <PlusCircle className={`w-5 h-5 ${enablePlus ? enableStyle : disableStyle}`} onClick={this.increaseHeatingTemperature} />
           </div>
