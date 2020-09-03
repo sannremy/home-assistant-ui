@@ -1,5 +1,6 @@
 import React from 'react'
 import { Car, Train } from '@styled-icons/boxicons-regular'
+import { formatTrainStationName } from '../lib/text'
 
 class Travel extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class Travel extends React.Component {
       name = config.name
     } else if (mode === 'train') {
       icon = <Train className="w-5 mr-1" />
-      name = data.destinationMission
+      name = formatTrainStationName(data.destinationMission)
       time = data.departureTime
     }
 
