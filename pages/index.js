@@ -118,10 +118,12 @@ class Home extends React.Component {
             <div className="w-9/12 px-3">
               <div className="flex items-start">
                 <div className="mr-6">
-                  <Weather
-                    {...weather}
-                    sensor={sensor.meteofrance}
-                  />
+                  {weather.temperature && (
+                    <Weather
+                      {...weather}
+                      sensor={sensor.meteofrance}
+                    />
+                  )}
                 </div>
                 <div>
                   <WeatherForecast
@@ -138,7 +140,9 @@ class Home extends React.Component {
               <div>
                 <ul>
                   <li className="pb-2">
-                    <Thermostat {...climate} />
+                    {(climate.temperature && (
+                      <Thermostat {...climate} />
+                    ))}
                   </li>
                   {Object.keys(homeConfig.areas).map(area => (
                     <li key={area} className="py-2 border-t border-white">
