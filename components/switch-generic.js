@@ -84,10 +84,9 @@ class SwitchGeneric extends React.Component {
         onMouseUp={this.handleAnimationEnd}
         onMouseLeave={this.handleAnimationEnd}
         onClick={this.handleClick}
-        className={`${classNames.join(' ')} transform rounded-lg p-6 cursor-pointer transition duration-150 ease-in-out`}>
-        <div className="w-12">{this.icon}</div>
-        <div className="mt-6 font-semibold h-12">{name}</div>
-        <div className="mt-3 font-light">{enabled ? 'On' : 'Off'}</div>
+        className={`${classNames.join(' ')} flex items-center px-6 py-3 shadow-lg transform rounded-full cursor-pointer transition duration-150 ease-in-out`}>
+        <div className="w-6 mr-2">{this.icon}</div>
+        <div className="">{name}</div>
       </div>
     )
   }

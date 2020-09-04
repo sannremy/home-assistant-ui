@@ -158,30 +158,23 @@ class Home extends React.Component {
               </div>
             </div>
             <div className="w-6/12 px-3">
-              <div className="flex -mx-3">
+              <div className="flex flex-wrap -mx-3">
                 {Object.entries(light).map(([key, item], index) => (
-                    <div key={`light-${item.name}-${item.state}`} className="w-1/3 mx-2">
-                      <SwitchLight {...item} />
-                    </div>
-                  ))}
-              </div>
-
-              <div className="mt-4">
-                <div className="flex -mx-3 mt-2">
-                  {Object.entries(switchPlug).map(([key, item], index) => (
-                    <div key={`plug-${item.name}-${item.state}`} className="w-1/3 mx-2">
-                      <SwitchPlug {...item} />
-                    </div>
-                  ))}
-                  <div className="w-1/3 mx-2">
+                  <div key={`light-${item.name}-${item.state}`} className="w-auto mx-2 my-2">
+                    <SwitchLight {...item} />
                   </div>
-                </div>
+                ))}
+                {Object.entries(switchPlug).map(([key, item], index) => (
+                  <div key={`plug-${item.name}-${item.state}`} className="w-auto mx-2 my-2">
+                    <SwitchPlug {...item} />
+                  </div>
+                ))}
               </div>
             </div>
             <div className="w-3/12 px-3">
               <div>
                 {sensor.googleTravelTime && Object.entries(sensor.googleTravelTime).map(([key, item], index) => (
-                  <div key={index} className="py-2 last:border-0 border-b border-white">
+                  <div key={index} className="my-4">
                     <Travel
                       config={homeConfig.travels[item.id]}
                       mode="car"
@@ -190,7 +183,7 @@ class Home extends React.Component {
                   </div>
                 ))}
                 {sensor.transilien && sensor.transilien.transilien_search && sensor.transilien.transilien_search.nextTrainsList.slice(0, 2).map((item, index) => (
-                  <div key={index} className="py-2 last:border-0 border-b border-white">
+                  <div key={index} className="my-4">
                     <Travel
                       mode="train"
                       data={item}

@@ -35,7 +35,6 @@ class AreaSensor extends React.Component {
         <ul className="flex items-center text-sm font-light">
           {data && data.hasOwnProperty('co2') && (
             <li className="flex items-center mr-2">
-              {co2Icon}
               <span>{data.co2 === null ? '-' : data.co2} ppm</span>
             </li>
           )}
@@ -43,12 +42,6 @@ class AreaSensor extends React.Component {
             <li className="flex items-center mr-2">
               <Droplet className="w-4 h-4 mr-1" />
               <span>{data.humidity === null ? '-' : data.humidity} %</span>
-            </li>
-          )}
-          {data && data.hasOwnProperty('battery_percent') && (
-            <li className="flex items-center mr-2">
-              <Battery className="w-4 h-4 mr-1" />
-              <span>{data.battery_percent === null ? '-' : data.battery_percent} %</span>
             </li>
           )}
         </ul>
