@@ -138,23 +138,25 @@ class Home extends React.Component {
           <div className="flex items-stretch -mx-3 mt-3">
             <div className="w-3/12 px-3">
               <div>
-                <ul>
-                  <li className="pb-2">
-                    {(climate.temperature && (
-                      <Thermostat {...climate} />
-                    ))}
-                  </li>
-                  {Object.keys(homeConfig.areas).map(area => (
-                    <li key={area} className="py-2 border-t border-white">
-                      {sensor[area] && (
-                        <AreaSensor
-                          config={homeConfig.areas[area]}
-                          data={sensor[area]}
-                        />
-                      )}
-                    </li>
+                <div>
+                  {(climate.temperature && (
+                    <Thermostat {...climate} />
                   ))}
-                </ul>
+                </div>
+                <div>
+                  <ul>
+                    {Object.keys(homeConfig.areas).map(area => (
+                      <li key={area} className="my-4">
+                        {sensor[area] && (
+                          <AreaSensor
+                            config={homeConfig.areas[area]}
+                            data={sensor[area]}
+                          />
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
             <div className="w-6/12 px-3">

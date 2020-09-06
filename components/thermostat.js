@@ -1,6 +1,6 @@
 import React from 'react'
 import { formatTemperature } from '../lib/text'
-import { MinusCircle, PlusCircle, Battery, CurrentLocation, SliderAlt } from '@styled-icons/boxicons-regular'
+import { MinusCircle, PlusCircle, HomeHeart } from '@styled-icons/boxicons-regular'
 import { setThermostatTemperature } from '../actions'
 import { dispatch } from '../lib/store'
 
@@ -77,8 +77,6 @@ class Thermostat extends React.Component {
   render() {
     const {
       currentTemperature,
-      batteryPercent,
-      presetMode,
     } = this.props
 
     const {
@@ -90,34 +88,18 @@ class Thermostat extends React.Component {
 
     const enableStyle = "cursor-pointer"
     const disableStyle = "opacity-50 cursor-not-allowed"
+    const heatingClass = isHeating ? "bg-yellow-400" : "bg-white"
 
     return (
       <div>
-        <div className="flex items-center justify-between">
+        <div className={`${heatingClass} flex items-center justify-between px-6 p-3 rounded-full shadow-lg`}>
+          <MinusCircle className={`w-6 h-8 transform transition duration-150 ease-in-out ${enableMinus ? enableStyle : disableStyle}`} onClick={this.decreaseHeatingTemperature} />
           <div className="flex items-center">
-            <MinusCircle className={`w-5 h-5 mr-2 ${enableMinus ? enableStyle : disableStyle}`} onClick={this.decreaseHeatingTemperature} />
-            <div className="w-16 text-center text-xl font-semibold mr-2">
-              {formatTemperature(heatingTemperature, 1)}
-            </div>
-            <PlusCircle className={`w-5 h-5 ${enablePlus ? enableStyle : disableStyle}`} onClick={this.increaseHeatingTemperature} />
+            <div className="font-semibold">{formatTemperature(heatingTemperature, 1)}</div>
+            <div className="text-sm">&nbsp;/&nbsp;{formatTemperature(currentTemperature, 1)}</div>
           </div>
-          <div className="text-xl font-semibold">{isHeating ? 'On' : 'Off'}</div>
+          <PlusCircle className={`w-6 h-6 transform transition duration-150 ease-in-out ${enablePlus ? enableStyle : disableStyle}`} onClick={this.increaseHeatingTemperature} />
         </div>
-
-        <ul className="flex items-center text-sm font-light">
-          <li className="flex items-center mr-2">
-            <CurrentLocation className="w-4 h-4 mr-1" />
-            <span>{formatTemperature(currentTemperature, 1)}</span>
-          </li>
-          <li className="flex items-center mr-2">
-            <SliderAlt className="w-4 h-4 mr-1" />
-            <span>{presetMode}</span>
-          </li>
-          <li className="flex items-center mr-2">
-            <Battery className="w-4 h-4 mr-1" />
-            <span>{batteryPercent} %</span>
-          </li>
-        </ul>
       </div>
     )
   }

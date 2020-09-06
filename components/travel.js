@@ -14,7 +14,7 @@ class Travel extends React.Component {
       mode,
     } = this.props
 
-    const iconClassName = "w-1/6 mr-3 rounded-full bg-indigo-200 p-2"
+    const iconClassName = "w-1/6 mr-3 rounded-full bg-indigo-100 p-2"
 
     let icon = <Car className={iconClassName} />
     let time = null
@@ -33,10 +33,8 @@ class Travel extends React.Component {
       <div className="flex items-start">
         {icon}
         <div className="w-5/6">
-          <div className="">{name}</div>
-          <div className="inline-block pt-1 mt-1 border-t border-indigo-800">
-            {time}
-          </div>
+          <div className="">{time}</div>
+          <div className="text-sm">{name}</div>
         </div>
       </div>
     )
