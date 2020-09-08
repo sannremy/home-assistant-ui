@@ -10,7 +10,7 @@ class AppDocument extends Document {
     return (
       <Html lang={process.env.locale.substring(0, 2)} className="h-full">
         <Head />
-        <body className="bg-gray-100 h-full">
+        <body className="bg-teal-100 h-full">
           <Main />
           <NextScript />
         </body>

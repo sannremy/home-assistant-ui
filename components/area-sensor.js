@@ -13,9 +13,12 @@ class AreaSensor extends React.Component {
       config,
     } = this.props
 
+    const isOutside = config.location === 'outside'
+    const bgTemperature = isOutside ? 'bg-green-100' : 'bg-indigo-100'
+
     return (
       <div className="flex items-center">
-        <div className="font-semibold p-2 rounded-full bg-indigo-100 mr-2">
+        <div className={`${bgTemperature} font-semibold p-2 rounded-full mr-2`}>
           {data && data.hasOwnProperty('temperature') && (
             <span className="">
               {data.temperature === null ? '-' : formatTemperature(data.temperature, 1)}
