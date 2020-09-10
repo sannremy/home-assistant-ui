@@ -14,7 +14,7 @@ class AreaSensor extends React.Component {
     } = this.props
 
     const isOutside = config.location === 'outside'
-    const bgTemperature = isOutside ? 'bg-green-100' : 'bg-indigo-100'
+    const bgTemperature = isOutside ? 'bg-green-200' : 'bg-indigo-200'
 
     return (
       <div className="flex items-center">

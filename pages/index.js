@@ -162,12 +162,12 @@ class Home extends React.Component {
             <div className="w-6/12 px-3">
               <div className="flex flex-wrap -mx-3">
                 {Object.entries(light).map(([key, item], index) => (
-                  <div key={`light-${item.name}-${item.state}`} className="w-auto mx-2 my-2">
+                  <div key={`light-${item.name}-${item.state}`} className="w-auto mr-4">
                     <SwitchLight {...item} />
                   </div>
                 ))}
                 {Object.entries(switchPlug).map(([key, item], index) => (
-                  <div key={`plug-${item.name}-${item.state}`} className="w-auto mx-2 my-2">
+                  <div key={`plug-${item.name}-${item.state}`} className="w-auto mt-4 mr-4">
                     <SwitchPlug {...item} />
                   </div>
                 ))}
