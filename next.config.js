@@ -3,7 +3,7 @@ const isProd = process.env.NODE_ENV === 'production'
 module.exports = {
   assetPrefix: isProd ? '/local' : '',
   basePath: isProd ? '/local' : '',
-  exportTrailingSlash: true,
+  trailingSlash: true,
   env: {
     haWebsocketAPI: process.env.HA_WEBSOCKET_API,
     haAccessToken: process.env.HA_ACCESS_TOKEN,
