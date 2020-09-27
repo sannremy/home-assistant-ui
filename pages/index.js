@@ -81,7 +81,7 @@ class Home extends React.Component {
     let gustAngle = null
     if (sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_angle')) {
       const angleExtracted = sensor.anemometer.gust_angle.match(/\d+/)
-      if (angleExtracted.length) {
+      if (angleExtracted && angleExtracted.length) {
         gustAngle = parseInt(angleExtracted[0], 10)
       }
     }
