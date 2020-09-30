@@ -1,8 +1,9 @@
-import { Play, PlayCircle } from '@styled-icons/boxicons-regular'
+import { Stopwatch } from '@styled-icons/boxicons-regular'
 import React from 'react'
 import { dispatch } from '../lib/store'
 import { switchTimer } from '../actions'
-import { CircularProgressbar } from 'react-circular-progressbar'
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
+import { formatSecondsToHHMMSS } from '../lib/text'
 
 
 class Timer extends React.Component {
@@ -11,6 +12,7 @@ class Timer extends React.Component {
     status: 'idle',
     timer: null,
     clicking: false,
+    duration: null,
   }
 
   constructor(props) {
@@ -26,18 +28,34 @@ class Timer extends React.Component {
     const {
       status, // idle, active, paused
       finishesAt,
+      duration,
     } = this.props
 
+    // Duration in seconds
+    const durations = duration.split(':').map(t => {
+      return parseInt(t, 10)
+    })
+    let durationSeconds = durations[0] * 60 * 60 // hours
+    durationSeconds += durations[1] * 60 // minutes
+    durationSeconds += durations[2] // seconds
+
     let timer = this.state.timer
+    let countdown = null
+
+    // Countdown in seconds
+    const getCountdown = (finishesAt) => {
+      const now = new Date()
+      const finishesAtDate = new Date(finishesAt)
+      return Math.ceil((finishesAtDate - now) / 1000)
+    }
 
     if (status !== 'idle' && finishesAt) {
       if (timer === null) {
-        const finishesAtDate = new Date(finishesAt)
+        countdown = getCountdown(finishesAt)
 
         timer = setInterval(() => {
-          const now = new Date()
           this.setState({
-            countdown: Math.floor((finishesAtDate - now) / 1000)
+            countdown: getCountdown(finishesAt)
           })
         }, 1000)
       }
@@ -49,6 +67,8 @@ class Timer extends React.Component {
     this.setState({
       timer,
       status,
+      countdown,
+      duration: durationSeconds,
     })
   }
 
@@ -64,7 +84,7 @@ class Timer extends React.Component {
 
   handleClick() {
     const {
-      entity_id,
+      entityId,
     } = this.props
 
     const {
@@ -73,12 +93,12 @@ class Timer extends React.Component {
 
     if (status === 'idle') {
       dispatch(switchTimer({
-        entity_id: this.props.entityId,
+        entity_id: entityId,
         action: 'start',
       }))
     } else if (status === 'active') {
       dispatch(switchTimer({
-        entity_id: this.props.entityId,
+        entity_id: entityId,
         action: 'cancel',
       }))
     }
@@ -100,21 +120,42 @@ class Timer extends React.Component {
     const {
       name,
       status, // idle, active, paused
-      duration,
     } = this.props
 
     const {
       clicking,
       countdown,
+      duration,
     } = this.state
 
     let text = name
-    let icon = <PlayCircle className="w-6" />
+    let icon = <Stopwatch className="w-6 h-6" />
     let classNames = []
     if (status === 'active') {
       classNames.push('bg-yellow-400')
-      icon = <CircularProgressbar value={countdown} text={`${66}%`} />
-      text = countdown
+      const percentageRemaining = Math.round((duration - countdown) / duration * 100)
+      icon = <CircularProgressbar
+        className="w-6 h-6"
+        value={percentageRemaining}
+        strokeWidth={10}
+        styles={buildStyles({
+          // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+          strokeLinecap: 'butt',
+
+          // How long animation takes to go from one percentage to another, in seconds
+          pathTransitionDuration: 0.5,
+
+          // Can specify path transition in more detail, or remove it entirely
+          // pathTransition: 'none',
+
+          // Colors
+          pathColor: `currentColor`,
+          textColor: 'currentColor',
+          trailColor: '#EBF4FF', // indigo-100
+          backgroundColor: 'transparent',
+        })}
+      />
+      text = formatSecondsToHHMMSS(countdown)
     } else if (status === 'paused') {
       classNames.push('bg-yellow-200')
     } else {
@@ -135,7 +176,7 @@ class Timer extends React.Component {
         onClick={this.handleClick}
         className={`${classNames.join(' ')} flex items-center px-6 py-3 shadow-lg transform rounded-full cursor-pointer transition duration-150 ease-in-out`}
       >
-        <div className="w-auto mr-2">
+        <div className="w-6 h-6 mr-2">
           {icon}
         </div>
         <div className="w-auto">{text}</div>

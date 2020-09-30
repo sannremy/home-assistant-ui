@@ -167,7 +167,7 @@ class Home extends React.Component {
               </div>
               <div className="flex flex-wrap -mx-3">
                 {Object.entries(timer).map(([key, item], index) => (
-                  <div key={`timer-${item.name}-${item.state}`} className="w-1/3 mr-4">
+                  <div key={`timer-${item.name}-${item.state}`} className="w-auto mt-4 mr-4">
                     <Timer {...item} />
                   </div>
                 ))}
