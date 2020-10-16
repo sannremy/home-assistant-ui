@@ -16,17 +16,21 @@ class Vigicrue extends React.Component {
 
     return (
       <div className="flex items-center">
-        <div className="mr-1">
-          <Water className="w-8 h-8" />
+        <div className="mr-3 w-1/6">
+          <Water className="rounded-full bg-indigo-200 p-2 w-full" />
         </div>
-        <div className="mr-2">
-          <Circle className="w-4 h-4 text-green-400" />
-        </div>
-        <div>
-          {formatNumber(level)} m at {formatDateTime(date, {
-            hour: 'numeric',
-            minute: 'numeric',
-          })}
+        <div className="w-5/6">
+          <div>
+            {formatNumber(level)} m
+          </div>
+          <div className="text-sm">
+            {formatDateTime(date, {
+              month: 'numeric',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric',
+            })}
+          </div>
         </div>
       </div>
     )

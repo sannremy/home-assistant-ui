@@ -54,6 +54,12 @@ const receiveSuccessResult = (result) => {
         && entities.light.includes(result[i].entity_id)
       ) {
         dispatch(updateLight(result[i]))
+      } else if (
+        // Timer
+        result[i].entity_id.indexOf('timer.') === 0
+        && entities.timer.includes(result[i].entity_id)
+      ) {
+        dispatch(updateTimer(result[i]))
       } else {
         // Not supported entities
         dispatch(updateNotSupported(result[i]))
@@ -92,6 +98,13 @@ const updateLight = ({ state, attributes, entity_id }) => ({
 
 const updateClimate = ({ state, attributes, entity_id }) => ({
   type: 'UPDATE_CLIMATE',
+  id: entity_id,
+  state,
+  attributes,
+})
+
+const updateTimer = ({ state, attributes, entity_id }) => ({
+  type: 'UPDATE_TIMER',
   id: entity_id,
   state,
   attributes,
@@ -185,6 +198,20 @@ export const setThermostatTemperature = ({ entity_id, temperature }) => {
     service_data: {
       entity_id,
       temperature,
+    },
+  }
+
+  return callService(message)
+}
+
+export const switchTimer = ({ entity_id, action }) => {
+
+  const message = {
+    type: 'call_service',
+    domain: 'timer',
+    service: action, // start, cancel
+    service_data: {
+      entity_id: entity_id,
     },
   }
 

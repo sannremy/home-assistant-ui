@@ -4,6 +4,7 @@ import SwitchPlug from './switch-plug'
 import Climate from './climate'
 import Light from './light'
 import Sensor from './sensor'
+import Timer from './timer'
 import Weather from './weather'
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   Climate,
   Light,
   Sensor,
+  Timer,
   Weather,
 })

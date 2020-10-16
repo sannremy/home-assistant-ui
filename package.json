@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NODE_ENV=production next build && next export",
     "start": "next start"
   },
   "dependencies": {
     "@styled-icons/boxicons-regular": "^10.0.0",
     "@styled-icons/boxicons-solid": "^10.18.0",
-    "next": "^9.4.4",
+    "next": "^9.5.4",
     "react": "^16.13.1",
+    "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",

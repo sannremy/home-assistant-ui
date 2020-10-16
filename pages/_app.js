@@ -1,6 +1,8 @@
 import 'typeface-montserrat'
 import 'typeface-patua-one'
+
 import '../styles.css'
+import 'react-circular-progressbar/dist/styles.css'
 
 import { Provider } from 'react-redux'
 import { init, getStates } from '../lib/ha-websocket-api'

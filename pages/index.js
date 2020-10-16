@@ -1,17 +1,18 @@
 import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
+import homeConfig from '../home-config.json'
+
 import Weather from '../components/weather'
 import DateTime from '../components/date-time'
 import Thermostat from '../components/thermostat'
 import Travel from '../components/travel'
 import WeatherForecast from '../components/weather-forecast'
 import AreaSensor from '../components/area-sensor'
-import homeConfig from '../home-config.json'
 import SwitchPlug from '../components/switch-plug'
 import SwitchLight from '../components/switch-light'
-import { formatDateTime } from '../lib/text'
 import Vigicrue from '../components/vigicrue'
+import Timer from '../components/timer'
 
 let interval = null
 
@@ -75,16 +76,8 @@ class Home extends React.Component {
       light,
       switchPlug,
       weather,
+      timer,
     } = this.props
-
-    // Gust angle
-    let gustAngle = null
-    if (sensor.anemometer && sensor.anemometer.hasOwnProperty('gust_angle')) {
-      const angleExtracted = sensor.anemometer.gust_angle.match(/\d+/)
-      if (angleExtracted.length) {
-        gustAngle = parseInt(angleExtracted[0], 10)
-      }
-    }
 
     // Latest vigicrue
     let vigicrueHydro = null
@@ -172,6 +165,13 @@ class Home extends React.Component {
                   </div>
                 ))}
               </div>
+              <div className="flex flex-wrap -mx-3">
+                {Object.entries(timer).map(([key, item], index) => (
+                  <div key={`timer-${item.name}-${item.state}`} className="w-auto mt-4 mr-4">
+                    <Timer {...item} />
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="w-3/12 px-3">
               <div>
@@ -216,6 +216,7 @@ const mapStateToProps = state => {
     light: state.Light,
     switchPlug: state.SwitchPlug,
     weather: state.Weather,
+    timer: state.Timer,
   }
 }
 
