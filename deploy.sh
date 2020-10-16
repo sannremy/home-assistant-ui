@@ -12,6 +12,5 @@ lftp -u $HA_FTP_USERNAME,$HA_FTP_PASSWORD $HA_FTP_HOST << EOF
 mirror -R out/ /config/www
 bye
 EOF
-fi
 
 echo "Done."
