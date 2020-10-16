@@ -97,8 +97,23 @@ class Home extends React.Component {
         <Head>
           <title>{title}</title>
           <meta name="title" content={title} />
+          <meta name="description" content="Best Home Assistant UI" />
+          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover" />
 
-          <link rel="icon" href="/favicon.ico" />
+          <meta name="application-name" content="Home Assistant UI" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+          <meta name="apple-mobile-web-app-title" content="Home Assistant UI" />
+          <meta name="format-detection" content="telephone=no" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <meta name="theme-color" content="#000000" />
+
+          <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+          <link rel="manifest" href="/icons/manifest.json" />
+          <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5" />
+          <link rel="shortcut icon" href="/favicon.ico" />
         </Head>
 
         <main className="h-full px-6 py-6">
