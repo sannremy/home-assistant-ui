@@ -11,7 +11,7 @@ module.exports = withPWA({
   basePath: isProd ? '/local' : '',
   trailingSlash: true,
   env: {
-    haWebsocketAPI: process.env.HA_WEBSOCKET_API,
+    haUrl: process.env.HA_URL,
     haAccessToken: process.env.HA_ACCESS_TOKEN,
     locale: process.env.LOCALE,
     timeZone: process.env.TIME_ZONE,

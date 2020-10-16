@@ -199,7 +199,7 @@ class Home extends React.Component {
                     />
                   </div>
                 ))}
-                {sensor.transilien && sensor.transilien.transilien_search && sensor.transilien.transilien_search.nextTrainsList.slice(0, 2).map((item, index) => (
+                {sensor.transilien && sensor.transilien.transilien_search && sensor.transilien.transilien_search.nextTrainsList && sensor.transilien.transilien_search.nextTrainsList.slice(0, 2).map((item, index) => (
                   <div key={index} className="my-4">
                     <Travel
                       mode="train"

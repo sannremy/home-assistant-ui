@@ -1,11 +1,11 @@
-import { sendMessage } from '../lib/ha-websocket-api'
+import { connection, callService } from '../lib/ha-websocket-api'
 import homeConfig from '../home-config.json'
 
-const entities = homeConfig.entities
+const configEntities = homeConfig.entities
 
 const sensorEntity = {}
-for (let i = 0; i < entities.sensor.length; i++) {
-  const sensor = entities.sensor[i];
+for (let i = 0; i < configEntities.sensor.length; i++) {
+  const sensor = configEntities.sensor[i];
   sensor.entities.map(entity => {
     sensorEntity[entity] = {...sensor}
   })
@@ -14,55 +14,52 @@ for (let i = 0; i < entities.sensor.length; i++) {
 /**
  * Receive HA result (success or error)
  */
-const receiveSuccessResult = (result) => {
-  if (result === null) {
-    return {
-      type: 'RECEIVE_RESULT_NULL',
-    }
-  }
-
+export const receiveEntities = (entities) => {
   return dispatch => {
-    for (let i = 0; i < result.length; i++) {
-      if (
-        // Sensor
-        result[i].entity_id.indexOf('sensor.') === 0
-        && sensorEntity[result[i].entity_id]
-      ) {
-        const entityConfig = sensorEntity[result[i].entity_id]
-        dispatch(updateSensor(result[i], entityConfig))
-      } else if (
-        // Weather
-        result[i].entity_id.indexOf('weather.') === 0
-        && entities.weather.includes(result[i].entity_id)
-      ) {
-        dispatch(updateWeather(result[i]))
-      } else if (
-        // Switch Plug
-        result[i].entity_id.indexOf('switch.') === 0
-        && entities.switchPlug.includes(result[i].entity_id)
-      ) {
-        dispatch(updateSwitchPlug(result[i]))
-      } else if (
-        // Climate
-        result[i].entity_id.indexOf('climate.') === 0
-        && entities.climate.includes(result[i].entity_id)
-      ) {
-        dispatch(updateClimate(result[i]))
-      } else if (
-        // Light
-        result[i].entity_id.indexOf('light.') === 0
-        && entities.light.includes(result[i].entity_id)
-      ) {
-        dispatch(updateLight(result[i]))
-      } else if (
-        // Timer
-        result[i].entity_id.indexOf('timer.') === 0
-        && entities.timer.includes(result[i].entity_id)
-      ) {
-        dispatch(updateTimer(result[i]))
-      } else {
-        // Not supported entities
-        dispatch(updateNotSupported(result[i]))
+    for (const entityId in entities) {
+      if (entities.hasOwnProperty(entityId)) {
+        const entity = entities[entityId];
+        if (
+          // Sensor
+          entityId.indexOf('sensor.') === 0
+          && sensorEntity[entityId]
+        ) {
+          const entityConfig = sensorEntity[entityId]
+          dispatch(updateSensor(entity, entityConfig))
+        } else if (
+          // Weather
+          entityId.indexOf('weather.') === 0
+          && configEntities.weather.includes(entityId)
+        ) {
+          dispatch(updateWeather(entity))
+        } else if (
+          // Switch Plug
+          entityId.indexOf('switch.') === 0
+          && configEntities.switchPlug.includes(entityId)
+        ) {
+          dispatch(updateSwitchPlug(entity))
+        } else if (
+          // Climate
+          entityId.indexOf('climate.') === 0
+          && configEntities.climate.includes(entityId)
+        ) {
+          dispatch(updateClimate(entity))
+        } else if (
+          // Light
+          entityId.indexOf('light.') === 0
+          && configEntities.light.includes(entityId)
+        ) {
+          dispatch(updateLight(entity))
+        } else if (
+          // Timer
+          entityId.indexOf('timer.') === 0
+          && configEntities.timer.includes(entityId)
+        ) {
+          dispatch(updateTimer(entity))
+        } else {
+          // Not supported in config entities
+          dispatch(updateNotSupported(entity))
+        }
       }
     }
   }
@@ -111,50 +108,24 @@ const updateTimer = ({ state, attributes, entity_id }) => ({
 })
 
 const updateNotSupported = ({ entity_id }) => {
-  console.log('UPDATE_NOT_SUPPORTED:', entity_id)
+  console.info('UPDATE_NOT_SUPPORTED:', entity_id)
   return {
     type: 'UPDATE_NOT_SUPPORTED',
     id: entity_id,
   }
 }
 
-const receiveErrorResult = (error) => ({
-  type: 'RECEIVE_ERROR_RESULT',
-  error,
-})
+/**
+ * Call services
+ */
 
-export const receiveResult = (response) => {
-  return dispatch => {
-    if (response.success) {
-      return dispatch(receiveSuccessResult(response.result))
-    } else {
-      return dispatch(receiveErrorResult(response.error))
-    }
-  }
-}
-
-export const receiveEvent = (response) => {
-  return dispatch => {
-    if (response.event.event_type === 'state_changed') {
-      return dispatch(receiveStateChangedEvent(response.event))
-    }
-  }
-}
-
-const receiveStateChangedEvent = (stateChangedEvent) => {
-  return dispatch => {
-    dispatch(receiveSuccessResult([stateChangedEvent.data.new_state]))
-  }
-}
-
-const callService = (message) => {
-  let success = false
+const _callService = (message) => {
+  let success = true
 
   try {
-    sendMessage(message)
-    success = true
+    callService(connection, message.domain, message.service, message.service_data)
   } catch (err) {
-    console.log('Cannot call service, not connected or authenticated')
+    success = false
   }
 
   return {
@@ -166,33 +137,30 @@ const callService = (message) => {
 
 export const switchLight = ({ entity_id, enabled }) => {
   const message = {
-    type: 'call_service',
     domain: 'light',
     service: enabled ? 'turn_on' : 'turn_off',
     service_data: {
-      entity_id: entity_id,
+      entity_id,
     },
   }
 
-  return callService(message)
+  return _callService(message)
 }
 
 export const switchPlug = ({ entity_id, enabled }) => {
   const message = {
-    type: 'call_service',
     domain: 'switch',
     service: enabled ? 'turn_on' : 'turn_off',
     service_data: {
-      entity_id: entity_id,
+      entity_id,
     },
   }
 
-  return callService(message)
+  return _callService(message)
 }
 
 export const setThermostatTemperature = ({ entity_id, temperature }) => {
   const message = {
-    type: 'call_service',
     domain: 'climate',
     service: 'set_temperature',
     service_data: {
@@ -201,13 +169,12 @@ export const setThermostatTemperature = ({ entity_id, temperature }) => {
     },
   }
 
-  return callService(message)
+  return _callService(message)
 }
 
 export const switchTimer = ({ entity_id, action }) => {
 
   const message = {
-    type: 'call_service',
     domain: 'timer',
     service: action, // start, cancel
     service_data: {
@@ -215,5 +182,5 @@ export const switchTimer = ({ entity_id, action }) => {
     },
   }
 
-  return callService(message)
+  return _callService(message)
 }

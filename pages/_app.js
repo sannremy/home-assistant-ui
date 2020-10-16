@@ -5,7 +5,7 @@ import '../styles.css'
 import 'react-circular-progressbar/dist/styles.css'
 
 import { Provider } from 'react-redux'
-import { init, getStates } from '../lib/ha-websocket-api'
+import { init } from '../lib/ha-websocket-api'
 import { store } from '../lib/store'
 
 if (process.browser) {
