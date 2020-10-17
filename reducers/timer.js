@@ -1,5 +1,7 @@
 import homeConfig from '../home-config.json'
+import { hasSameValues } from '../lib/object'
 
+let prevState = {}
 const Timer = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_TIMER':
@@ -10,7 +12,7 @@ const Timer = (state = {}, action) => {
         name = timerConfig.name
       }
 
-      return {
+      const newState = {
         ...state,
         [id]: {
           entityId: action.id,
@@ -20,6 +22,11 @@ const Timer = (state = {}, action) => {
           name,
         },
       }
+
+      const s = hasSameValues(prevState, newState) ? state : newState
+      prevState = s
+
+      return s
     default:
       return state
   }

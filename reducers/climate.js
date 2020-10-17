@@ -1,7 +1,10 @@
+import { hasSameValues } from "../lib/object"
+
+let prevState = {}
 const Climate = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_CLIMATE':
-      return {
+      const newState = {
         ...state,
         entityId: action.id,
         currentTemperature: action.attributes.current_temperature,
@@ -13,6 +16,11 @@ const Climate = (state = {}, action) => {
         batteryPercent: action.attributes.battery_level,
         presetMode: action.attributes.preset_mode,
       }
+
+      const s = hasSameValues(prevState, newState) ? state : newState
+      prevState = s
+
+      return s
     default:
       return state
   }

@@ -1,5 +1,7 @@
 import homeConfig from '../home-config.json'
+import { hasSameValues } from '../lib/object'
 
+let prevState = {}
 const Light = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_LIGHT':
@@ -9,7 +11,7 @@ const Light = (state = {}, action) => {
         name = lightConfig.name
       }
 
-      return {
+      const newState = {
         ...state,
         [action.id]: {
           entityId: action.id,
@@ -23,6 +25,11 @@ const Light = (state = {}, action) => {
           effect: action.attributes.effect,
         },
       }
+
+      const s = hasSameValues(prevState, newState) ? state : newState
+      prevState = s
+
+      return s
     default:
       return state
   }

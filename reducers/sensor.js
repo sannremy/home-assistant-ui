@@ -1,3 +1,6 @@
+import { hasSameValues } from "../lib/object"
+
+let prevState = {}
 const Sensor = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_SENSOR':
@@ -39,7 +42,10 @@ const Sensor = (state = {}, action) => {
         newState[moduleName][metric]['id'] = metric;
       }
 
-      return newState
+      const s = hasSameValues(prevState, newState) ? state : newState
+      prevState = s
+
+      return s
     default:
       return state
   }

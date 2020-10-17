@@ -1,7 +1,10 @@
+import { hasSameValues } from "../lib/object"
+
+let prevState = {}
 const Weather = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_WEATHER':
-      return {
+      const newState = {
         ...state,
         condition: action.state,
         temperature: action.attributes.temperature,
@@ -17,6 +20,11 @@ const Weather = (state = {}, action) => {
           return item
         }),
       }
+
+      const s = hasSameValues(prevState, newState) ? state : newState
+      prevState = s
+
+      return s
     default:
       return state
   }

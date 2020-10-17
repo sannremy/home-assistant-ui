@@ -1,5 +1,7 @@
 import homeConfig from '../home-config.json'
+import { hasSameValues } from '../lib/object'
 
+let prevState = {}
 const SwitchPlug = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_SWITCH_PLUG':
@@ -9,7 +11,7 @@ const SwitchPlug = (state = {}, action) => {
         name = switchPlugConfig.name
       }
 
-      return {
+      const newState = {
         ...state,
         [action.id]: {
           entityId: action.id,
@@ -17,6 +19,11 @@ const SwitchPlug = (state = {}, action) => {
           name,
         },
       }
+
+      const s = hasSameValues(prevState, newState) ? state : newState
+      prevState = s
+
+      return s
     default:
       return state
   }
