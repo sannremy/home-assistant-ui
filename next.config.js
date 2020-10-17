@@ -11,6 +11,7 @@ module.exports = withPWA({
   basePath: isProd ? '/local' : '',
   trailingSlash: true,
   env: {
+    isProd,
     haUrl: process.env.HA_URL,
     haAccessToken: process.env.HA_ACCESS_TOKEN,
     locale: process.env.LOCALE,

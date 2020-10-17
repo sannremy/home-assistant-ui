@@ -91,6 +91,7 @@ class Home extends React.Component {
     }
 
     const title = `Home`
+    const prefixPublicFolder = process.env.isProd ? '/local' : ''
 
     return (
       <div className="h-full text-indigo-900">
@@ -108,12 +109,12 @@ class Home extends React.Component {
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="theme-color" content="#ffffff" />
 
-          <link rel="apple-touch-icon" sizes="180x180" href="/local/apple-touch-icon.png" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/local/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/local/favicon-16x16.png" />
-          <link rel="manifest" href="/local/manifest.json" />
-          <link rel="mask-icon" href="/local/safari-pinned-tab.svg" color="#5bbad5" />
-          <link rel="shortcut icon" href="/local/favicon.ico" />
+          <link rel="apple-touch-icon" sizes="180x180" href={`${prefixPublicFolder}/apple-touch-icon.png`} />
+          <link rel="icon" type="image/png" sizes="32x32" href={`${prefixPublicFolder}/favicon-32x32.png`} />
+          <link rel="icon" type="image/png" sizes="16x16" href={`${prefixPublicFolder}/favicon-16x16.png`} />
+          <link rel="manifest" href={`${prefixPublicFolder}/manifest.json`} />
+          <link rel="mask-icon" href={`${prefixPublicFolder}/safari-pinned-tab.svg" color="#5bbad5`} />
+          <link rel="shortcut icon" href={`${prefixPublicFolder}/favicon.ico`} />
         </Head>
 
         <main className="h-full px-6 py-6">
