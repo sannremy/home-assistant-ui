@@ -8,9 +8,9 @@ class AppDocument extends Document {
 
   render() {
     return (
-      <Html lang={process.env.locale.substring(0, 2)} className="h-full">
+      <Html lang={process.env.locale.substring(0, 2)} className="overflow-hidden h-full">
         <Head />
-        <body className="bg-teal-100 border-indigo-300 h-full">
+        <body className="bg-teal-100 border-indigo-300 overflow-auto h-full">
           <Main />
           <NextScript />
         </body>
