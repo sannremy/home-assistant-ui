@@ -10,7 +10,7 @@ class AppDocument extends Document {
     return (
       <Html lang={process.env.locale.substring(0, 2)} className="overflow-hidden h-full">
         <Head />
-        <body className="bg-teal-100 border-indigo-300 overflow-auto h-full" style={{
+        <body className="bg-indigo-100 border-indigo-300 overflow-auto h-full" style={{
           borderTopWidth: process.env.isProd ? '20px' : 0,
         }}>
           <Main />
