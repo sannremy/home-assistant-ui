@@ -128,14 +128,14 @@ class Timer extends React.Component {
       duration,
     } = this.state
 
-    let text = name
-    let icon = <Stopwatch className="w-6 h-6" />
+    let text = formatSecondsToHHMMSS(duration)
+    let icon = <Stopwatch className="w-full h-full" />
     let classNames = []
     if (status === 'active') {
       classNames.push('bg-yellow-400')
       const percentageRemaining = Math.round((duration - countdown) / duration * 100)
       icon = <CircularProgressbar
-        className="w-6 h-6"
+        className="w-full h-full"
         value={percentageRemaining}
         strokeWidth={10}
         styles={buildStyles({
@@ -174,12 +174,11 @@ class Timer extends React.Component {
         onMouseUp={this.handleAnimationEnd}
         onMouseLeave={this.handleAnimationEnd}
         onClick={this.handleClick}
-        className={`${classNames.join(' ')} flex items-center px-6 py-3 shadow-lg transform rounded-full cursor-pointer transition duration-150 ease-in-out`}
+        className={`${classNames.join(' ')} w-40 px-6 py-4 transform rounded-lg cursor-pointer transition duration-150 ease-in-out`}
       >
-        <div className="w-6 h-6 mr-2">
-          {icon}
-        </div>
-        <div className="w-auto">{text}</div>
+        <div className="-ml-2 w-10 h-10">{icon}</div>
+        <div className="mt-8 font-semibold">{name}</div>
+        <div className="mt-4 font-light">{text}</div>
       </div>
     )
   }

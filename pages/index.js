@@ -3,6 +3,10 @@ import Head from 'next/head'
 import { connect } from 'react-redux'
 import Navbar from '../components/navbar'
 import HomeView from '../views/home'
+import LightsView from '../views/lights'
+import PlugsView from '../views/plugs'
+import TravelsView from '../views/travels'
+import TimersView from '../views/timers'
 
 class Index extends React.Component {
   constructor(props) {
@@ -42,6 +46,10 @@ class Index extends React.Component {
         </Head>
         <main className="h-full px-6 py-6">
           {navbar.view === 'home' && (<HomeView />)}
+          {navbar.view === 'lights' && (<LightsView />)}
+          {navbar.view === 'plugs' && (<PlugsView />)}
+          {navbar.view === 'travels' && (<TravelsView />)}
+          {navbar.view === 'timers' && (<TimersView />)}
         </main>
         <Navbar {...navbar} />
       </div>

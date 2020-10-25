@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import { connect } from 'react-redux'
 import homeConfig from '../home-config.json'
 
@@ -13,7 +12,6 @@ import SwitchPlug from '../components/switch-plug'
 import SwitchLight from '../components/switch-light'
 import Vigicrue from '../components/vigicrue'
 import Timer from '../components/timer'
-import { Bulb, Calendar, Car, Home, TimeFive } from '@styled-icons/boxicons-regular'
 
 let interval = null
 
@@ -113,23 +111,7 @@ class HomeView extends React.Component {
           </div>
           <div className="w-6/12 px-3">
             <div className="flex flex-wrap -mx-3">
-              {Object.entries(light).map(([key, item], index) => (
-                <div key={`light-${item.name}-${item.state}`} className="w-auto mr-4">
-                  <SwitchLight {...item} />
-                </div>
-              ))}
-              {Object.entries(switchPlug).map(([key, item], index) => (
-                <div key={`plug-${item.name}-${item.state}`} className="w-auto mt-4 mr-4">
-                  <SwitchPlug {...item} />
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-wrap -mx-3">
-              {Object.entries(timer).map(([key, item], index) => (
-                <div key={`timer-${item.name}-${item.state}`} className="w-auto mt-4 mr-4">
-                  <Timer {...item} />
-                </div>
-              ))}
+            ll
             </div>
           </div>
           <div className="w-3/12 px-3">

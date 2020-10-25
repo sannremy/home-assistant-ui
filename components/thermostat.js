@@ -93,7 +93,7 @@ class Thermostat extends React.Component {
     return (
       <div className="flex items-center">
         <div className="font-semibold bg-indigo-200 rounded-full p-2 mr-2">{formatTemperature(currentTemperature, 1)}</div>
-        <div className={`${heatingClass} w-40 flex items-center justify-between px-4 py-3 rounded-full shadow-lg`}>
+        <div className={`${heatingClass} w-40 flex items-center justify-between px-4 py-3 rounded-lg`}>
           <MinusCircle className={`w-6 h-6 transform transition duration-150 ease-in-out ${enableMinus ? enableStyle : disableStyle}`} onClick={this.decreaseHeatingTemperature} />
           <div className="font-semibold">{formatTemperature(heatingTemperature, 1)}</div>
           <PlusCircle className={`w-6 h-6 transform transition duration-150 ease-in-out ${enablePlus ? enableStyle : disableStyle}`} onClick={this.increaseHeatingTemperature} />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bulb, Calendar, Car, Home, TimeFive } from '@styled-icons/boxicons-regular'
+import { Bulb, Car, Home, Plug, TimeFive } from '@styled-icons/boxicons-regular'
 import { changeView } from '../actions'
 import { dispatch } from '../lib/store'
 
@@ -42,7 +42,7 @@ class Navbar extends React.Component {
       lights: commonSelectedClassNames,
       travels: commonSelectedClassNames,
       timers: commonSelectedClassNames,
-      calendar: commonSelectedClassNames,
+      plugs: commonSelectedClassNames,
     }
 
     selectedClassNames[currentView] = 'border-indigo-200 bg-indigo-100'
@@ -61,6 +61,11 @@ class Navbar extends React.Component {
             </a>
           </li>
           <li>
+            <a href="#" onClick={() => this.handleClick('plugs')} className={commonClassNames + ' ' + selectedClassNames['plugs']}>
+              <Plug className="h-full" />
+            </a>
+          </li>
+          <li>
             <a href="#" onClick={() => this.handleClick('travels')} className={commonClassNames + ' ' + selectedClassNames['travels']}>
               <Car className="h-full" />
             </a>
@@ -68,11 +73,6 @@ class Navbar extends React.Component {
           <li>
             <a href="#" onClick={() => this.handleClick('timers')} className={commonClassNames + ' ' + selectedClassNames['timers']}>
               <TimeFive className="h-full" />
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={() => this.handleClick('calendar')} className={commonClassNames + ' ' + selectedClassNames['calendar']}>
-              <Calendar className="h-full" />
             </a>
           </li>
         </ul>

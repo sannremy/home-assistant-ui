@@ -17,12 +17,12 @@ const Light = (state = {}, action) => {
           entityId: action.id,
           state: action.state,
           name,
-          minMireds: action.attributes.min_mireds,
-          maxMireds: action.attributes.max_mireds,
           effectList: action.attributes.effect_list,
           brightness: action.attributes.brightness,
           colorTemperature: action.attributes.color_temp,
           effect: action.attributes.effect,
+          effectList: action.attributes.effect_list,
+          rgbColor: action.attributes.rgb_color,
         },
       }
 

@@ -16,6 +16,8 @@ class SwitchGeneric extends React.Component {
     this.handleClick = this.handleClick.bind(this)
     this.handleAnimationStart = this.handleAnimationStart.bind(this)
     this.handleAnimationEnd = this.handleAnimationEnd.bind(this)
+
+    this.displayExtraInfo = this.displayExtraInfo.bind(this)
   }
 
   componentDidMount() {
@@ -55,6 +57,10 @@ class SwitchGeneric extends React.Component {
     })
   }
 
+  displayExtraInfo() {
+    return (<></>)
+  }
+
   render() {
     const {
       name,
@@ -84,9 +90,11 @@ class SwitchGeneric extends React.Component {
         onMouseUp={this.handleAnimationEnd}
         onMouseLeave={this.handleAnimationEnd}
         onClick={this.handleClick}
-        className={`${classNames.join(' ')} flex items-center px-6 py-3 shadow-lg transform rounded-full cursor-pointer transition duration-150 ease-in-out`}>
-        <div className="w-6 mr-2">{this.icon}</div>
-        <div className="">{name}</div>
+        className={`${classNames.join(' ')} w-32 px-6 py-4 transform rounded-lg cursor-pointer transition duration-150 ease-in-out`}
+      >
+        <div className="-ml-2 w-10 h-10">{this.icon}</div>
+        <div className="mt-8 font-semibold">{name}</div>
+        <div className="mt-4 font-light">{this.displayExtraInfo()}</div>
       </div>
     )
   }
