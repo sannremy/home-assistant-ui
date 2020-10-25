@@ -3,7 +3,6 @@ const Navbar = (state = {
 }, action) => {
   switch (action.type) {
     case 'CHANGE_VIEW':
-      console.log(action)
       return {
         ...state,
         view: action.view,

@@ -2,6 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
 import Navbar from '../components/navbar'
+import HomeView from '../views/home'
 
 class Index extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class Index extends React.Component {
           <link rel="shortcut icon" href={`${prefixPublicFolder}/favicon.ico`} />
         </Head>
         <main className="h-full px-6 py-6">
-          {navbar.view}
+          {navbar.view === 'home' && (<HomeView />)}
         </main>
         <Navbar {...navbar} />
       </div>
