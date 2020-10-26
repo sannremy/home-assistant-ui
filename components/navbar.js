@@ -21,6 +21,14 @@ class Navbar extends React.Component {
     }
 
     this.handleClick = this.handleClick.bind(this)
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', () => {
+        this.setState({
+          cursor: this.iconRefs[this.state.currentView].current.offsetLeft,
+        })
+      })
+    }
   }
 
   componentDidMount() {
@@ -46,7 +54,7 @@ class Navbar extends React.Component {
       cursor,
     } = this.state
 
-    const commonClassNames = 'relative block text-center px-8 py-4 h-16 z-10'
+    const commonClassNames = 'relative block text-center px-8 py-4 h-16 z-10 focus:outline-none'
 
     return (
       <div className="absolute bottom-0 w-full bg-white border-t border-indigo-200">
