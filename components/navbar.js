@@ -5,7 +5,7 @@ import { dispatch } from '../lib/store'
 
 class Navbar extends React.Component {
   state = {
-    currentView: null,
+    currentView: 'home',
     cursor: null,
   }
 
@@ -21,14 +21,6 @@ class Navbar extends React.Component {
     }
 
     this.handleClick = this.handleClick.bind(this)
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', () => {
-        this.setState({
-          cursor: this.iconRefs[this.state.currentView].current.offsetLeft,
-        })
-      })
-    }
   }
 
   componentDidMount() {

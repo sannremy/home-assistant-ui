@@ -9,12 +9,14 @@ class TimersView extends React.Component {
     } = this.props
 
     return (
-      <div className="flex flex-wrap">
-        {Object.entries(timer).map(([key, item], index) => (
-          <div key={`timer-${item.name}-${item.state}`} className="w-auto mt-4 mr-4">
-            <Timer {...item} />
-          </div>
-        ))}
+      <div>
+        <div className="flex flex-wrap">
+          {Object.entries(timer).map(([key, item], index) => (
+            <div key={`timer-${item.name}-${item.state}`} className="w-auto mt-4 mr-4">
+              <Timer {...item} />
+            </div>
+          ))}
+        </div>
       </div>
     )
   }

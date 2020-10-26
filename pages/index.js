@@ -11,6 +11,16 @@ import TimersView from '../views/timers'
 class Index extends React.Component {
   constructor(props) {
     super(props)
+
+    this.views = {
+      home: <HomeView />,
+      lights: <LightsView />,
+      plugs: <PlugsView />,
+      travels: <TravelsView />,
+      timers: <TimersView />,
+    }
+
+    this.viewIndexes = Object.keys(this.views)
   }
 
   render() {
@@ -22,7 +32,7 @@ class Index extends React.Component {
     const prefixPublicFolder = process.env.isProd ? '/local' : ''
 
     return (
-      <div className="relative h-full text-indigo-900">
+      <div className="relative text-indigo-900 overflow-hidden">
         <Head>
           <title>{title}</title>
           <meta name="title" content={title} />
@@ -44,12 +54,14 @@ class Index extends React.Component {
           <link rel="mask-icon" href={`${prefixPublicFolder}/safari-pinned-tab.svg" color="#5bbad5`} />
           <link rel="shortcut icon" href={`${prefixPublicFolder}/favicon.ico`} />
         </Head>
-        <main className="h-full px-6 py-6">
-          {navbar.view === 'home' && (<HomeView />)}
-          {navbar.view === 'lights' && (<LightsView />)}
-          {navbar.view === 'plugs' && (<PlugsView />)}
-          {navbar.view === 'travels' && (<TravelsView />)}
-          {navbar.view === 'timers' && (<TimersView />)}
+        <main className="relative w-screen h-screen transition-all duration-500 ease-in-out" style={{
+          left: `-${this.viewIndexes.indexOf(navbar.view) * 100}%`,
+        }}>
+          {Object.entries(this.views).map(([id, component], index) => (
+            <div className="absolute w-full px-6 py-6" style={{
+              left: `${index * 100}%`,
+            }}>{component}</div>
+          ))}
         </main>
         <Navbar {...navbar} />
       </div>

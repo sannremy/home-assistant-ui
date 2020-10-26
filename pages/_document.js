@@ -8,9 +8,9 @@ class AppDocument extends Document {
 
   render() {
     return (
-      <Html lang={process.env.locale.substring(0, 2)} className="overflow-hidden h-full">
+      <Html lang={process.env.locale.substring(0, 2)} className="overflow-hidden">
         <Head />
-        <body className="bg-indigo-100 border-indigo-300 overflow-auto h-full" style={{
+        <body className="bg-indigo-100 border-indigo-300 overflow-auto" style={{
           borderTopWidth: process.env.isProd ? '20px' : 0,
         }}>
           <Main />

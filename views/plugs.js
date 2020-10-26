@@ -9,12 +9,14 @@ class PlugsView extends React.Component {
     } = this.props
 
     return (
-      <div className="flex flex-wrap">
-        {Object.entries(switchPlug).map(([key, item], index) => (
-          <div key={`plug-${item.name}-${item.state}`} className="w-auto mt-4 mr-4">
-            <SwitchPlug {...item} />
-          </div>
-        ))}
+      <div>
+        <div className="flex flex-wrap">
+          {Object.entries(switchPlug).map(([key, item], index) => (
+            <div key={`plug-${item.name}-${item.state}`} className="w-auto mt-4 mr-4">
+              <SwitchPlug {...item} />
+            </div>
+          ))}
+        </div>
       </div>
     )
   }

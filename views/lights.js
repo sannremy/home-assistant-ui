@@ -9,12 +9,14 @@ class LightsView extends React.Component {
     } = this.props
 
     return (
-      <div className="flex flex-wrap">
-        {Object.entries(light).map(([key, item], index) => (
-          <div key={`light-${item.name}-${item.state}`} className="w-auto mr-4">
-            <SwitchLight {...item} />
-          </div>
-        ))}
+      <div>
+        <div className="flex flex-wrap">
+          {Object.entries(light).map(([key, item], index) => (
+            <div key={`light-${item.name}-${item.state}`} className="w-auto mr-4">
+              <SwitchLight {...item} />
+            </div>
+          ))}
+        </div>
       </div>
     )
   }

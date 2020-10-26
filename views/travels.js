@@ -10,24 +10,26 @@ class TravelsView extends React.Component {
     } = this.props
 
     return (
-      <div className="flex flex-wrap">
-        {sensor.googleTravelTime && Object.entries(sensor.googleTravelTime).map(([key, item], index) => (
-          <div key={index} className="my-4">
-            <Travel
-              config={homeConfig.travels[item.id]}
-              mode="car"
-              data={item}
-            />
-          </div>
-        ))}
-        {sensor.transilien && sensor.transilien.transilien_search && sensor.transilien.transilien_search.nextTrainsList && sensor.transilien.transilien_search.nextTrainsList.slice(0, 2).map((item, index) => (
-          <div key={index} className="my-4">
-            <Travel
-              mode="train"
-              data={item}
-            />
-          </div>
-        ))}
+      <div>
+        <div className="flex flex-wrap">
+          {sensor.googleTravelTime && Object.entries(sensor.googleTravelTime).map(([key, item], index) => (
+            <div key={index} className="my-4">
+              <Travel
+                config={homeConfig.travels[item.id]}
+                mode="car"
+                data={item}
+              />
+            </div>
+          ))}
+          {sensor.transilien && sensor.transilien.transilien_search && sensor.transilien.transilien_search.nextTrainsList && sensor.transilien.transilien_search.nextTrainsList.slice(0, 2).map((item, index) => (
+            <div key={index} className="my-4">
+              <Travel
+                mode="train"
+                data={item}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
