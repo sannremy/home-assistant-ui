@@ -10,8 +10,6 @@ import WeatherForecast from '../components/weather-forecast'
 import AreaSensor from '../components/area-sensor'
 import Vigicrue from '../components/vigicrue'
 
-import Chart from 'chart.js'
-
 let interval = null
 
 class HomeView extends React.Component {
@@ -29,69 +27,6 @@ class HomeView extends React.Component {
         currentDate: new Date()
       })
     }, 1000)
-
-    const {
-      sensor,
-    } = this.props
-
-    let vigicrueHydro = []
-    if (sensor.vigicrue && sensor.vigicrue.hasOwnProperty('vigicrue_hydro_observation')) {
-      const hydroLength = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro.length
-      vigicrueHydro = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro.slice(hydroLength - 50, hydroLength)
-    }
-
-    var ctx = document.getElementById('vigicrueChart');
-    var vigicrueChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: vigicrueHydro.map(item => {
-          const date = new Date(item.DtObsHydro)
-          return `${('' + date.getHours()).padStart(2, '0')}:${('' + date.getMinutes()).padStart(2, '0')}`
-        }),
-        datasets: [{
-          label:  "Niveau d'eau",
-          data: vigicrueHydro.map(item => item.ResObsHydro),
-          borderColor: "rgb(195, 218, 254)",
-          backgroundColor: "rgba(195, 218, 254, 0.3)",
-        }]
-      },
-      options: {
-        elements: {
-          point: {
-            radius: 0,
-          },
-        },
-        legend: {
-          display: false,
-        },
-        tooltips: {
-          enabled: false,
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              maxRotation: 0,
-              fontFamily: 'Montserrat, sans-serif',
-              callback: function(value, index, values) {
-                return index % 2 === 2 ? '' : value
-              }
-            },
-            gridLines: {
-              display: false
-            }
-          }],
-          yAxes: [{
-            ticks: {
-              maxRotation: 0,
-              fontFamily: 'Montserrat, sans-serif',
-            },
-            gridLines: {
-              display: false
-            }
-          }]
-        },
-      }
-    });
   }
 
   componentWillUnmount() {
@@ -105,16 +40,11 @@ class HomeView extends React.Component {
       weather,
     } = this.props
 
-    // Latest vigicrue
-    // let vigicrueHydro = null
-    // if (sensor.vigicrue && sensor.vigicrue.hasOwnProperty('vigicrue_hydro_observation')) {
-    //   const hydroLength = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro.length
-    //   vigicrueHydro = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro[hydroLength - 1]
-    //   vigicrueHydro = {
-    //     date: new Date(vigicrueHydro.DtObsHydro),
-    //     level: vigicrueHydro.ResObsHydro,
-    //   }
-    // }
+    let vigicrueHydro = []
+    if (sensor.vigicrue && sensor.vigicrue.hasOwnProperty('vigicrue_hydro_observation')) {
+      const hydroLength = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro.length
+      vigicrueHydro = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro.slice(hydroLength - 50, hydroLength)
+    }
 
     return (
       <div>
@@ -170,7 +100,7 @@ class HomeView extends React.Component {
           </div>
           <div className="w-6/12 px-3">
             <div className="flex flex-wrap -mx-3">
-                <canvas id="vigicrueChart" />
+
             </div>
           </div>
           <div className="w-3/12 px-3">
@@ -194,13 +124,13 @@ class HomeView extends React.Component {
               ))}
             </div>
 
-            {/* <div>
-              {vigicrueHydro && (
-                <div className="py-2 last:border-0 border-b border-white">
-                  <Vigicrue level={vigicrueHydro.level} date={vigicrueHydro.date} />
+            <div>
+              {vigicrueHydro.length && (
+                <div className="py-2">
+                  <Vigicrue data={vigicrueHydro} />
                 </div>
               )}
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
