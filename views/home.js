@@ -5,7 +5,6 @@ import homeConfig from '../home-config.json'
 import Weather from '../components/weather'
 import DateTime from '../components/date-time'
 import Thermostat from '../components/thermostat'
-import Travel from '../components/travel'
 import WeatherForecast from '../components/weather-forecast'
 import AreaSensor from '../components/area-sensor'
 import Vigicrue from '../components/vigicrue'
@@ -105,26 +104,6 @@ class HomeView extends React.Component {
           </div>
           <div className="w-3/12 px-3">
             <div>
-              {sensor.googleTravelTime && Object.entries(sensor.googleTravelTime).map(([key, item], index) => (
-                <div key={index} className="my-4">
-                  <Travel
-                    config={homeConfig.travels[item.id]}
-                    mode="car"
-                    data={item}
-                  />
-                </div>
-              ))}
-              {sensor.transilien && sensor.transilien.transilien_search && sensor.transilien.transilien_search.nextTrainsList && sensor.transilien.transilien_search.nextTrainsList.slice(0, 2).map((item, index) => (
-                <div key={index} className="my-4">
-                  <Travel
-                    mode="train"
-                    data={item}
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div>
               {vigicrueHydro.length && (
                 <div className="py-2">
                   <Vigicrue data={vigicrueHydro} />
@@ -142,10 +121,7 @@ const mapStateToProps = state => {
   return {
     climate: state.Climate,
     sensor: state.Sensor,
-    light: state.Light,
-    switchPlug: state.SwitchPlug,
     weather: state.Weather,
-    timer: state.Timer,
   }
 }
 
