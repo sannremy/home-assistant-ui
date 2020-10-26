@@ -72,6 +72,9 @@ class HomeView extends React.Component {
             ticks: {
               maxRotation: 0,
               fontFamily: 'Montserrat, sans-serif',
+              callback: function(value, index, values) {
+                return index % 2 === 2 ? '' : value
+              }
             },
             gridLines: {
               display: false
