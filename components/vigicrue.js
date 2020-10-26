@@ -1,6 +1,5 @@
 import React from 'react'
 import { formatDateTime, formatNumber } from '../lib/text'
-import { Circle } from '@styled-icons/boxicons-solid'
 import { Water } from '@styled-icons/boxicons-regular'
 import Chart from 'chart.js'
 
@@ -24,7 +23,6 @@ class Vigicrue extends React.Component {
           return `${('' + date.getHours()).padStart(2, '0')}:${('' + date.getMinutes()).padStart(2, '0')}`
         }),
         datasets: [{
-          label:  "Niveau d'eau",
           data: data.map(item => item.ResObsHydro),
           borderColor: "rgb(195, 218, 254)",
           backgroundColor: "rgba(195, 218, 254, 0.3)",
@@ -32,6 +30,7 @@ class Vigicrue extends React.Component {
         }]
       },
       options: {
+        animation: false,
         elements: {
           point: false,
         },
@@ -47,6 +46,7 @@ class Vigicrue extends React.Component {
           }],
           yAxes: [{
             display: false,
+            stacked: true,
           }]
         },
       }
@@ -62,10 +62,19 @@ class Vigicrue extends React.Component {
     const lastData = data[length - 1]
 
     return (
-      <div className="relative">
-        <div className="absolute w-full p-2">
-          <div className="text-center">
-            <div className="text-lg font-semibold">{formatNumber(lastData.ResObsHydro)} m</div>
+      <div className="relative rounded-lg w-full h-32 overflow-hidden">
+        <canvas ref={this.chartCanvas} className="absolute w-full h-full bottom-0" />
+        <div className="absolute w-full bottom-0">
+          <div className="text-center mb-4">
+
+            <div className="flex items-center justify-center">
+              <div className="w-6 h-6 mr-1 mb-1">
+                <Water className="w-full h-full" />
+              </div>
+              <div className="font-semibold">
+                {formatNumber(lastData.ResObsHydro)} m
+              </div>
+            </div>
             <div className="text-sm">
               {formatDateTime(new Date(lastData.DtObsHydro), {
                 month: 'numeric',
@@ -76,7 +85,6 @@ class Vigicrue extends React.Component {
             </div>
           </div>
         </div>
-        <canvas ref={this.chartCanvas} className="absolute w-full h-full" />
       </div>
     )
   }

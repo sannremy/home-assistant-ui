@@ -6,10 +6,19 @@ import { dispatch } from '../lib/store'
 class Navbar extends React.Component {
   state = {
     currentView: null,
+    cursor: null,
   }
 
   constructor(props) {
     super(props)
+
+    this.iconRefs = {
+      home: React.createRef(),
+      lights: React.createRef(),
+      plugs: React.createRef(),
+      travels: React.createRef(),
+      timers: React.createRef(),
+    }
 
     this.handleClick = this.handleClick.bind(this)
   }
@@ -17,12 +26,14 @@ class Navbar extends React.Component {
   componentDidMount() {
     this.setState({
       currentView: this.props.view,
+      cursor: this.iconRefs['home'].current.offsetLeft,
     })
   }
 
   handleClick(view) {
     this.setState({
       currentView: view,
+      cursor: this.iconRefs[view].current.offsetLeft,
     })
 
     dispatch(changeView({
@@ -32,46 +43,46 @@ class Navbar extends React.Component {
 
   render() {
     const {
-      currentView,
+      cursor,
     } = this.state
 
-    const commonClassNames = 'block text-center px-8 py-4 h-16 border-t-4'
-    const commonSelectedClassNames = 'border-white bg-white'
-    const selectedClassNames = {
-      home: commonSelectedClassNames,
-      lights: commonSelectedClassNames,
-      travels: commonSelectedClassNames,
-      timers: commonSelectedClassNames,
-      plugs: commonSelectedClassNames,
-    }
-
-    selectedClassNames[currentView] = 'border-indigo-200 bg-indigo-100'
+    const commonClassNames = 'relative block text-center px-8 py-4 h-16 z-10'
 
     return (
       <div className="absolute bottom-0 w-full bg-white border-t border-indigo-200">
-        <ul className="flex items-center justify-center">
-          <li>
-            <a href="#" onClick={() => this.handleClick('home')} className={commonClassNames + ' ' + selectedClassNames['home']}>
+        <ul className="relative flex items-center justify-center">
+          {/* Cursor */}
+          <li className="absolute block px-8 py-4 h-16 border-t-4 border-indigo-200 bg-indigo-100 z-0 transition-all duration-500 ease-in-out" style={{
+            left: `${cursor}px`,
+          }}>
+            <div style={{
+              width: '32px',
+              height: '32px',
+            }} />
+          </li>
+          {/* Icons */}
+          <li ref={this.iconRefs['home']}>
+            <a href="#" onClick={() => this.handleClick('home')} className={commonClassNames}>
               <Home className="h-full" />
             </a>
           </li>
-          <li>
-            <a href="#" onClick={() => this.handleClick('lights')} className={commonClassNames + ' ' + selectedClassNames['lights']}>
+          <li ref={this.iconRefs['lights']}>
+            <a href="#" onClick={() => this.handleClick('lights')} className={commonClassNames}>
               <Bulb className="h-full" />
             </a>
           </li>
-          <li>
-            <a href="#" onClick={() => this.handleClick('plugs')} className={commonClassNames + ' ' + selectedClassNames['plugs']}>
+          <li ref={this.iconRefs['plugs']}>
+            <a href="#" onClick={() => this.handleClick('plugs')} className={commonClassNames}>
               <Plug className="h-full" />
             </a>
           </li>
-          <li>
-            <a href="#" onClick={() => this.handleClick('travels')} className={commonClassNames + ' ' + selectedClassNames['travels']}>
+          <li ref={this.iconRefs['travels']}>
+            <a href="#" onClick={() => this.handleClick('travels')} className={commonClassNames}>
               <Car className="h-full" />
             </a>
           </li>
-          <li>
-            <a href="#" onClick={() => this.handleClick('timers')} className={commonClassNames + ' ' + selectedClassNames['timers']}>
+          <li ref={this.iconRefs['timers']}>
+            <a href="#" onClick={() => this.handleClick('timers')} className={commonClassNames}>
               <TimeFive className="h-full" />
             </a>
           </li>
