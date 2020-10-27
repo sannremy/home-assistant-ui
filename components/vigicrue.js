@@ -63,7 +63,9 @@ class Vigicrue extends React.Component {
 
     return (
       <div className="relative rounded-lg w-full h-32 overflow-hidden">
-        <canvas ref={this.chartCanvas} className="absolute w-full h-full bottom-0" />
+        <div className="absolute w-full h-full bottom-0 flex items-end">
+          <canvas ref={this.chartCanvas} />
+        </div>
         <div className="absolute w-full bottom-0">
           <div className="text-center mb-4">
 
