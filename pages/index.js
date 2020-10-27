@@ -58,7 +58,7 @@ class Index extends React.Component {
           left: `-${this.viewIndexes.indexOf(navbar.view) * 100}%`,
         }}>
           {Object.entries(this.views).map(([id, component], index) => (
-            <div className="absolute w-full px-6 py-6" style={{
+            <div key={id} className="absolute w-full px-6 py-6" style={{
               left: `${index * 100}%`,
             }}>{component}</div>
           ))}
