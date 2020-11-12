@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { connect } from 'react-redux'
 import homeConfig from '../home-config.json'
 
@@ -40,15 +39,41 @@ class HomeView extends React.Component {
       weather,
     } = this.props
 
+    let vigicrueHydro = []
+    if (sensor.vigicrue && sensor.vigicrue.hasOwnProperty('vigicrue_hydro_observation')) {
+      const hydroLength = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro.length
+      vigicrueHydro = sensor.vigicrue.vigicrue_hydro_observation.Serie.ObssHydro.slice(hydroLength - 50, hydroLength)
+    }
+
     return (
       <div>
-        <div className="House House--floor0-selected">
-          <div className="Floor Floor--level0 transition duration-500 ease-in-out"></div>
-          <div className="Floor Floor--level1 transition duration-500 ease-in-out"></div>
-          <div className="Floor Floor--level2 transition duration-500 ease-in-out"></div>
+        {/* Header */}
+        <div className="h-auto flex -mx-3">
+          <div className="w-3/12 px-3">
+            <DateTime date={this.state.currentDate} />
+          </div>
+
+          <div className="w-9/12 px-3">
+            <div className="flex items-start">
+              <div className="mr-6">
+                {weather.temperature && (
+                  <Weather
+                    {...weather}
+                    sensor={sensor.meteofrance}
+                  />
+                )}
+              </div>
+              <div>
+                <WeatherForecast
+                  forecast={weather.forecast}
+                />
+              </div>
+            </div>
+          </div>
         </div>
+
         {/* Cols */}
-        {/* <div className="flex items-stretch -mx-3 mt-3">
+        <div className="flex items-stretch -mx-3 mt-3">
           <div className="w-3/12 px-3">
             <div>
               <div>
@@ -74,16 +99,19 @@ class HomeView extends React.Component {
           </div>
           <div className="w-6/12 px-3">
             <div className="flex flex-wrap -mx-3">
-              <div className="relative House House--floor0-selected">
-                <div className="Floor Floor--level0 transition duration-500 ease-in-out"></div>
-                <div className="Floor Floor--level1 transition duration-500 ease-in-out"></div>
-                <div className="Floor Floor--level2 transition duration-500 ease-in-out"></div>
-              </div>
+
             </div>
           </div>
           <div className="w-3/12 px-3">
+            <div>
+              {vigicrueHydro.length && (
+                <div className="py-2">
+                  <Vigicrue data={vigicrueHydro} />
+                </div>
+              )}
+            </div>
           </div>
-        </div> */}
+        </div>
       </div>
     )
   }

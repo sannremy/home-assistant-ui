@@ -20,3 +20,42 @@ h1, h2, h3, h4 {
 #__next {
   height: 100%;
 }
+
+.House {
+  position: relative;
+}
+
+.House--floor0-selected .Floor--level1,
+.House--floor0-selected .Floor--level2,
+.House--floor1-selected .Floor--level2 {
+  transform: translateY(-200px) rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
+}
+
+.Floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 500px;
+  height: 300px;
+  margin: 200px auto 0 auto;
+  transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
+}
+
+.Floor:hover {
+  border: 2px #fff solid;
+}
+
+.Floor--level0 {
+  top: 100px;
+  background-color: #49b293;
+}
+
+.Floor--level1 {
+  top: 50px;
+  background-color: #48ef93;
+}
+
+.Floor--level2 {
+  top: 0px;
+  background-color: #00b232;
+}
