@@ -7,26 +7,24 @@
     "build": "NODE_ENV=production next build && next export",
     "start": "next start"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^3.0.0",
     "@styled-icons/boxicons-regular": "^10.18.0",
     "@styled-icons/boxicons-solid": "^10.18.0",
+    "autoprefixer": "^10.0.2",
     "chart.js": "^2.9.4",
     "home-assistant-js-websocket": "^5.7.0",
-    "next": "^9.5.4",
+    "next": "^10.0.1",
     "next-pwa": "^3.1.5",
-    "react": "^16.13.1",
+    "react": "^17.0.1",
     "react-circular-progressbar": "^2.0.3",
-    "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.1.1"
-  },
-  "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^2.2.0",
-    "autoprefixer": "^9.7.6",
-    "tailwindcss": "^1.4.5",
-    "typeface-montserrat": "^0.0.75",
-    "typeface-patua-one": "^0.0.71"
+    "styled-components": "^5.2.1",
+    "tailwindcss": "^1.9.6",
+    "typeface-montserrat": "^1.1.13",
+    "typeface-patua-one": "^1.1.13"
   }
 }
