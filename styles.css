@@ -41,10 +41,6 @@ h1, h2, h3, h4 {
   transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
 }
 
-.Floor:hover {
-  border: 2px #fff solid;
-}
-
 .Floor--level0 {
   top: 100px;
   background-color: #49b293;

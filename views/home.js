@@ -9,6 +9,7 @@ import Thermostat from '../components/thermostat'
 import WeatherForecast from '../components/weather-forecast'
 import AreaSensor from '../components/area-sensor'
 import Vigicrue from '../components/vigicrue'
+import House from '../components/house'
 
 let interval = null
 
@@ -42,10 +43,8 @@ class HomeView extends React.Component {
 
     return (
       <div>
-        <div className="House House--floor0-selected">
-          <div className="Floor Floor--level0 transition duration-500 ease-in-out"></div>
-          <div className="Floor Floor--level1 transition duration-500 ease-in-out"></div>
-          <div className="Floor Floor--level2 transition duration-500 ease-in-out"></div>
+        <div className="">
+          <House />
         </div>
         {/* Cols */}
         {/* <div className="flex items-stretch -mx-3 mt-3">
