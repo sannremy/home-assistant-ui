@@ -25,16 +25,52 @@ h1, h2, h3, h4 {
   position: relative;
 }
 
-.House--floor0-selected .Floor--level1,
-.House--floor0-selected .Floor--level2,
-.House--floor1-selected .Floor--level2 {
+.House__floors {
+  position: relative;
+}
+
+.Element {
+  position: absolute;
+}
+
+.Element--garage {
+  width: 320px;
+  height: 130px;
+  background-color: #fff;
+}
+
+.Element--kitchen {
+  width: 170px;
+  height: 130px;
+  background-color: #cccccc;
+  bottom: 0;
+}
+
+.Element--wc {
+  width: 50px;
+  height: 130px;
+  background-color: #999999;
+  bottom: 0;
+  left: 170px;
+}
+
+.Element--garden {
+  width: 300px;
+  height: 100%;
+  background-color: #68D391;
+  right: 0;
+}
+
+.House__floor--0-selected .Floor--level1,
+.House__floor--0-selected .Floor--level2,
+.House__floor--1-selected .Floor--level2 {
   transform: translateY(-200px) rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
 }
 
 .Floor {
   position: absolute;
   left: 0;
-  right: 0;
+  right: 100px;
   width: 500px;
   height: 300px;
   margin: 200px auto 0 auto;
@@ -42,16 +78,18 @@ h1, h2, h3, h4 {
 }
 
 .Floor--level0 {
-  top: 100px;
-  background-color: #49b293;
+  top: 47px;
+  left: 144px;
+  width: 800px;
+  background-color: #EDF2F7;
 }
 
 .Floor--level1 {
   top: 50px;
-  background-color: #48ef93;
+  background-color: #C6F6D5;
 }
 
 .Floor--level2 {
   top: 0px;
-  background-color: #00b232;
+  background-color: #FAF089;
 }

@@ -14,9 +14,18 @@ class House extends React.Component {
     this.handleChangeFloor = this.handleChangeFloor.bind(this)
   }
 
-  handleChangeFloor(level) {
-    this.setState({
+  handleChangeFloor(levelSelected) {
+    const {
       level,
+    } = this.state
+
+    let newLevel = null
+    if (level !== levelSelected) {
+      newLevel = levelSelected
+    }
+
+    this.setState({
+      level: newLevel,
     })
   }
 
@@ -26,8 +35,14 @@ class House extends React.Component {
     } = this.state
 
     const floors = 3
+    const elementsPerFloor = [
+      ['garage', 'kitchen', 'wc', 'garden'], // floor 0
+      ['room1', 'room2', 'room3', 'office1', 'bathroom1', 'bathroom2'], // floor 1
+      ['bathroom3', 'office2'], // floor 2
+    ]
+
     const commonClassNames = 'transition duration-500 ease-in-out'
-    const selected = level !== null ? ' House--floor' + level + '-selected' : ''
+    const selected = level !== null ? 'House__floor--' + level + '-selected' : ''
 
     return (
       <div className="relative">
@@ -38,20 +53,24 @@ class House extends React.Component {
                 key={'text_' + floorLevel}
                 onClick={() => this.handleChangeFloor(floorLevel)}
               >
-                <a className={`${floorLevel === level ? 'bg-indigo-100 border-indigo-200' : 'bg-white'} font-semibold border-l-4 p-2 w-16 h-16 flex items-center justify-center`}>
+                <a className={`${floorLevel === level ? 'border-indigo-200' : 'bg-white'} cursor-pointer font-semibold border-4 border-white p-2 w-16 h-16 flex items-center justify-center`}>
                   {floorLevel === 0 ? "RdC" : floorLevel}
                 </a>
               </li>
             ))}
           </ul>
         </div>
-        <div className={`House${selected}`}>
+        <div className={`${selected} House House__floors`}>
           {[...Array(floors).keys()].map(floorLevel => (
             <div
               key={'image_' + floorLevel}
-              className={`Floor ${'Floor--level' + floorLevel} ${commonClassNames}`}
+              className={`Floor ${'Floor--level' + floorLevel} ${commonClassNames} shadow-lg`}
               onClick={() => this.handleChangeFloor(floorLevel)}
-            />
+            >
+              {elementsPerFloor[floorLevel].map(element => (
+                <div className={`Element Element--${element}`} />
+              ))}
+            </div>
           ))}
         </div>
       </div>
