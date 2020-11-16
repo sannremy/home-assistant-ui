@@ -68,7 +68,7 @@ class House extends React.Component {
               onClick={() => this.handleChangeFloor(floorLevel)}
             >
               {elementsPerFloor[floorLevel].map(element => (
-                <div className={`Element Element--${element}`} />
+                <div key={element} className={`Element Element--${element}`} />
               ))}
             </div>
           ))}
