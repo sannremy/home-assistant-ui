@@ -41,6 +41,12 @@ class House extends React.Component {
       ['bathroom3', 'office2', 'attic'], // floor 2
     ]
 
+    const pinsPerFloor = [
+      ['camera', 'light1', 'light2'], // floor 0
+      ['light3'], // floor 1
+      [], // floor 2
+    ]
+
     const commonClassNames = 'transition duration-500 ease-in-out'
     const selected = level !== null ? 'House__floor--' + level + '-selected' : ''
 
@@ -73,7 +79,20 @@ class House extends React.Component {
             </div>
           ))}
         </div>
-        <div className="relative">k</div>
+        <div className={`Pins`}>
+          {[...Array(floors).keys()].map(floorLevel => (
+            <div
+              key={'pin_' + floorLevel}
+              className={`${'Pins--level' + floorLevel}`}
+            >
+              {pinsPerFloor[floorLevel].map(pin => (
+                <div key={pin} className={`Pin Pin--${pin}`}>
+                  Pin
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     )
   }

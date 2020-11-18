@@ -23,10 +23,7 @@ h1, h2, h3, h4 {
 
 /* House */
 
-.House {
-  position: relative;
-}
-
+.House,
 .House__floors {
   position: relative;
 }
@@ -171,4 +168,22 @@ h1, h2, h3, h4 {
 .Floor--level2 {
   top: 0px;
   background-color: #EEF5E0;
+}
+
+/* Pins */
+
+.Pins {
+  position: relative;
+}
+
+.Pin {
+  position: absolute;
+  left: 0;
+  right: 100px;
+  display: inline-block;
+  margin: 200px auto 0 auto;
+}
+
+.Pin--light1 {
+  
 }
