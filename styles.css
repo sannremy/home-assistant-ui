@@ -23,15 +23,23 @@ h1, h2, h3, h4 {
 
 /* House */
 
-.House,
-.House__floors {
+.House {
   position: relative;
 }
 
-.House__floor--0-selected .Floor--level1,
-.House__floor--0-selected .Floor--level2,
-.House__floor--1-selected .Floor--level2 {
+.level-0-selected .Floor--level1,
+.level-0-selected .Floor--level2,
+.level-1-selected .Floor--level2 {
   transform: translateY(-200px) rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
+}
+
+.level-0-selected .Pins--level1,
+.level-0-selected .Pins--level2,
+.level-1-selected .Pins--level0,
+.level-1-selected .Pins--level2,
+.level-2-selected .Pins--level0,
+.level-2-selected .Pins--level1 {
+  opacity: 0;
 }
 
 /* Element */

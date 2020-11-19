@@ -48,10 +48,10 @@ class House extends React.Component {
     ]
 
     const commonClassNames = 'transition duration-500 ease-in-out'
-    const selected = level !== null ? 'House__floor--' + level + '-selected' : ''
+    const selected = level !== null ? 'level-' + level + '-selected' : ''
 
     return (
-      <div className="relative">
+      <div className={`relative ${selected}`}>
         <div className="absolute">
           <ul>
             {[...Array(floors).keys()].reverse().map(floorLevel => (
@@ -66,7 +66,7 @@ class House extends React.Component {
             ))}
           </ul>
         </div>
-        <div className={`${selected} House House__floors`}>
+        <div className="House">
           {[...Array(floors).keys()].map(floorLevel => (
             <div
               key={'image_' + floorLevel}
@@ -83,7 +83,7 @@ class House extends React.Component {
           {[...Array(floors).keys()].map(floorLevel => (
             <div
               key={'pin_' + floorLevel}
-              className={`${'Pins--level' + floorLevel}`}
+              className={`${commonClassNames} ${'Pins--level' + floorLevel}`}
             >
               {pinsPerFloor[floorLevel].map(pin => (
                 <div key={pin} className={`Pin Pin--${pin}`}>
