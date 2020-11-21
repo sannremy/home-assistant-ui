@@ -107,7 +107,7 @@ class House extends React.Component {
             >
               {pinsPerFloor[floorLevel].map(pin => (
                 <div key={pin.id} className={`Pin Pin--${pin.id} flex items-center`}>
-                  <div className="w-10 h-10">
+                  <div className="w-12 h-12 p-2 bg-white rounded-full flex items-center">
                     {pin.icon}
                   </div>
                 </div>

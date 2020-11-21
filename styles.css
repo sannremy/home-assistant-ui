@@ -191,8 +191,6 @@ h1, h2, h3, h4 {
 
 .Pin {
   position: absolute;
-  left: 0;
-  right: 0;
   display: inline-block;
   margin: 200px auto 0 auto;
 }
@@ -208,7 +206,7 @@ h1, h2, h3, h4 {
 }
 
 .Pin--light3 {
-  top: 210px;
+  top: 200px;
   left: 250px;
 }
 
