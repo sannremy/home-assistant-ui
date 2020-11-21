@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bulb, Car, Home, Plug, TimeFive } from '@styled-icons/boxicons-regular'
+import { Bulb, CameraHome } from '@styled-icons/boxicons-regular'
 import { changeView } from '../actions'
 import { dispatch } from '../lib/store'
 
@@ -42,12 +42,32 @@ class House extends React.Component {
     ]
 
     const pinsPerFloor = [
-      ['camera', 'light1', 'light2'], // floor 0
-      ['light3'], // floor 1
-      [], // floor 2
+      [ // floor 0
+        {
+          id: 'camera',
+          icon: <CameraHome />
+        },
+        {
+          id: 'light1',
+          icon: <Bulb />
+        },
+        {
+          id: 'light2',
+          icon: <Bulb />
+        },
+      ],
+      [ // floor 1
+        {
+          id: 'light3',
+          icon: <Bulb />
+        },
+      ],
+      [ // floor 2
+
+      ],
     ]
 
-    const commonClassNames = 'transition duration-500 ease-in-out'
+    const commonClassNames = 'transition duration-300 ease-in-out'
     const selected = level !== null ? 'level-' + level + '-selected' : ''
 
     return (
@@ -86,8 +106,10 @@ class House extends React.Component {
               className={`${commonClassNames} ${'Pins--level' + floorLevel}`}
             >
               {pinsPerFloor[floorLevel].map(pin => (
-                <div key={pin} className={`Pin Pin--${pin}`}>
-                  Pin
+                <div key={pin.id} className={`Pin Pin--${pin.id} flex items-center`}>
+                  <div className="w-10 h-10">
+                    {pin.icon}
+                  </div>
                 </div>
               ))}
             </div>

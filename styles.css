@@ -33,13 +33,11 @@ h1, h2, h3, h4 {
   transform: translateY(-200px) rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
 }
 
-.level-0-selected .Pins--level1,
-.level-0-selected .Pins--level2,
-.level-1-selected .Pins--level0,
-.level-1-selected .Pins--level2,
-.level-2-selected .Pins--level0,
-.level-2-selected .Pins--level1 {
-  opacity: 0;
+.level-0-selected .Pins--level0,
+.level-1-selected .Pins--level1,
+.level-2-selected .Pins--level2 {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 /* Element */
@@ -184,14 +182,37 @@ h1, h2, h3, h4 {
   position: relative;
 }
 
+.Pins--level0,
+.Pins--level1,
+.Pins--level2 {
+  opacity: 0;
+  transform: translateY(-100px);
+}
+
 .Pin {
   position: absolute;
   left: 0;
-  right: 100px;
+  right: 0;
   display: inline-block;
   margin: 200px auto 0 auto;
 }
 
 .Pin--light1 {
-  
+  top: 160px;
+  left: 570px;
+}
+
+.Pin--light2 {
+  top: 120px;
+  left: 490px;
+}
+
+.Pin--light3 {
+  top: 210px;
+  left: 250px;
+}
+
+.Pin--camera {
+  top: 120px;
+  left: 470px;
 }
