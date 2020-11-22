@@ -5,7 +5,7 @@ import { dispatch } from '../lib/store'
 
 class House extends React.Component {
   state = {
-    level: null,
+    level: 2,
   }
 
   constructor(props) {
@@ -19,14 +19,11 @@ class House extends React.Component {
       level,
     } = this.state
 
-    let newLevel = null
     if (level !== levelSelected) {
-      newLevel = levelSelected
+      this.setState({
+        level: levelSelected,
+      })
     }
-
-    this.setState({
-      level: newLevel,
-    })
   }
 
   render() {
@@ -68,7 +65,7 @@ class House extends React.Component {
     ]
 
     const commonClassNames = 'transition duration-300 ease-in-out'
-    const selected = level !== null ? 'level-' + level + '-selected' : ''
+    const selected = 'level-' + level + '-selected'
 
     return (
       <div className={`relative ${selected}`}>
