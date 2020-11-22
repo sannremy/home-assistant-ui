@@ -1,14 +1,6 @@
 import React from 'react'
-import Image from 'next/image'
 import { connect } from 'react-redux'
-import homeConfig from '../home-config.json'
-
-import Weather from '../components/weather'
 import DateTime from '../components/date-time'
-import Thermostat from '../components/thermostat'
-import WeatherForecast from '../components/weather-forecast'
-import AreaSensor from '../components/area-sensor'
-import Vigicrue from '../components/vigicrue'
 import House from '../components/house'
 
 let interval = null
@@ -35,17 +27,27 @@ class HomeView extends React.Component {
   }
 
   render() {
+    // const {
+    //   climate,
+    //   sensor,
+    //   weather,
+    // } = this.props
+
     const {
-      climate,
-      sensor,
-      weather,
-    } = this.props
+      currentDate,
+    } = this.state
 
     return (
-      <div>
-        <div className="">
+      <div className="relative">
+        <div className="absolute top-0 left-0">
           <House />
         </div>
+        <div className="absolute top-0 left-0">
+          <div className="relative">
+            <DateTime date={currentDate} />
+          </div>
+        </div>
+
         {/* Cols */}
         {/* <div className="flex items-stretch -mx-3 mt-3">
           <div className="w-3/12 px-3">
