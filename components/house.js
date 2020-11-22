@@ -38,25 +38,29 @@ class House extends React.Component {
       ['bathroom3', 'office2', 'attic'], // floor 2
     ]
 
+    const pinIconStyles = {
+      transform: "translateY(0.1rem)",
+    }
+
     const pinsPerFloor = [
       [ // floor 0
         {
           id: 'camera',
-          icon: <CameraHome />
+          icon: <CameraHome style={pinIconStyles} />
         },
         {
           id: 'light1',
-          icon: <Bulb />
+          icon: <Bulb style={pinIconStyles} />
         },
         {
           id: 'light2',
-          icon: <Bulb />
+          icon: <Bulb style={pinIconStyles} />
         },
       ],
       [ // floor 1
         {
           id: 'light3',
-          icon: <Bulb />
+          icon: <Bulb style={pinIconStyles} />
         },
       ],
       [ // floor 2
@@ -103,9 +107,12 @@ class House extends React.Component {
               className={`${commonClassNames} ${'Pins--level' + floorLevel}`}
             >
               {pinsPerFloor[floorLevel].map(pin => (
-                <div key={pin.id} className={`Pin Pin--${pin.id} flex items-center`}>
-                  <div className="w-12 h-12 p-2 bg-white rounded-full flex items-center">
-                    {pin.icon}
+                <div key={pin.id} className={`Pin Pin--${pin.id}`}>
+                  <div className="relative">
+                    <div className="w-12 h-12 p-2 bg-white rounded-full flex items-center">
+                      {pin.icon}
+                    </div>
+                    <div className="Pin__arrow" />
                   </div>
                 </div>
               ))}

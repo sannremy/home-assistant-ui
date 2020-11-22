@@ -195,22 +195,35 @@ h1, h2, h3, h4 {
   margin: 200px auto 0 auto;
 }
 
+.Pin__arrow {
+  position: absolute;
+  z-index: -1;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; 
+  height: 0; 
+  border-left: 1rem solid transparent;
+  border-right: 1rem solid transparent;
+  border-top: 1rem solid #fff;
+}
+
 .Pin--light1 {
-  top: 160px;
+  top: 110px;
   left: 570px;
 }
 
 .Pin--light2 {
-  top: 120px;
+  top: 70px;
   left: 490px;
 }
 
 .Pin--light3 {
-  top: 200px;
+  top: 170px;
   left: 250px;
 }
 
 .Pin--camera {
-  top: 120px;
-  left: 470px;
+  top: 90px;
+  left: 430px;
 }
