@@ -1,7 +1,6 @@
 import React from 'react'
 import { Bulb, CameraHome } from '@styled-icons/boxicons-regular'
-import { changeView } from '../actions'
-import { dispatch } from '../lib/store'
+import Pin from './pin'
 
 class House extends React.Component {
   state = {
@@ -46,25 +45,72 @@ class House extends React.Component {
       [ // floor 0
         {
           id: 'camera',
-          icon: <CameraHome style={pinIconStyles} />
+          content: <CameraHome style={pinIconStyles} />
         },
         {
           id: 'light1',
-          icon: <Bulb style={pinIconStyles} />
+          content: <Bulb style={pinIconStyles} />
         },
         {
           id: 'light2',
-          icon: <Bulb style={pinIconStyles} />
+          content: <Bulb style={pinIconStyles} />
+        },
+        {
+          id: 'weather-station-indoor-1',
+          content: (
+            <span className="font-semibold">
+              19.8
+            </span>
+          )
+        },
+        {
+          id: 'weather-station-outdoor-1',
+          content: (
+            <span className="font-semibold">
+              5.7
+            </span>
+          )
         },
       ],
       [ // floor 1
         {
           id: 'light3',
-          icon: <Bulb style={pinIconStyles} />
+          content: <Bulb style={pinIconStyles} />
+        },
+        {
+          id: 'weather-station-indoor-2',
+          content: (
+            <span className="font-semibold">
+              19.9
+            </span>
+          )
+        },
+        {
+          id: 'weather-station-indoor-3',
+          content: (
+            <span className="font-semibold">
+              20.1
+            </span>
+          )
+        },
+        {
+          id: 'thermostat',
+          content: (
+            <span className="font-semibold">
+              19.8
+            </span>
+          )
         },
       ],
       [ // floor 2
-
+        {
+          id: 'weather-station-indoor-4',
+          content: (
+            <span className="font-semibold">
+              19
+            </span>
+          )
+        },
       ],
     ]
 
@@ -107,14 +153,11 @@ class House extends React.Component {
               className={`${commonClassNames} ${'Pins--level' + floorLevel}`}
             >
               {pinsPerFloor[floorLevel].map(pin => (
-                <div key={pin.id} className={`Pin Pin--${pin.id}`}>
-                  <div className="relative">
-                    <div className="w-12 h-12 p-2 bg-white rounded-full flex items-center">
-                      {pin.icon}
-                    </div>
-                    <div className="Pin__arrow" />
+                <Pin key={'pin_' + pin.id} id={pin.id}>
+                  <div className="w-12 h-12 p-2 bg-white rounded-full flex items-center justify-center">
+                    {pin.content}
                   </div>
-                </div>
+                </Pin>
               ))}
             </div>
           ))}
