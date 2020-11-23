@@ -2,6 +2,14 @@ import React from 'react'
 import { Bulb, CameraHome } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
 
+const floors = 3
+
+const elementsPerFloor = [
+  ['garage', 'kitchen', 'wc1', 'garden'], // floor 0
+  ['room1', 'room2', 'room3', 'office1', 'bathroom1', 'bathroom2', 'wc2'], // floor 1
+  ['bathroom3', 'office2', 'attic'], // floor 2
+]
+
 class House extends React.Component {
   state = {
     level: 2,
@@ -30,12 +38,12 @@ class House extends React.Component {
       level,
     } = this.state
 
-    const floors = 3
-    const elementsPerFloor = [
-      ['garage', 'kitchen', 'wc1', 'garden'], // floor 0
-      ['room1', 'room2', 'room3', 'office1', 'bathroom1', 'bathroom2', 'wc2'], // floor 1
-      ['bathroom3', 'office2', 'attic'], // floor 2
-    ]
+    const {
+      sensors,
+      climate,
+    } = this.props
+
+    const transitionClassNames = 'transition duration-300 ease-in-out'
 
     const pinsPerFloor = [
       [ // floor 0
@@ -55,7 +63,9 @@ class House extends React.Component {
           id: 'weather-station-indoor-1',
           content: (
             <span className="font-semibold">
-              19.8
+              {/* {sensors && sensors['area1'] && (
+                <span>{sensors['area1'].temperature}</span>
+              )} */}
             </span>
           )
         },
@@ -110,11 +120,8 @@ class House extends React.Component {
       ],
     ]
 
-    const commonClassNames = 'transition duration-300 ease-in-out'
-    const selected = 'level-' + level + '-selected'
-
     return (
-      <div className={`relative ${selected}`}>
+      <div className={`relative ${'level-' + level + '-selected'}`}>
         <div className="absolute">
           <ul>
             {[...Array(floors).keys()].reverse().map(floorLevel => (
@@ -133,7 +140,7 @@ class House extends React.Component {
           {[...Array(floors).keys()].map(floorLevel => (
             <div
               key={'image_' + floorLevel}
-              className={`Floor ${'Floor--level' + floorLevel} ${commonClassNames} shadow-lg`}
+              className={`Floor ${'Floor--level' + floorLevel} ${transitionClassNames} shadow-lg`}
               onClick={() => this.handleChangeFloor(floorLevel)}
             >
               {elementsPerFloor[floorLevel].map(element => (
@@ -146,7 +153,7 @@ class House extends React.Component {
           {[...Array(floors).keys()].map(floorLevel => (
             <div
               key={'pin_' + floorLevel}
-              className={`${commonClassNames} ${'Pins--level' + floorLevel}`}
+              className={`${transitionClassNames} ${'Pins--level' + floorLevel}`}
             >
               {pinsPerFloor[floorLevel].map(pin => (
                 <Pin key={'pin_' + pin.id} id={pin.id}>

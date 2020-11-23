@@ -1,3 +1,4 @@
+import { Sun } from '@styled-icons/boxicons-regular'
 import React from 'react'
 import { connect } from 'react-redux'
 import DateTime from '../components/date-time'
@@ -27,11 +28,11 @@ class HomeView extends React.Component {
   }
 
   render() {
-    // const {
-    //   climate,
-    //   sensor,
-    //   weather,
-    // } = this.props
+    const {
+      climate,
+      sensor,
+      // weather,
+    } = this.props
 
     const {
       currentDate,
@@ -39,12 +40,27 @@ class HomeView extends React.Component {
 
     return (
       <div className="relative">
-        <div className="absolute top-0 left-0">
-          <House />
+        <div className="absolute top-0 left-0 w-full h-full">
+          <House
+            sensors={sensor}
+            climate={climate}
+          />
         </div>
-        <div className="absolute top-0 left-0">
+        <div className="absolute top-0 left-0 w-full h-full">
           <div className="relative">
-            <DateTime date={currentDate} />
+            <div className="float-right flex items-center">
+              <div className="mr-10">
+                <DateTime date={currentDate} />
+              </div>
+              <div className="flex items-center">
+                <span className="text-2xl tracking-wide font-semibold">
+                  8&deg;
+                </span>
+                <div className="w-10 h-10">
+                  <Sun />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
