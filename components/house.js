@@ -1,14 +1,10 @@
 import React from 'react'
 import { Bulb, CameraHome } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
+import homeConfig from '../home-config.json'
 
-const floors = 3
-
-const elementsPerFloor = [
-  ['garage', 'kitchen', 'wc1', 'garden'], // floor 0
-  ['room1', 'room2', 'room3', 'office1', 'bathroom1', 'bathroom2', 'wc2'], // floor 1
-  ['bathroom3', 'office2', 'attic'], // floor 2
-]
+const elementsPerFloor = homeConfig.floors
+const floors = elementsPerFloor.length
 
 class House extends React.Component {
   state = {
