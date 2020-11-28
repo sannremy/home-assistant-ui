@@ -9,12 +9,24 @@ const floors = elementsPerFloor.length
 class House extends React.Component {
   state = {
     level: 2,
+    cursor: 0,
   }
 
   constructor(props) {
     super(props)
 
+    this.floorRefs = []
+    for (let i = 0; i < floors; i++) {
+      this.floorRefs[i] = React.createRef();
+    }
+
     this.handleChangeFloor = this.handleChangeFloor.bind(this)
+  }
+
+  componentDidMount() {
+    this.setState({
+      cursor: this.floorRefs[this.state.level].current.offsetLeft,
+    })
   }
 
   handleChangeFloor(levelSelected) {
@@ -25,6 +37,7 @@ class House extends React.Component {
     if (level !== levelSelected) {
       this.setState({
         level: levelSelected,
+        cursor: this.floorRefs[levelSelected].current.offsetTop,
       })
     }
   }
@@ -32,6 +45,7 @@ class House extends React.Component {
   render() {
     const {
       level,
+      cursor,
     } = this.state
 
     const {
@@ -119,13 +133,18 @@ class House extends React.Component {
     return (
       <div className={`relative ${'level-' + level + '-selected'}`}>
         <div className="absolute">
-          <ul>
+          <ul className="relative bg-white">
+            <li className={`absolute bg-indigo-100 border-4 border-indigo-200 p-2 w-16 h-16 z-0 ${transitionClassNames}`} style={{
+              transform: `translateY(${cursor}px)`,
+            }} />
             {[...Array(floors).keys()].reverse().map(floorLevel => (
               <li
+                ref={this.floorRefs[floorLevel]}
                 key={'text_' + floorLevel}
                 onClick={() => this.handleChangeFloor(floorLevel)}
+                className="relative z-10"
               >
-                <a className={`${floorLevel === level ? 'border-indigo-200' : 'bg-white'} cursor-pointer font-semibold border-4 border-white p-2 w-16 h-16 flex items-center justify-center`}>
+                <a className={`cursor-pointer font-semibold p-2 w-16 h-16 flex items-center justify-center`}>
                   {floorLevel === 0 ? "RdC" : floorLevel}
                 </a>
               </li>
