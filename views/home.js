@@ -1,4 +1,3 @@
-import { Sun } from '@styled-icons/boxicons-regular'
 import React from 'react'
 import { connect } from 'react-redux'
 import DateTime from '../components/date-time'
@@ -49,17 +48,7 @@ class HomeView extends React.Component {
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="relative">
             <div className="float-right flex items-center">
-              <div className="mr-10">
-                <DateTime date={currentDate} />
-              </div>
-              <div className="flex items-center">
-                <span className="text-2xl tracking-wide font-semibold">
-                  8&deg;
-                </span>
-                <div className="w-10 h-10">
-                  <Sun />
-                </div>
-              </div>
+              <DateTime date={currentDate} />
             </div>
           </div>
         </div>

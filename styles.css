@@ -194,6 +194,7 @@ h1, h2, h3, h4 {
   position: absolute;
   display: inline-block;
   margin: 200px auto 0 auto;
+  z-index: inherit;
 }
 
 .Pin__arrow {
