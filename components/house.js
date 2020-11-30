@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bulb, CameraHome } from '@styled-icons/boxicons-regular'
+import { Bulb, CameraHome, LoaderAlt } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
 import homeConfig from '../home-config.json'
 
@@ -8,7 +8,7 @@ const floors = elementsPerFloor.length
 
 class House extends React.Component {
   state = {
-    level: 2,
+    level: floors - 1,
     cursor: 0,
   }
 
@@ -18,6 +18,11 @@ class House extends React.Component {
     this.floorRefs = []
     for (let i = 0; i < floors; i++) {
       this.floorRefs[i] = React.createRef();
+    }
+
+    this.icons = {
+      'Bulb': <Bulb />,
+      'CameraHome': <CameraHome />,
     }
 
     this.handleChangeFloor = this.handleChangeFloor.bind(this)
@@ -49,86 +54,59 @@ class House extends React.Component {
     } = this.state
 
     const {
-      sensors,
-      climate,
+      sensors, // used in eval
+      climate, // used in eval
     } = this.props
 
     const transitionClassNames = 'transition duration-300 ease-in-out'
 
-    const pinsPerFloor = [
-      [ // floor 0
-        {
-          id: 'camera',
-          content: <CameraHome />
-        },
-        {
-          id: 'light1',
-          content: <Bulb />
-        },
-        {
-          id: 'light2',
-          content: <Bulb />
-        },
-        {
-          id: 'weather-station-indoor-1',
-          content: (
-            <span className="font-semibold">
-              {/* {sensors && sensors['area1'] && (
-                <span>{sensors['area1'].temperature}</span>
-              )} */}
-            </span>
-          )
-        },
-        {
-          id: 'weather-station-outdoor-1',
-          content: (
-            <span className="font-semibold">
-              5.7
-            </span>
-          )
-        },
-      ],
-      [ // floor 1
-        {
-          id: 'light3',
-          content: <Bulb />
-        },
-        {
-          id: 'weather-station-indoor-2',
-          content: (
-            <span className="font-semibold">
-              19.9
-            </span>
-          )
-        },
-        {
-          id: 'weather-station-indoor-3',
-          content: (
-            <span className="font-semibold">
-              20.1
-            </span>
-          )
-        },
-        {
-          id: 'thermostat',
-          content: (
-            <span className="font-semibold">
-              19.8
-            </span>
-          )
-        },
-      ],
-      [ // floor 2
-        {
-          id: 'weather-station-indoor-4',
-          content: (
-            <span className="font-semibold">
-              19
-            </span>
-          )
-        },
-      ],
-    ]
+    const pinsPerFloor = []
+    for (let i = 0; i < floors; i++) {
+      pinsPerFloor.push([])
+    }
+
+    for (const pinId in homeConfig.pins) {
+      if (homeConfig.pins.hasOwnProperty(pinId)) {
+        const pin = homeConfig.pins[pinId];
+        if (pin.type === 'variable') {
+          const vars = pin.content.split('.')
+          const varsChains = []
+
+          const conditions = vars.map(v => {
+            varsChains.push(v)
+            return varsChains.join('.')
+          })
+
+          const value = eval(conditions.join(' && '))
+          let content = null
+          if (value) {
+            content = (
+              <span className="font-semibold">{value}</span>
+            )
+          } else {
+            content = <LoaderAlt className="animate-spin" />
+          }
+
+          pinsPerFloor[pin.floor].push({
+            id: pinId,
+            content,
+            style: pin.style || {},
+          })
+        } else if (pin.type === 'icon') {
+          if (this.icons[pin.content]) {
+            pinsPerFloor[pin.floor].push({
+              id: pinId,
+              content: this.icons[pin.content],
+              style: pin.style || {},
+            })
+          } else {
+            console.warn('Unknown Pin icon', pin)
+          }
+        } else {
+          console.warn('Unknown Pin type', pin)
+        }
+      }
+    }
 
     return (
       <div className={`relative ${'level-' + level + '-selected'}`}>
@@ -171,7 +149,7 @@ class House extends React.Component {
               className={`${transitionClassNames} ${'Pins--level' + floorLevel}`}
             >
               {pinsPerFloor[floorLevel].map(pin => (
-                <Pin key={'pin_' + pin.id} id={pin.id}>
+                <Pin key={'pin_' + pin.id} id={pin.id} style={pin.style}>
                   <div className="w-12 h-12 p-2 bg-white rounded-full flex items-center justify-center">
                     <div style={{
                       transform: "translateY(0.1rem)",

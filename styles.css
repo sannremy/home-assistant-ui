@@ -201,59 +201,9 @@ h1, h2, h3, h4 {
   bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 1rem solid transparent;
   border-right: 1rem solid transparent;
   border-top: 1rem solid #fff;
-}
-
-.Pin--light1 {
-  top: 110px;
-  left: 570px;
-}
-
-.Pin--light2 {
-  top: 70px;
-  left: 490px;
-}
-
-.Pin--light3 {
-  top: 170px;
-  left: 250px;
-}
-
-.Pin--camera {
-  top: 90px;
-  left: 430px;
-}
-
-.Pin--weather-station-indoor-1 {
-  top: 170px;
-  left: 520px;
-}
-
-.Pin--weather-station-indoor-2 {
-  top: 220px;
-  left: 370px;
-}
-
-.Pin--weather-station-indoor-3 {
-  top: 60px;
-  left: 470px;
-}
-
-.Pin--weather-station-indoor-4 {
-  top: 60px;
-  left: 570px;
-}
-
-.Pin--weather-station-outdoor-1 {
-  top: 40px;
-  left: 700px;
-}
-
-.Pin--thermostat {
-  top: 110px;
-  left: 580px;
 }
