@@ -52,7 +52,7 @@ class Navbar extends React.Component {
       <div className="absolute bottom-0 w-full bg-white border-t border-indigo-200">
         <ul className="relative flex items-center justify-center">
           {/* Cursor */}
-          <li className="absolute left-0 block px-8 py-4 h-16 border-t-4 border-indigo-200 bg-indigo-100 z-0 transition duration-500 ease-in-out" style={{
+          <li className="absolute left-0 block px-8 py-4 h-16 border-t-4 border-indigo-200 bg-indigo-100 z-0 transition duration-300 ease-in-out" style={{
             transform: `translateX(${cursor}px)`,
           }}>
             <div style={{
