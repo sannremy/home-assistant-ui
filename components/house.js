@@ -10,6 +10,7 @@ class House extends React.Component {
   state = {
     level: floors - 1,
     cursor: 0,
+    pinId: null,
   }
 
   constructor(props) {
@@ -26,6 +27,7 @@ class House extends React.Component {
     }
 
     this.handleChangeFloor = this.handleChangeFloor.bind(this)
+    this.handlePinClick = this.handlePinClick.bind(this)
   }
 
   componentDidMount() {
@@ -47,10 +49,25 @@ class House extends React.Component {
     }
   }
 
+  handlePinClick(event, clickedPinId) {
+    event.preventDefault()
+
+    const {
+      pinId,
+    } = this.state
+
+    let newPinId = clickedPinId !== pinId ? clickedPinId : null
+
+    this.setState({
+      pinId: newPinId,
+    })
+  }
+
   render() {
     const {
       level,
       cursor,
+      pinId,
     } = this.state
 
     const {
@@ -149,7 +166,13 @@ class House extends React.Component {
               className={`${transitionClassNames} ${'Pins--level' + floorLevel}`}
             >
               {pinsPerFloor[floorLevel].map(pin => (
-                <Pin key={'pin_' + pin.id} id={pin.id} style={pin.style}>
+                <Pin
+                  onClick={(e) => this.handlePinClick(e, pin.id)}
+                  key={'pin_' + pin.id}
+                  id={pin.id}
+                  style={pin.style}
+                  isSelected={pin.id === pinId}
+                >
                   <div className="w-12 h-12 p-2 bg-white rounded-full flex items-center justify-center">
                     <div style={{
                       transform: "translateY(0.1rem)",
