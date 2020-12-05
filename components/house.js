@@ -82,9 +82,9 @@ class House extends React.Component {
       pinsPerFloor.push([])
     }
 
-    for (const pinId in homeConfig.pins) {
-      if (homeConfig.pins.hasOwnProperty(pinId)) {
-        const pin = homeConfig.pins[pinId];
+    for (const pId in homeConfig.pins) {
+      if (homeConfig.pins.hasOwnProperty(pId)) {
+        const pin = homeConfig.pins[pId];
         if (pin.type === 'variable') {
           const vars = pin.content.split('.')
           const varsChains = []
@@ -105,14 +105,14 @@ class House extends React.Component {
           }
 
           pinsPerFloor[pin.floor].push({
-            id: pinId,
+            id: pId,
             content,
             style: pin.style || {},
           })
         } else if (pin.type === 'icon') {
           if (this.icons[pin.content]) {
             pinsPerFloor[pin.floor].push({
-              id: pinId,
+              id: pId,
               content: this.icons[pin.content],
               style: pin.style || {},
             })
@@ -167,19 +167,13 @@ class House extends React.Component {
             >
               {pinsPerFloor[floorLevel].map(pin => (
                 <Pin
-                  onClick={(e) => this.handlePinClick(e, pin.id)}
                   key={'pin_' + pin.id}
                   id={pin.id}
                   style={pin.style}
                   isSelected={pin.id === pinId}
+                  onClick={(e) => this.handlePinClick(e, pin.id)}
                 >
-                  <div className="w-12 h-12 p-2 bg-white rounded-full flex items-center justify-center">
-                    <div style={{
-                      transform: "translateY(0.1rem)",
-                    }}>
-                      {pin.content}
-                    </div>
-                  </div>
+                  {pin.content}
                 </Pin>
               ))}
             </div>

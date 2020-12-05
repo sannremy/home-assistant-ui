@@ -193,6 +193,11 @@ h1, h2, h3, h4 {
   position: absolute;
   display: inline-block;
   margin: 200px auto 0 auto;
+  cursor: pointer;
+}
+
+.Pin__content {
+  background-color: #fff;
 }
 
 .Pin__arrow {
@@ -206,4 +211,12 @@ h1, h2, h3, h4 {
   border-left: 1rem solid transparent;
   border-right: 1rem solid transparent;
   border-top: 1rem solid #fff;
+}
+
+.Pin.Pin--selected .Pin__arrow {
+  border-top-color: #f6e05e;
+}
+
+.Pin.Pin--selected .Pin__content {
+  background-color: #f6e05e;
 }
