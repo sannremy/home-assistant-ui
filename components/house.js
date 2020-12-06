@@ -11,6 +11,7 @@ class House extends React.Component {
     level: floors - 1,
     cursor: 0,
     pinId: null,
+    pinData: null,
   }
 
   constructor(props) {
@@ -19,11 +20,6 @@ class House extends React.Component {
     this.floorRefs = []
     for (let i = 0; i < floors; i++) {
       this.floorRefs[i] = React.createRef();
-    }
-
-    this.icons = {
-      'Bulb': <Bulb />,
-      'CameraHome': <CameraHome />,
     }
 
     this.handleChangeFloor = this.handleChangeFloor.bind(this)
@@ -45,6 +41,8 @@ class House extends React.Component {
       this.setState({
         level: levelSelected,
         cursor: this.floorRefs[levelSelected].current.offsetTop,
+        pinId: null, // reset pin
+        pinData: 'todo',
       })
     }
   }
@@ -60,6 +58,7 @@ class House extends React.Component {
 
     this.setState({
       pinId: newPinId,
+      pinData: 'todo',
     })
   }
 
@@ -68,6 +67,7 @@ class House extends React.Component {
       level,
       cursor,
       pinId,
+      pinData,
     } = this.state
 
     const {
@@ -109,16 +109,18 @@ class House extends React.Component {
             content,
             style: pin.style || {},
           })
-        } else if (pin.type === 'icon') {
-          if (this.icons[pin.content]) {
-            pinsPerFloor[pin.floor].push({
-              id: pId,
-              content: this.icons[pin.content],
-              style: pin.style || {},
-            })
-          } else {
-            console.warn('Unknown Pin icon', pin)
-          }
+        } else if (pin.type === 'light') {
+          pinsPerFloor[pin.floor].push({
+            id: pId,
+            content: <Bulb />,
+            style: pin.style || {},
+          })
+        } else if (pin.type === 'camera') {
+          pinsPerFloor[pin.floor].push({
+            id: pId,
+            content: <CameraHome />,
+            style: pin.style || {},
+          })
         } else {
           console.warn('Unknown Pin type', pin)
         }
@@ -127,6 +129,8 @@ class House extends React.Component {
 
     return (
       <div className={`relative ${'level-' + level + '-selected'}`}>
+
+        {/* Levels */}
         <div className="absolute">
           <ul className="relative bg-white">
             <li className={`absolute bg-indigo-100 border-4 border-indigo-200 p-2 w-16 h-16 z-0 ${transitionClassNames}`} style={{
@@ -146,6 +150,8 @@ class House extends React.Component {
             ))}
           </ul>
         </div>
+
+        {/* Floors */}
         <div className="House">
           {[...Array(floors).keys()].map(floorLevel => (
             <div
@@ -159,6 +165,8 @@ class House extends React.Component {
             </div>
           ))}
         </div>
+
+        {/* Pins */}
         <div className={`Pins`}>
           {[...Array(floors).keys()].map(floorLevel => (
             <div
@@ -178,6 +186,13 @@ class House extends React.Component {
               ))}
             </div>
           ))}
+        </div>
+
+        {/* Info Panel */}
+        <div className={`${pinId === null ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'} Panel absolute w-1/2 mx-auto my-0 left-0 right-0 shadow-xl transform transition duration-300 ease-in-out`}>
+          <div className="bg-white px-6 py-4 rounded-lg">
+            {pinData}
+          </div>
         </div>
       </div>
     )
