@@ -11,7 +11,6 @@ class House extends React.Component {
     level: floors - 1,
     cursor: 0,
     pinId: null,
-    pinData: null,
   }
 
   constructor(props) {
@@ -41,9 +40,13 @@ class House extends React.Component {
       this.setState({
         level: levelSelected,
         cursor: this.floorRefs[levelSelected].current.offsetTop,
-        pinId: null, // reset pin
-        pinData: 'todo',
       })
+
+      setTimeout(() => {
+        this.setState({
+          pinId: null,
+        })
+      }, 300) // end of animation
     }
   }
 
@@ -58,7 +61,6 @@ class House extends React.Component {
 
     this.setState({
       pinId: newPinId,
-      pinData: 'todo',
     })
   }
 
@@ -67,7 +69,6 @@ class House extends React.Component {
       level,
       cursor,
       pinId,
-      pinData,
     } = this.state
 
     const {
@@ -77,6 +78,7 @@ class House extends React.Component {
 
     const transitionClassNames = 'transition duration-300 ease-in-out'
 
+    const pins = {}
     const pinsPerFloor = []
     for (let i = 0; i < floors; i++) {
       pinsPerFloor.push([])
@@ -86,7 +88,7 @@ class House extends React.Component {
       if (homeConfig.pins.hasOwnProperty(pId)) {
         const pin = homeConfig.pins[pId];
         if (pin.type === 'variable') {
-          const vars = pin.content.split('.')
+          const vars = pin.preview.split('.')
           const varsChains = []
 
           const conditions = vars.map(v => {
@@ -95,32 +97,47 @@ class House extends React.Component {
           })
 
           const value = eval(conditions.join(' && '))
-          let content = null
+          let preview = null
           if (value) {
-            content = (
+            preview = (
               <span className="font-semibold">{value}</span>
             )
           } else {
-            content = <LoaderAlt className="animate-spin" />
+            preview = <LoaderAlt className="animate-spin" />
           }
 
           pinsPerFloor[pin.floor].push({
             id: pId,
-            content,
+            preview,
+            data: pId + ' data',
             style: pin.style || {},
           })
+
+          pins[pId] = {
+            data: pId + ' data',
+          }
         } else if (pin.type === 'light') {
           pinsPerFloor[pin.floor].push({
             id: pId,
-            content: <Bulb />,
+            preview: <Bulb />,
+            data: pId + ' data',
             style: pin.style || {},
           })
+
+          pins[pId] = {
+            data: pId + ' data',
+          }
         } else if (pin.type === 'camera') {
           pinsPerFloor[pin.floor].push({
             id: pId,
-            content: <CameraHome />,
+            preview: <CameraHome />,
+            data: 'camera data',
             style: pin.style || {},
           })
+
+          pins[pId] = {
+            data: pId + ' data',
+          }
         } else {
           console.warn('Unknown Pin type', pin)
         }
@@ -181,7 +198,7 @@ class House extends React.Component {
                   isSelected={pin.id === pinId}
                   onClick={(e) => this.handlePinClick(e, pin.id)}
                 >
-                  {pin.content}
+                  {pin.preview}
                 </Pin>
               ))}
             </div>
@@ -191,7 +208,7 @@ class House extends React.Component {
         {/* Info Panel */}
         <div className={`${pinId === null ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'} Panel absolute w-1/2 mx-auto my-0 left-0 right-0 shadow-xl transform transition duration-300 ease-in-out`}>
           <div className="bg-white px-6 py-4 rounded-lg">
-            {pinData}
+            {pinId && pins[pinId].data}
           </div>
         </div>
       </div>
