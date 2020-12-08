@@ -11,6 +11,7 @@ class House extends React.Component {
     level: floors - 1,
     cursor: 0,
     pinId: null,
+    showPinData: false,
   }
 
   constructor(props) {
@@ -40,6 +41,7 @@ class House extends React.Component {
       this.setState({
         level: levelSelected,
         cursor: this.floorRefs[levelSelected].current.offsetTop,
+        showPinData: false,
       })
 
       setTimeout(() => {
@@ -57,11 +59,20 @@ class House extends React.Component {
       pinId,
     } = this.state
 
-    let newPinId = clickedPinId !== pinId ? clickedPinId : null
+    let showPinData = clickedPinId !== pinId
 
     this.setState({
-      pinId: newPinId,
+      pinId: clickedPinId,
+      showPinData,
     })
+
+    if (!showPinData) {
+      setTimeout(() => {
+        this.setState({
+          pinId: null,
+        })
+      }, 300) // end of animation
+    }
   }
 
   render() {
@@ -69,6 +80,7 @@ class House extends React.Component {
       level,
       cursor,
       pinId,
+      showPinData,
     } = this.state
 
     const {
@@ -206,7 +218,7 @@ class House extends React.Component {
         </div>
 
         {/* Info Panel */}
-        <div className={`${pinId === null ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'} Panel absolute w-1/2 mx-auto my-0 left-0 right-0 shadow-xl transform transition duration-300 ease-in-out`}>
+        <div className={`${showPinData ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'} Panel absolute w-1/2 mx-auto my-0 left-0 right-0 shadow-xl transform transition duration-300 ease-in-out`}>
           <div className="bg-white px-6 py-4 rounded-lg">
             {pinId && pins[pinId].data}
           </div>
