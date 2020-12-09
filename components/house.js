@@ -99,7 +99,7 @@ class House extends React.Component {
     for (const pId in homeConfig.pins) {
       if (homeConfig.pins.hasOwnProperty(pId)) {
         const pin = homeConfig.pins[pId];
-        if (pin.type === 'variable') {
+        if (pin.type === 'variable' || pin.type === 'climate') {
           const vars = pin.preview.split('.')
           const varsChains = []
 
@@ -118,21 +118,31 @@ class House extends React.Component {
             preview = <LoaderAlt className="animate-spin" />
           }
 
+          let data = null
+          if (pin.type === 'climate') {
+            data = (
+              <ul>
+                <li>Target: {climate.temperature}C</li>
+                <li>Battery: {climate.batteryPercent}%</li>
+              </ul>
+            )
+          } else {
+            data = pId + ' data'
+          }
+
           pinsPerFloor[pin.floor].push({
             id: pId,
             preview,
-            data: pId + ' data',
             style: pin.style || {},
           })
 
           pins[pId] = {
-            data: pId + ' data',
+            data,
           }
         } else if (pin.type === 'light') {
           pinsPerFloor[pin.floor].push({
             id: pId,
             preview: <Bulb />,
-            data: pId + ' data',
             style: pin.style || {},
           })
 
@@ -143,7 +153,6 @@ class House extends React.Component {
           pinsPerFloor[pin.floor].push({
             id: pId,
             preview: <CameraHome />,
-            data: 'camera data',
             style: pin.style || {},
           })
 
