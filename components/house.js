@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bulb, CameraHome, LoaderAlt } from '@styled-icons/boxicons-regular'
+import { Battery, Bulb, CameraHome, LoaderAlt, TargetLock } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
 import homeConfig from '../home-config.json'
 
@@ -121,10 +121,22 @@ class House extends React.Component {
           let data = null
           if (pin.type === 'climate') {
             data = (
-              <ul>
-                <li>Target: {climate.temperature}C</li>
-                <li>Battery: {climate.batteryPercent}%</li>
-              </ul>
+              <div className="flex items-center">
+                <ul className="w-1/2">
+                  <li className="flex items-center">
+                    <TargetLock className="w-5 mr-2" />
+                    <span>{climate.temperature}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <Battery className="w-5 mr-2" />
+                    <span>{climate.batteryPercent}%</span>
+                  </li>
+                </ul>
+                <ul className="w-1/2">
+                  <li>{climate.temperature}%</li>
+                  <li>Battery: {climate.batteryPercent}%</li>
+                </ul>
+              </div>
             )
           } else {
             data = pId + ' data'
