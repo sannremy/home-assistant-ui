@@ -2,6 +2,7 @@ import React from 'react'
 import { Battery, Bulb, CameraHome, LoaderAlt, TargetLock } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
 import homeConfig from '../home-config.json'
+import { formatTemperature } from '../lib/text'
 
 const elementsPerFloor = homeConfig.floors
 const floors = elementsPerFloor.length
@@ -121,20 +122,17 @@ class House extends React.Component {
           let data = null
           if (pin.type === 'climate') {
             data = (
-              <div className="flex items-center">
+              <div className="flex items-start">
                 <ul className="w-1/2">
                   <li className="flex items-center">
-                    <TargetLock className="w-5 mr-2" />
-                    <span>{climate.temperature}</span>
-                  </li>
-                  <li className="flex items-center">
-                    <Battery className="w-5 mr-2" />
-                    <span>{climate.batteryPercent}%</span>
+                    <span>Set: {formatTemperature(climate.temperature)}</span>
                   </li>
                 </ul>
                 <ul className="w-1/2">
-                  <li>{climate.temperature}%</li>
-                  <li>Battery: {climate.batteryPercent}%</li>
+                  <li className="flex items-center">
+                    <span>{climate.batteryPercent}%</span>
+                    <Battery className="w-5 ml-1" />
+                  </li>
                 </ul>
               </div>
             )
