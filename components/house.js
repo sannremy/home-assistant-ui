@@ -1,5 +1,5 @@
 import React from 'react'
-import { Battery, Bulb, CameraHome, LoaderAlt, TargetLock } from '@styled-icons/boxicons-regular'
+import { Battery, Bulb, CameraHome, LoaderAlt, MinusCircle, PlusCircle, TargetLock } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
 import homeConfig from '../home-config.json'
 import { formatTemperature } from '../lib/text'
@@ -123,13 +123,31 @@ class House extends React.Component {
           if (pin.type === 'climate') {
             data = (
               <div className="flex items-start">
-                <ul className="w-1/2">
-                  <li className="flex items-center">
-                    <span>Set: {formatTemperature(climate.temperature)}</span>
+                <ul className="w-1/4">
+                  <li className="flex">
+                    <div className="text-center py-2 px-4 border border-gray-200 rounded-lg">
+                      <div>
+                        <PlusCircle className="w-5" />
+                      </div>
+                      <div className="my-1">
+                        <span className="font-semibold">
+                          {formatTemperature(climate.temperature)}
+                        </span>
+                      </div>
+                      <div>
+                        <MinusCircle className="w-5" />
+                      </div>
+                    </div>
                   </li>
                 </ul>
-                <ul className="w-1/2">
-                  <li className="flex items-center">
+                <ul className="w-1/4 border-r border-indigo-900">
+                  <li>{climate.state}</li>
+                </ul>
+                <ul className="w-1/4">
+                  <li>{climate.presetMode}</li>
+                </ul>
+                <ul className="w-1/4">
+                  <li className="flex items-center justify-end">
                     <span>{climate.batteryPercent}%</span>
                     <Battery className="w-5 ml-1" />
                   </li>
