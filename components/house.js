@@ -140,7 +140,7 @@ class House extends React.Component {
                     </div>
                   </li>
                 </ul>
-                <ul className="w-1/4 border-r border-indigo-900">
+                <ul className="w-1/4">
                   <li>{climate.state}</li>
                 </ul>
                 <ul className="w-1/4">
