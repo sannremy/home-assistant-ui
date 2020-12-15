@@ -6,15 +6,8 @@ const Climate = (state = {}, action) => {
     case 'UPDATE_CLIMATE':
       const newState = {
         ...state,
+        ...action.attributes,
         entityId: action.id,
-        currentTemperature: action.attributes.current_temperature,
-        temperature: action.attributes.temperature,
-        minTemperatureAllowed: action.attributes.min_temp,
-        maxTemperatureAllowed: action.attributes.max_temp,
-        temperatureStep: action.attributes.target_temp_step,
-        state: action.attributes.hvac_action,
-        batteryPercent: action.attributes.battery_level,
-        presetMode: action.attributes.preset_mode,
       }
 
       const s = hasSameValues(prevState, newState) ? state : newState

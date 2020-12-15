@@ -141,14 +141,14 @@ class House extends React.Component {
                   </li>
                 </ul>
                 <ul className="w-1/4">
-                  <li>{climate.state}</li>
+                  <li>{climate.hvac_action}</li>
                 </ul>
                 <ul className="w-1/4">
-                  <li>{climate.presetMode}</li>
+                  <li>{climate.preset_mode}</li>
                 </ul>
                 <ul className="w-1/4">
                   <li className="flex items-center justify-end">
-                    <span>{climate.batteryPercent}%</span>
+                    <span>{climate.battery_level}%</span>
                     <Battery className="w-5 ml-1" />
                   </li>
                 </ul>
