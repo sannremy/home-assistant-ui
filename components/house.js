@@ -1,5 +1,5 @@
 import React from 'react'
-import { Battery, Bulb, CameraHome, LoaderAlt, MinusCircle, PlusCircle, TargetLock } from '@styled-icons/boxicons-regular'
+import { Battery, Bulb, CameraHome, Droplet, LoaderAlt, MinusCircle, PlusCircle, TargetLock } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
 import homeConfig from '../home-config.json'
 import { formatTemperature } from '../lib/text'
@@ -100,7 +100,11 @@ class House extends React.Component {
     for (const pId in homeConfig.pins) {
       if (homeConfig.pins.hasOwnProperty(pId)) {
         const pin = homeConfig.pins[pId];
-        if (pin.type === 'variable' || pin.type === 'climate') {
+        if (
+          pin.type === 'variable'
+          || pin.type === 'climate'
+          || pin.type.indexOf("sensors.") === 0
+        ) {
           const vars = pin.preview.split('.')
           const varsChains = []
 
@@ -149,6 +153,30 @@ class House extends React.Component {
                 <ul className="w-1/4">
                   <li className="flex items-center justify-end">
                     <span>{climate.battery_level}%</span>
+                    <Battery className="w-5 ml-1" />
+                  </li>
+                </ul>
+              </div>
+            )
+          } else if (pin.type.indexOf("sensors.") === 0) {
+            const sensor = eval(pin.type)
+            data = (
+              <div className="flex items-start">
+                <ul className="w-1/4">
+                  <li>{sensor && sensor.temperature}</li>
+                </ul>
+                <ul className="w-1/4">
+                  <li>{sensor && sensor.co2}ppm</li>
+                </ul>
+                <ul className="w-1/4">
+                  <li className="flex items-center justify-end">
+                    <span>{sensor && sensor.humidity}%</span>
+                    <Droplet className="w-5 ml-1" />
+                  </li>
+                </ul>
+                <ul className="w-1/4">
+                  <li className="flex items-center justify-end">
+                    <span>{sensor && sensor.battery_percent}%</span>
                     <Battery className="w-5 ml-1" />
                   </li>
                 </ul>
