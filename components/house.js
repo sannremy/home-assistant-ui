@@ -85,8 +85,9 @@ class House extends React.Component {
     } = this.state
 
     const {
-      sensors, // used in eval
-      climate, // used in eval
+      light,
+      sensors,
+      climate,
     } = this.props
 
     const transitionClassNames = 'transition duration-300 ease-in-out'
@@ -101,8 +102,7 @@ class House extends React.Component {
       if (homeConfig.pins.hasOwnProperty(pId)) {
         const pin = homeConfig.pins[pId];
         if (
-          pin.type === 'variable'
-          || pin.type === 'climate'
+          pin.type === 'climate'
           || pin.type.indexOf("sensors.") === 0
         ) {
           const vars = pin.preview.split('.')
@@ -159,7 +159,8 @@ class House extends React.Component {
               </div>
             )
           } else if (pin.type.indexOf("sensors.") === 0) {
-            const sensor = eval(pin.type)
+            const sensor = sensors[pin.type.split('.')[1]]
+
             data = (
               <div className="flex items-start">
                 <ul className="w-1/4">
@@ -195,7 +196,16 @@ class House extends React.Component {
           pins[pId] = {
             data,
           }
-        } else if (pin.type === 'light') {
+        } else if (pin.type.indexOf("light.") === 0) {
+          const l = light[pin.type]
+
+          const data = (
+            <div className="flex items-start">
+              <ul className="w-1/4">
+                <li>{l && l.name}</li>
+              </ul>
+            </div>
+          )
           pinsPerFloor[pin.floor].push({
             id: pId,
             preview: <Bulb />,
@@ -203,7 +213,7 @@ class House extends React.Component {
           })
 
           pins[pId] = {
-            data: pId + ' data',
+            data,
           }
         } else if (pin.type === 'camera') {
           pinsPerFloor[pin.floor].push({

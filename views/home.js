@@ -30,6 +30,7 @@ class HomeView extends React.Component {
     const {
       climate,
       sensor,
+      light,
       // weather,
     } = this.props
 
@@ -43,6 +44,7 @@ class HomeView extends React.Component {
           <House
             sensors={sensor}
             climate={climate}
+            light={light}
           />
         </div>
         <div className="absolute top-0 left-0 w-full h-full">
@@ -99,6 +101,7 @@ const mapStateToProps = state => {
   return {
     climate: state.Climate,
     sensor: state.Sensor,
+    light: state.Light,
     weather: state.Weather,
   }
 }
