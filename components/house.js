@@ -1,5 +1,5 @@
 import React from 'react'
-import { Battery, Bulb, CameraHome, Droplet, LoaderAlt, MinusCircle, PlusCircle, TargetLock } from '@styled-icons/boxicons-regular'
+import { Battery, Bulb, CameraHome, Droplet, LoaderAlt, MinusCircle, PlusCircle, Wifi, Wifi1, Wifi2, WifiOff } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
 import homeConfig from '../home-config.json'
 import { formatTemperature } from '../lib/text'
@@ -163,22 +163,38 @@ class House extends React.Component {
 
             data = (
               <div className="flex items-start">
-                <ul className="w-1/4">
-                  <li>{sensor && sensor.temperature}</li>
-                </ul>
-                <ul className="w-1/4">
-                  <li>{sensor && sensor.co2}ppm</li>
-                </ul>
-                <ul className="w-1/4">
-                  <li className="flex items-center justify-end">
+                <ul className="w-1/3">
+                  <li>{sensor && sensor.temperature && (
+                    <span>
+                      <span>{formatTemperature(sensor.temperature)}</span>
+                    </span>
+                  )}</li>
+                  <li className="flex items-center">
                     <span>{sensor && sensor.humidity}%</span>
                     <Droplet className="w-5 ml-1" />
                   </li>
                 </ul>
-                <ul className="w-1/4">
+                <ul className="w-1/3">
+                  <li>{sensor && sensor.co2 && (
+                    <span>{sensor.co2}<span className="text-xs ml-1">ppm</span></span>
+                  )}</li>
+                </ul>
+                <ul className="w-1/3">
                   <li className="flex items-center justify-end">
                     <span>{sensor && sensor.battery_percent}%</span>
                     <Battery className="w-5 ml-1" />
+                    {sensor && sensor.reachability && sensor.radio === "Low" && (
+                      <Wifi1 className="w-5" title={`${sensor.radio} (${sensor.radio_level} dBm)`} />
+                    )}
+                    {sensor && sensor.reachability && sensor.radio === "Medium" && (
+                      <Wifi2 className="w-5" title={`${sensor.radio} (${sensor.radio_level} dBm)`} />
+                    )}
+                    {sensor && sensor.reachability && sensor.radio === "High" && (
+                      <Wifi className="w-5" title={`${sensor.radio} (${sensor.radio_level} dBm)`} />
+                    )}
+                    {sensor && !sensor.reachability && (
+                      <WifiOff className="w-5" />
+                    )}
                   </li>
                 </ul>
               </div>
