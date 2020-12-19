@@ -14,15 +14,10 @@ const Light = (state = {}, action) => {
       const newState = {
         ...state,
         [action.id]: {
+          ...action.attributes,
           entityId: action.id,
           state: action.state,
           name,
-          effectList: action.attributes.effect_list,
-          brightness: action.attributes.brightness,
-          colorTemperature: action.attributes.color_temp,
-          effect: action.attributes.effect,
-          effectList: action.attributes.effect_list,
-          rgbColor: action.attributes.rgb_color,
         },
       }
 
