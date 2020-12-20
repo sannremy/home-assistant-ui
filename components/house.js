@@ -1,8 +1,9 @@
 import React from 'react'
-import { Battery, Bulb, CameraHome, Droplet, LoaderAlt, MinusCircle, Plug, PlusCircle, Wifi, WifiOff } from '@styled-icons/boxicons-regular'
+import { Battery, Bulb, CameraHome, LoaderAlt, MinusCircle, Plug, PlusCircle, Wifi, WifiOff } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
 import homeConfig from '../home-config.json'
 import { formatTemperature, formatNumber } from '../lib/text'
+import { miredToRGB } from '../lib/color'
 
 const elementsPerFloor = homeConfig.floors
 const floors = elementsPerFloor.length
@@ -243,11 +244,50 @@ class House extends React.Component {
         } else if (pin.type.indexOf("light.") === 0) {
           const l = light[pin.type]
 
+          let brightness = null
+          if (l) {
+            if (isNaN(l.brightness)) {
+              brightness = 'off'
+            } else {
+              brightness = `${Math.round(l.brightness / 255 * 100)} %`
+            }
+          }
+
+          let [
+            red,
+            blue,
+            green,
+            alpha,
+          ] = [0, 0, 0, 0.1]
+
+          if (l && l.rgb_color) {
+            [
+              red,
+              blue,
+              green
+            ] = l.rgb_color
+            alpha = 1
+          } else if (l && l.color_temp) {
+            [red, blue, green] = miredToRGB(l.color_temp)
+            alpha = 1
+          }
+
           const data = (
             <div className="flex items-start">
               <ul className="w-1/4">
-                <li>{l && l.name}</li>
-                <li>{l && l.brightness}</li>
+                {l && l.name && (
+                  <li>{l.name}</li>
+                )}
+                {l && (l.rgb_color || l.color_temp) && (
+                  <li>
+                    <div className="border border-white w-5 h-5 rounded-full" style={{
+                      backgroundColor: `rgba(${red}, ${blue}, ${green}, ${alpha})`
+                    }} />
+                  </li>
+                )}
+                {brightness && (
+                  <li>{brightness}</li>
+                )}
               </ul>
             </div>
           )
