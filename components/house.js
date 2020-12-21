@@ -127,9 +127,22 @@ class House extends React.Component {
           let data = null
           if (pin.type === 'climate') {
             data = (
-              <div className="flex items-start px-6 py-4">
-                <ul className="w-1/4">
-                  <li className="flex">
+              <div>
+                <div className="flex items-center px-6 py-2 text-sm font-semibold bg-indigo-200 rounded-t-lg">
+                  <div className="flex-1">
+                    Thermostat
+                  </div>
+                  <div className="flex-1 flex items-center justify-end">
+                    {climate && climate.battery_level && (
+                      <div className="flex items-center">
+                        <span className="mr-1">{climate.battery_level} %</span>
+                        <Battery className="w-5" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-start px-6 py-4">
+                  <div className="w-1/2 flex">
                     <div className="text-center py-2 px-4 border border-gray-200 rounded-lg">
                       <div>
                         <PlusCircle className="w-5" />
@@ -143,20 +156,64 @@ class House extends React.Component {
                         <MinusCircle className="w-5" />
                       </div>
                     </div>
-                  </li>
-                </ul>
-                <ul className="w-1/4">
-                  <li>{climate.hvac_action}</li>
-                </ul>
-                <ul className="w-1/4">
-                  <li>{climate.preset_mode}</li>
-                </ul>
-                <ul className="w-1/4">
-                  <li className="flex items-center justify-end">
-                    <span>{climate.battery_level}%</span>
-                    <Battery className="w-5 ml-1" />
-                  </li>
-                </ul>
+                  </div>
+                  <ul className="w-1/2">
+                    <li>
+                      hvac_modes:
+                      {climate && climate.hvac_modes && (
+                        climate.hvac_modes.join(', ')
+                      )}
+                    </li>
+                    <li>
+                      min_temp:
+                      {climate && climate.min_temp && (
+                        climate.min_temp
+                      )}
+                    </li>
+                    <li>
+                      max_temp:
+                      {climate && climate.max_temp && (
+                        climate.max_temp
+                      )}
+                    </li>
+                    <li>
+                      target_temp_step:
+                      {climate && climate.target_temp_step && (
+                        climate.target_temp_step
+                      )}
+                    </li>
+                    <li>
+                      preset_modes:
+                      {climate && climate.preset_modes && (
+                        climate.preset_modes.join(', ')
+                      )}
+                    </li>
+                    <li>
+                      current_temperature:
+                      {climate && climate.current_temperature && (
+                        climate.current_temperature
+                      )}
+                    </li>
+                    <li>
+                      temperature:
+                      {climate && climate.temperature && (
+                        climate.temperature
+                      )}
+                    </li>
+                    <li>
+                      hvac_action:
+                      {climate && climate.hvac_action && (
+                        climate.hvac_action
+                      )}
+                    </li>
+                    <li>
+                      preset_mode:
+                      {climate && climate.preset_mode && (
+                        climate.preset_mode
+                      )}
+                    </li>
+                  </ul>
+                </div>
               </div>
             )
           } else if (pin.type.indexOf("sensors.") === 0) {
