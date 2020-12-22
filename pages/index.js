@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import Navbar from '../components/navbar'
 import HomeView from '../views/home'
 import LightsView from '../views/lights'
-import PlugsView from '../views/plugs'
 import TravelsView from '../views/travels'
 import TimersView from '../views/timers'
 
@@ -15,7 +14,6 @@ class Index extends React.Component {
     this.views = {
       home: <HomeView />,
       lights: <LightsView />,
-      plugs: <PlugsView />,
       travels: <TravelsView />,
       timers: <TimersView />,
     }
