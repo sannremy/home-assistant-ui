@@ -130,7 +130,7 @@ class House extends React.Component {
               <div>
                 <div className="flex items-center px-6 py-2 text-sm font-semibold bg-indigo-200 rounded-t-lg">
                   <div className="flex-1">
-                    Thermostat
+                    <span>{pin.name || "Thermostat"}</span>
                   </div>
                   <div className="flex-1 flex items-center justify-end">
                     {climate && climate.battery_level && (
@@ -223,7 +223,7 @@ class House extends React.Component {
               <div>
                 <div className="flex items-center px-6 py-2 text-sm font-semibold bg-indigo-200 rounded-t-lg">
                   <div className="flex-1">
-                    Module name
+                    <span>{pin.name || "Module"}</span>
                   </div>
                   <div className="flex-1 flex items-center justify-end">
                     <div className="flex items-center border-r-2 border-indigo-900 pr-2 mr-2">
