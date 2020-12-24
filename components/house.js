@@ -330,22 +330,37 @@ class House extends React.Component {
           }
 
           const data = (
-            <div className="flex items-start">
-              <ul className="w-1/4">
-                {l && l.name && (
-                  <li>{l.name}</li>
-                )}
-                {l && (l.rgb_color || l.color_temp) && (
-                  <li>
-                    <div className="border border-white w-5 h-5 rounded-full" style={{
-                      backgroundColor: `rgba(${red}, ${blue}, ${green}, ${alpha})`
-                    }} />
-                  </li>
-                )}
-                {brightness && (
-                  <li>{brightness}</li>
-                )}
-              </ul>
+            <div>
+              <div className="flex items-center px-6 py-2 text-sm font-semibold bg-indigo-200 rounded-t-lg">
+                <div className="flex-1">
+                  <span>{pin.name || "Module"}</span>
+                </div>
+                <div className="flex-1 flex items-center justify-end">
+                  <div className="flex items-center border-r-2 border-indigo-900 pr-2 mr-2">
+                    a
+                  </div>
+                  <div>
+                    b
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <ul className="w-1/4">
+                  {l && l.name && (
+                    <li>{l.name}</li>
+                  )}
+                  {l && (l.rgb_color || l.color_temp) && (
+                    <li>
+                      <div className="border border-white w-5 h-5 rounded-full" style={{
+                        backgroundColor: `rgba(${red}, ${blue}, ${green}, ${alpha})`
+                      }} />
+                    </li>
+                  )}
+                  {brightness && (
+                    <li>{brightness}</li>
+                  )}
+                </ul>
+              </div>
             </div>
           )
           pinsPerFloor[pin.floor].push({
