@@ -337,10 +337,10 @@ class House extends React.Component {
                 </div>
                 <div className="flex-1 flex items-center justify-end">
                   <div className="flex items-center border-r-2 border-indigo-900 pr-2 mr-2">
-                    a
+                    light 1
                   </div>
                   <div>
-                    b
+                    light 2
                   </div>
                 </div>
               </div>
