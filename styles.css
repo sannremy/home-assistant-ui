@@ -38,6 +38,7 @@ h1, h2, h3, h4 {
 .level-2-selected .Pins--level2 {
   transform: translateY(0);
   opacity: 1;
+  pointer-events: inherit;
 }
 
 /* Element */
@@ -187,6 +188,7 @@ h1, h2, h3, h4 {
 .Pins--level2 {
   opacity: 0;
   transform: translateY(-100px);
+  pointer-events: none;
 }
 
 .Pin {
