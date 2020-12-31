@@ -120,6 +120,11 @@ export const changeView = ({ view }) => ({
   view,
 })
 
+export const clickOutside = ({ hasClickedOutside }) => ({
+  type: 'CLICK_OUTSIDE',
+  hasClickedOutside,
+})
+
 /**
  * Call services
  */

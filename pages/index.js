@@ -1,11 +1,15 @@
 import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
+
 import Navbar from '../components/navbar'
 import HomeView from '../views/home'
 import LightsView from '../views/lights'
 import TravelsView from '../views/travels'
 import TimersView from '../views/timers'
+
+import { dispatch } from '../lib/store'
+import { clickOutside } from '../actions'
 
 class Index extends React.Component {
   constructor(props) {
@@ -19,6 +23,20 @@ class Index extends React.Component {
     }
 
     this.viewIndexes = Object.keys(this.views)
+
+    this.handleClickOutside = this.handleClickOutside.bind(this)
+  }
+
+  handleClickOutside(event) {
+    if (event.target.classList.contains("viewWrapper")) {
+      dispatch(clickOutside({
+        hasClickedOutside: true,
+      }))
+    } else {
+      dispatch(clickOutside({
+        hasClickedOutside: false,
+      }))
+    }
   }
 
   render() {
@@ -56,9 +74,16 @@ class Index extends React.Component {
           left: `-${this.viewIndexes.indexOf(navbar.view) * 100}%`,
         }}>
           {Object.entries(this.views).map(([id, component], index) => (
-            <div key={id} className="absolute w-full px-6 py-6" style={{
-              left: `${index * 100}%`,
-            }}>{component}</div>
+            <div
+              key={id}
+              className="absolute w-full h-full px-6 py-6 viewWrapper"
+              style={{
+                left: `${index * 100}%`,
+              }}
+              onClick={e => this.handleClickOutside(e)}
+            >
+              {component}
+            </div>
           ))}
         </main>
         <Navbar {...navbar} />

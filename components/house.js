@@ -21,7 +21,7 @@ class House extends React.Component {
 
     this.floorRefs = []
     for (let i = 0; i < floors; i++) {
-      this.floorRefs[i] = React.createRef();
+      this.floorRefs[i] = React.createRef()
     }
 
     this.handleChangeFloor = this.handleChangeFloor.bind(this)
@@ -89,7 +89,10 @@ class House extends React.Component {
       light,
       sensors,
       climate,
+      ui,
     } = this.props
+
+    console.log(ui)
 
     const transitionClassNames = 'transition duration-300 ease-in-out'
 
@@ -389,8 +392,7 @@ class House extends React.Component {
     }
 
     return (
-      <div className={`relative ${'level-' + level + '-selected'}`}>
-
+      <div className={`h-full relative ${'level-' + level + '-selected'}`}>
         {/* Levels */}
         <div className="absolute">
           <ul className="relative bg-white">
@@ -439,7 +441,7 @@ class House extends React.Component {
                   key={'pin_' + pin.id}
                   id={pin.id}
                   style={pin.style}
-                  isSelected={pin.id === pinId}
+                  isSelected={pin.id === pinId && showPinData}
                   onClick={(e) => this.handlePinClick(e, pin.id)}
                 >
                   {pin.preview}

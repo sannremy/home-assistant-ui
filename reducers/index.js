@@ -6,6 +6,7 @@ import Sensor from './sensor'
 import Timer from './timer'
 import Weather from './weather'
 import Navbar from './navbar'
+import UI from './ui'
 
 export default combineReducers({
   SwitchPlug,
@@ -15,4 +16,5 @@ export default combineReducers({
   Timer,
   Weather,
   Navbar,
+  UI,
 })
