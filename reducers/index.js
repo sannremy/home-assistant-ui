@@ -7,6 +7,7 @@ import Timer from './timer'
 import Weather from './weather'
 import Navbar from './navbar'
 import UI from './ui'
+import Sun from './sun'
 
 export default combineReducers({
   SwitchPlug,
@@ -17,4 +18,5 @@ export default combineReducers({
   Weather,
   Navbar,
   UI,
+  Sun,
 })

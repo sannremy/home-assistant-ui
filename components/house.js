@@ -34,6 +34,24 @@ class House extends React.Component {
     })
   }
 
+  disablePin() {
+    this.setState({
+      showPinData: false,
+    })
+
+    setTimeout(() => {
+      this.setState({
+        pinId: null,
+      })
+    }, 300) // end of animation
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.ui.hasClickedOutside && this.props.ui.hasClickedOutside) {
+      this.disablePin()
+    }
+  }
+
   handleChangeFloor(levelSelected) {
     const {
       level,
@@ -43,15 +61,10 @@ class House extends React.Component {
       this.setState({
         level: levelSelected,
         cursor: this.floorRefs[levelSelected].current.offsetTop,
-        showPinData: false,
       })
-
-      setTimeout(() => {
-        this.setState({
-          pinId: null,
-        })
-      }, 300) // end of animation
     }
+
+    this.disablePin()
   }
 
   handlePinClick(event, clickedPinId) {
@@ -69,11 +82,7 @@ class House extends React.Component {
     })
 
     if (!showPinData) {
-      setTimeout(() => {
-        this.setState({
-          pinId: null,
-        })
-      }, 300) // end of animation
+      this.disablePin()
     }
   }
 
@@ -89,10 +98,7 @@ class House extends React.Component {
       light,
       sensors,
       climate,
-      ui,
     } = this.props
-
-    console.log(ui)
 
     const transitionClassNames = 'transition duration-300 ease-in-out'
 

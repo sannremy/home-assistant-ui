@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import DateTime from '../components/date-time'
+import Horizon from '../components/horizon'
 import House from '../components/house'
 
 let interval = null
@@ -33,6 +34,7 @@ class HomeView extends React.Component {
       light,
       // weather,
       ui,
+      sun,
     } = this.props
 
     const {
@@ -41,6 +43,11 @@ class HomeView extends React.Component {
 
     return (
       <div className="relative">
+        <div className="absolute left-0" style={{
+          top: "30vh",
+        }}>
+          <Horizon sun={sun} />
+        </div>
         <div className="absolute top-0 left-0 w-full h-full">
           <House
             sensors={sensor}
@@ -106,6 +113,7 @@ const mapStateToProps = state => {
     light: state.Light,
     weather: state.Weather,
     ui: state.UI,
+    sun: state.Sun,
   }
 }
 

@@ -56,6 +56,12 @@ export const receiveEntities = (entities) => {
           && configEntities.timer.includes(entityId)
         ) {
           dispatch(updateTimer(entity))
+        } else if (
+          // Sun
+          entityId.indexOf('sun.') === 0
+          && configEntities.sun.includes(entityId)
+        ) {
+          dispatch(updateSun(entity))
         } else {
           // Not supported in config entities
           dispatch(updateNotSupported(entity))
@@ -107,8 +113,14 @@ const updateTimer = ({ state, attributes, entity_id }) => ({
   attributes,
 })
 
+const updateSun = ({ state, attributes }) => ({
+  type: 'UPDATE_SUN',
+  state,
+  attributes,
+})
+
 const updateNotSupported = ({ entity_id }) => {
-  console.info('UPDATE_NOT_SUPPORTED:', entity_id)
+  // console.info('UPDATE_NOT_SUPPORTED:', entity_id)
   return {
     type: 'UPDATE_NOT_SUPPORTED',
     id: entity_id,
