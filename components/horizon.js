@@ -1,5 +1,5 @@
 import React from 'react'
-import { UpArrowCircle, Sun, DownArrowCircle } from '@styled-icons/boxicons-regular'
+import { UpArrowCircle, Sun, DownArrowCircle, LoaderAlt } from '@styled-icons/boxicons-regular'
 import { formatDateTime } from '../lib/text'
 
 class Horizon extends React.Component {
@@ -16,7 +16,18 @@ class Horizon extends React.Component {
       sun,
     } = this.props
 
-    let timeToDisplay = sun.next_setting < sun.next_rising ? sun.next_setting : sun.next_rising
+    let timeToDisplay
+    let iconToDisplay = <LoaderAlt className="animate-spin" />
+
+    if (sun.next_setting && sun.next_rising) {
+      if (sun.next_setting < sun.next_rising) {
+        timeToDisplay = sun.next_setting
+        iconToDisplay = <DownArrowCircle />
+      } else {
+        timeToDisplay = sun.next_rising
+        iconToDisplay = <UpArrowCircle />
+      }
+    }
 
     return (
       <div className="w-auto flex items-center flex-col justify-center">
@@ -24,17 +35,15 @@ class Horizon extends React.Component {
         <div className="flex items-center justify-center">
           <div className="flex items-center mt-1">
             <div className="flex items-center w-5 h-5 mr-1">
-              {sun.rising && (
-                <UpArrowCircle />
-              )}
-              {!sun.rising && (
-                <DownArrowCircle />
-              )}
+              {iconToDisplay}
             </div>
-            {formatDateTime(timeToDisplay, {
+            {timeToDisplay && formatDateTime(timeToDisplay, {
               hour: "numeric",
               minute: "numeric",
             })}
+            {!timeToDisplay && (
+              <span>-</span>
+            )}
           </div>
         </div>
       </div>
