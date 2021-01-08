@@ -1,5 +1,5 @@
 import React from 'react'
-import { UpArrowCircle, Sun, DownArrowCircle, LoaderAlt } from '@styled-icons/boxicons-regular'
+import { UpArrowCircle, Sun, DownArrowCircle, LoaderAlt, Moon } from '@styled-icons/boxicons-regular'
 import { formatDateTime } from '../lib/text'
 
 class Horizon extends React.Component {
@@ -29,9 +29,17 @@ class Horizon extends React.Component {
       }
     }
 
+    let sunOrMoon = <LoaderAlt className="w-full h-full animate-spin" />
+
+    if (sun.state === 'below_horizon') {
+      sunOrMoon = <Moon className="w-full h-full text-blue-600" />
+    } else if (sun.state === 'above_horizon') {
+      sunOrMoon = <Sun className="w-full h-full text-yellow-400" />
+    }
+
     return (
-      <div className="w-auto flex items-center flex-col justify-center">
-        <Sun className="w-16 h-16 text-yellow-400" />
+      <div className="w-16 flex items-center flex-col justify-center">
+        {sunOrMoon}
         <div className="flex items-center justify-center">
           <div className="flex items-center mt-1">
             <div className="flex items-center w-5 h-5 mr-1">
