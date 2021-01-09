@@ -32,7 +32,7 @@ class HomeView extends React.Component {
       climate,
       sensor,
       light,
-      // weather,
+      weather,
       ui,
       sun,
     } = this.props
@@ -43,11 +43,6 @@ class HomeView extends React.Component {
 
     return (
       <div className="relative">
-        <div className="absolute left-0" style={{
-          top: "30vh",
-        }}>
-          <Horizon sun={sun} />
-        </div>
         <div className="absolute top-0 left-0 w-full h-full">
           <House
             sensors={sensor}
@@ -56,10 +51,14 @@ class HomeView extends React.Component {
             ui={ui}
           />
         </div>
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="relative">
-            <div className="float-right flex items-center">
-              <DateTime date={currentDate} />
+        <div className="absolute top-0 right-0 w-full h-full">
+          <div className="relative flex flex-col">
+            <DateTime
+              date={currentDate}
+              weather={weather}
+            />
+            <div className="flex justify-end mt-4">
+              <Horizon sun={sun} />
             </div>
           </div>
         </div>

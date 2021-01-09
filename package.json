@@ -25,5 +25,9 @@
     "tailwindcss": "^1.9.6",
     "typeface-montserrat": "^1.1.13",
     "typeface-patua-one": "^1.1.13"
+  },
+  "dependencies": {
+    "@iconify/icons-wi": "^1.1.0",
+    "@iconify/react": "^1.1.3"
   }
 }

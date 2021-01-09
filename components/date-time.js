@@ -1,6 +1,6 @@
-import { Sun } from '@styled-icons/boxicons-regular'
 import React from 'react'
-import { formatDateTime } from '../lib/text'
+import { weatherIconMap } from '../lib/icon'
+import { formatDateTime, formatTemperature } from '../lib/text'
 
 class DateTime extends React.Component {
   constructor(props) {
@@ -10,6 +10,7 @@ class DateTime extends React.Component {
   render() {
     const {
       date,
+      weather,
     } = this.props
 
     return (
@@ -23,10 +24,10 @@ class DateTime extends React.Component {
           </span>
           <span className="mx-4 border border-indigo-900 w-px h-6" />
           <span className="mr-2">
-            8&deg;
+            {formatTemperature(weather.temperature)}
           </span>
           <span className="w-8 h-8 flex items-center">
-            <Sun />
+            {weatherIconMap[weather.condition]}
           </span>
         </div>
         <div className="flex items-center justify-end font-light">{formatDateTime(date, {
