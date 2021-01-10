@@ -43,14 +43,6 @@ class HomeView extends React.Component {
 
     return (
       <div className="relative">
-        <div className="absolute top-0 left-0 w-full h-full">
-          <House
-            sensors={sensor}
-            climate={climate}
-            light={light}
-            ui={ui}
-          />
-        </div>
         <div className="absolute top-0 right-0 w-full h-full">
           <div className="relative flex flex-col">
             <DateTime
@@ -61,6 +53,14 @@ class HomeView extends React.Component {
               <Horizon sun={sun} />
             </div>
           </div>
+        </div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <House
+            sensors={sensor}
+            climate={climate}
+            light={light}
+            ui={ui}
+          />
         </div>
 
         {/* Cols */}

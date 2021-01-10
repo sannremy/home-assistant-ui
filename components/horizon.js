@@ -1,6 +1,7 @@
 import React from 'react'
-import { UpArrowCircle, Sun, DownArrowCircle, LoaderAlt, Moon } from '@styled-icons/boxicons-regular'
+import { Sun, LoaderAlt, Moon } from '@styled-icons/boxicons-regular'
 import { formatDateTime } from '../lib/text'
+import { horizonIconMap } from '../lib/icon'
 
 class Horizon extends React.Component {
   state = {
@@ -22,26 +23,28 @@ class Horizon extends React.Component {
     if (sun.next_setting && sun.next_rising) {
       if (sun.next_setting < sun.next_rising) {
         timeToDisplay = sun.next_setting
-        iconToDisplay = <DownArrowCircle />
+        iconToDisplay = horizonIconMap['sunset']
       } else {
         timeToDisplay = sun.next_rising
-        iconToDisplay = <UpArrowCircle />
+        iconToDisplay = horizonIconMap['sunrise']
       }
     }
 
-    let sunOrMoon = <LoaderAlt className="w-full h-full animate-spin" />
+    let horizonIcon = <LoaderAlt className="w-full h-full animate-spin" />
 
     if (sun.state === 'below_horizon') {
-      sunOrMoon = <Moon className="w-full h-full text-blue-600" />
+      horizonIcon = horizonIconMap['below-horizon']
     } else if (sun.state === 'above_horizon') {
-      sunOrMoon = <Sun className="w-full h-full text-yellow-400" />
+      horizonIcon = horizonIconMap['above-horizon']
     }
 
     return (
       <div className="w-16 flex items-center flex-col justify-center">
-        {sunOrMoon}
+        <div className="flex items-center mb-2">
+          {horizonIcon}
+        </div>
         <div className="flex items-center justify-center">
-          <div className="flex items-center mt-1">
+          <div className="flex items-center">
             <div className="flex items-center w-5 h-5 mr-1">
               {iconToDisplay}
             </div>

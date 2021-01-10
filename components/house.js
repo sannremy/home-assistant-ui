@@ -14,6 +14,7 @@ class House extends React.Component {
     cursor: 0,
     pinId: null,
     showPinData: false,
+    climateTargetedTemperature: null,
   }
 
   constructor(props) {
@@ -26,11 +27,17 @@ class House extends React.Component {
 
     this.handleChangeFloor = this.handleChangeFloor.bind(this)
     this.handlePinClick = this.handlePinClick.bind(this)
+    this.handleChangeClimate = this.handleChangeClimate.bind(this)
   }
 
   componentDidMount() {
+    const {
+      climate,
+    } = this.props
+
     this.setState({
       cursor: this.floorRefs[this.state.level].current.offsetLeft,
+      climateTargetedTemperature: climate.temperature,
     })
   }
 
@@ -86,12 +93,40 @@ class House extends React.Component {
     }
   }
 
+  handleChangeClimate(increase) {
+    console.log(increase)
+    const {
+      climate,
+    } = this.props
+
+    const {
+      climateTargetedTemperature
+    } = this.state
+
+    if (climate) {
+      let newTemp = climateTargetedTemperature
+      if (increase) {
+        newTemp += climate.target_temp_step
+      } else {
+        newTemp -= climate.target_temp_step
+      }
+
+      newTemp = Math.min(Math.max(newTemp, climate.min_temp), climate.max_temp)
+
+      this.setState({
+        climateTargetedTemperature: newTemp,
+      })
+    }
+
+  }
+
   render() {
     const {
       level,
       cursor,
       pinId,
       showPinData,
+      climateTargetedTemperature,
     } = this.state
 
     const {
@@ -153,15 +188,15 @@ class House extends React.Component {
                 <div className="flex items-start px-6 py-4">
                   <div className="w-1/2 flex">
                     <div className="text-center py-2 px-4 border border-gray-200 rounded-lg">
-                      <div>
+                      <div className="cursor-pointer" onClick={() => this.handleChangeClimate(true)}>
                         <PlusCircle className="w-5" />
                       </div>
                       <div className="my-1">
                         <span className="font-semibold">
-                          {formatTemperature(climate.temperature)}
+                          {formatTemperature(climateTargetedTemperature, 1)}
                         </span>
                       </div>
-                      <div>
+                      <div className="cursor-pointer" onClick={() => this.handleChangeClimate(false)}>
                         <MinusCircle className="w-5" />
                       </div>
                     </div>
