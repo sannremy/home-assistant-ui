@@ -14,7 +14,6 @@ class House extends React.Component {
     cursor: 0,
     pinId: null,
     showPinData: false,
-    climateTargetedTemperature: null,
   }
 
   constructor(props) {
@@ -37,7 +36,6 @@ class House extends React.Component {
 
     this.setState({
       cursor: this.floorRefs[this.state.level].current.offsetLeft,
-      climateTargetedTemperature: climate.temperature,
     })
   }
 
@@ -94,17 +92,12 @@ class House extends React.Component {
   }
 
   handleChangeClimate(increase) {
-    console.log(increase)
     const {
       climate,
     } = this.props
 
-    const {
-      climateTargetedTemperature
-    } = this.state
-
     if (climate) {
-      let newTemp = climateTargetedTemperature
+      let newTemp = climate.temperature
       if (increase) {
         newTemp += climate.target_temp_step
       } else {
@@ -113,9 +106,7 @@ class House extends React.Component {
 
       newTemp = Math.min(Math.max(newTemp, climate.min_temp), climate.max_temp)
 
-      this.setState({
-        climateTargetedTemperature: newTemp,
-      })
+      // dispatch action to climate
     }
 
   }
@@ -193,7 +184,7 @@ class House extends React.Component {
                       </div>
                       <div className="my-1">
                         <span className="font-semibold">
-                          {formatTemperature(climateTargetedTemperature, 1)}
+                          {formatTemperature(climate.temperature, 1)}
                         </span>
                       </div>
                       <div className="cursor-pointer" onClick={() => this.handleChangeClimate(false)}>
