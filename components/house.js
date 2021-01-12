@@ -177,8 +177,8 @@ class House extends React.Component {
                   </div>
                 </div>
                 <div className="flex items-start px-6 py-4">
-                  <div className="w-1/2 flex">
-                    <div className="text-center py-2 px-4 border border-gray-200 rounded-lg">
+                  <div className="flex mr-4">
+                    <div className={`text-center py-2 px-4 border border-${climate.hvac_action === "heating" ? "yellow-400" : "gray-200"} rounded-lg`}>
                       <div className="cursor-pointer" onClick={() => this.handleChangeClimate(true)}>
                         <PlusCircle className="w-5" />
                       </div>
@@ -192,61 +192,17 @@ class House extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <ul className="w-1/2">
-                    <li>
-                      hvac_modes:
-                      {climate && climate.hvac_modes && (
-                        climate.hvac_modes.join(', ')
-                      )}
-                    </li>
-                    <li>
-                      min_temp:
-                      {climate && climate.min_temp && (
-                        climate.min_temp
-                      )}
-                    </li>
-                    <li>
-                      max_temp:
-                      {climate && climate.max_temp && (
-                        climate.max_temp
-                      )}
-                    </li>
-                    <li>
-                      target_temp_step:
-                      {climate && climate.target_temp_step && (
-                        climate.target_temp_step
-                      )}
-                    </li>
-                    <li>
-                      preset_modes:
-                      {climate && climate.preset_modes && (
-                        climate.preset_modes.join(', ')
-                      )}
-                    </li>
-                    <li>
-                      current_temperature:
-                      {climate && climate.current_temperature && (
-                        climate.current_temperature
-                      )}
-                    </li>
-                    <li>
-                      temperature:
-                      {climate && climate.temperature && (
-                        climate.temperature
-                      )}
-                    </li>
-                    <li>
-                      hvac_action:
-                      {climate && climate.hvac_action && (
-                        climate.hvac_action
-                      )}
-                    </li>
-                    <li>
-                      preset_mode:
-                      {climate && climate.preset_mode && (
-                        climate.preset_mode
-                      )}
-                    </li>
+                  <ul className="leading-8">
+                    {climate && climate.current_temperature && (
+                      <li>
+                        <span>Température : {formatTemperature(climate.current_temperature, 1)}</span>
+                      </li>
+                    )}
+                    {climate && climate.preset_mode && (
+                      <li>
+                        <span>Mode : {climate.preset_mode}</span>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
