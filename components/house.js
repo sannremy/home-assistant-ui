@@ -295,9 +295,9 @@ class House extends React.Component {
           let brightness = null
           if (l) {
             if (isNaN(l.brightness)) {
-              brightness = 'off'
+              brightness = 0
             } else {
-              brightness = `${Math.round(l.brightness / 255 * 100)} %`
+              brightness = Math.round(l.brightness / 255 * 100)
             }
           }
 
@@ -326,29 +326,32 @@ class House extends React.Component {
                 <div className="flex-1">
                   <span>{pin.name || "Module"}</span>
                 </div>
-                <div className="flex-1 flex items-center justify-end">
-                  <div className="flex items-center border-r-2 border-indigo-900 pr-2 mr-2">
-                    light 1
-                  </div>
-                  <div>
-                    light 2
-                  </div>
-                </div>
               </div>
-              <div className="flex items-start">
+              <div className="flex items-start px-6 py-4">
                 <ul className="w-1/4">
-                  {l && l.name && (
-                    <li>{l.name}</li>
+                  {l && l.effect && (
+                    <li>{l.effect}</li>
                   )}
                   {l && (l.rgb_color || l.color_temp) && (
-                    <li>
+                    <li className="flex items-center">
+                      <div className="mr-2">Couleur</div>
                       <div className="border border-white w-5 h-5 rounded-full" style={{
                         backgroundColor: `rgba(${red}, ${blue}, ${green}, ${alpha})`
                       }} />
                     </li>
                   )}
                   {brightness && (
-                    <li>{brightness}</li>
+                    <li>{brightness} %
+                      <input
+                        type="range"
+                        id="brightness"
+                        name="brightness"
+                        min="0"
+                        max="100"
+                        value={brightness}
+                        step="1"
+                      />
+                    </li>
                   )}
                 </ul>
               </div>
