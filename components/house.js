@@ -117,7 +117,6 @@ class House extends React.Component {
       cursor,
       pinId,
       showPinData,
-      climateTargetedTemperature,
     } = this.state
 
     const {
@@ -344,8 +343,6 @@ class House extends React.Component {
                     <li>{brightness} %
                       <input
                         type="range"
-                        id="brightness"
-                        name="brightness"
                         min="0"
                         max="100"
                         value={brightness}
