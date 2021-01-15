@@ -341,13 +341,6 @@ class House extends React.Component {
                   )}
                   {brightness && (
                     <li>{brightness} %
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={brightness}
-                        step="1"
-                      />
                     </li>
                   )}
                 </ul>
