@@ -2,7 +2,7 @@ import React from 'react'
 import { Battery, Bulb, CameraHome, LoaderAlt, MinusCircle, Plug, PlusCircle, Wifi, WifiOff } from '@styled-icons/boxicons-regular'
 import Pin from './pin'
 import homeConfig from '../home-config.json'
-import { formatTemperature, formatNumber } from '../lib/text'
+import { formatTemperature, formatNumber, formatClimatePresetMode } from '../lib/text'
 import { miredToRGB } from '../lib/color'
 
 const elementsPerFloor = homeConfig.floors
@@ -177,7 +177,7 @@ class House extends React.Component {
                 </div>
                 <div className="flex items-start px-6 py-4">
                   <div className="flex mr-4">
-                    <div className={`text-center py-2 px-4 border border-${climate.hvac_action === "heating" ? "yellow-400" : "gray-200"} rounded-lg`}>
+                    <div className={`text-center py-2 px-4 border border-gray-200 rounded-lg`}>
                       <div className="cursor-pointer" onClick={() => this.handleChangeClimate(true)}>
                         <PlusCircle className="w-5" />
                       </div>
@@ -197,9 +197,14 @@ class House extends React.Component {
                         <span>Température : {formatTemperature(climate.current_temperature, 1)}</span>
                       </li>
                     )}
+                    {climate && climate.hvac_action === "heating" && (
+                      <li>
+                        <span>Status : En chauffe</span>
+                      </li>
+                    )}
                     {climate && climate.preset_mode && (
                       <li>
-                        <span>Mode : {climate.preset_mode}</span>
+                        <span>Mode : {formatClimatePresetMode(climate.preset_mode)}</span>
                       </li>
                     )}
                   </ul>
