@@ -158,6 +158,7 @@ class House extends React.Component {
             preview = <LoaderAlt className="animate-spin" />
           }
 
+          let isActive = false
           let data = null
           if (pin.type === 'climate') {
             data = (
@@ -211,6 +212,8 @@ class House extends React.Component {
                 </div>
               </div>
             )
+
+            isActive = climate.hvac_action === "heating"
           } else if (pin.type.indexOf("sensors.") === 0) {
             const sensor = sensors[pin.type.split('.')[1]]
 
@@ -284,10 +287,12 @@ class House extends React.Component {
             data = pId + ' data'
           }
 
+          // Pins for sensors and climate
           pinsPerFloor[pin.floor].push({
             id: pId,
             preview,
             style: pin.style || {},
+            isActive,
           })
 
           pins[pId] = {
@@ -356,6 +361,7 @@ class House extends React.Component {
             id: pId,
             preview: <Bulb />,
             style: pin.style || {},
+            isActive: l.state === "on",
           })
 
           pins[pId] = {
@@ -428,6 +434,7 @@ class House extends React.Component {
                   id={pin.id}
                   style={pin.style}
                   isSelected={pin.id === pinId && showPinData}
+                  isActive={pin.isActive}
                   onClick={(e) => this.handlePinClick(e, pin.id)}
                 >
                   {pin.preview}
