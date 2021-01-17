@@ -361,7 +361,7 @@ class House extends React.Component {
             id: pId,
             preview: <Bulb />,
             style: pin.style || {},
-            isActive: l.state === "on",
+            isActive: l && l.state === "on",
           })
 
           pins[pId] = {
