@@ -4,6 +4,8 @@ import Pin from './pin'
 import homeConfig from '../home-config.json'
 import { formatTemperature, formatNumber, formatClimatePresetMode } from '../lib/text'
 import { miredToRGB } from '../lib/color'
+import { dispatch } from '../lib/store'
+import { switchLight } from '../actions'
 
 const elementsPerFloor = homeConfig.floors
 const floors = elementsPerFloor.length
@@ -27,13 +29,10 @@ class House extends React.Component {
     this.handleChangeFloor = this.handleChangeFloor.bind(this)
     this.handlePinClick = this.handlePinClick.bind(this)
     this.handleChangeClimate = this.handleChangeClimate.bind(this)
+    this.handleToggleLight = this.handleToggleLight.bind(this)
   }
 
   componentDidMount() {
-    const {
-      climate,
-    } = this.props
-
     this.setState({
       cursor: this.floorRefs[this.state.level].current.offsetLeft,
     })
@@ -108,7 +107,17 @@ class House extends React.Component {
 
       // dispatch action to climate
     }
+  }
 
+  handleToggleLight(event, light) {
+    event.preventDefault()
+
+    const enabled = light && light.state === "on" ? false : true
+
+    dispatch(switchLight({
+      entity_id: light.entityId,
+      enabled,
+    }))
   }
 
   render() {
@@ -338,6 +347,9 @@ class House extends React.Component {
               </div>
               <div className="flex items-start px-6 py-4">
                 <ul className="w-1/4">
+                  <li>
+                    <span onClick={(e) => this.handleToggleLight(e, l)}>{l.state}</span>
+                  </li>
                   {l && l.effect && (
                     <li>{l.effect}</li>
                   )}
@@ -350,8 +362,7 @@ class House extends React.Component {
                     </li>
                   )}
                   {brightness && (
-                    <li>{brightness} %
-                    </li>
+                    <li>{brightness} %</li>
                   )}
                 </ul>
               </div>
