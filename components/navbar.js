@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bulb, Car, Home, TimeFive } from '@styled-icons/boxicons-regular'
+import { Car, Home, TimeFive } from '@styled-icons/boxicons-regular'
 import { changeView } from '../actions'
 import { dispatch } from '../lib/store'
 
@@ -14,7 +14,6 @@ class Navbar extends React.Component {
 
     this.iconRefs = {
       home: React.createRef(),
-      lights: React.createRef(),
       travels: React.createRef(),
       timers: React.createRef(),
     }
@@ -63,11 +62,6 @@ class Navbar extends React.Component {
           <li ref={this.iconRefs['home']}>
             <a href="#" onClick={() => this.handleClick('home')} className={commonClassNames}>
               <Home className="h-full" />
-            </a>
-          </li>
-          <li ref={this.iconRefs['lights']}>
-            <a href="#" onClick={() => this.handleClick('lights')} className={commonClassNames}>
-              <Bulb className="h-full" />
             </a>
           </li>
           <li ref={this.iconRefs['travels']}>

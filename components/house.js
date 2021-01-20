@@ -347,9 +347,11 @@ class House extends React.Component {
               </div>
               <div className="flex items-start px-6 py-4">
                 <ul className="w-1/4">
-                  <li>
-                    <span onClick={(e) => this.handleToggleLight(e, l)}>{l.state}</span>
-                  </li>
+                  {l && l.state && (
+                    <li>
+                      <span onClick={(e) => this.handleToggleLight(e, l)}>{l.state}</span>
+                    </li>
+                  )}
                   {l && l.effect && (
                     <li>{l.effect}</li>
                   )}
