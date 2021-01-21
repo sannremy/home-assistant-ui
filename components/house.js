@@ -349,7 +349,7 @@ class House extends React.Component {
                 <ul className="w-1/4">
                   {l && l.state && (
                     <li>
-                      <span onClick={(e) => this.handleToggleLight(e, l)}>{l.state}</span>
+                      <button onClick={(e) => this.handleToggleLight(e, l)}>{l.state}</button>
                     </li>
                   )}
                   {l && l.effect && (
@@ -363,7 +363,7 @@ class House extends React.Component {
                       }} />
                     </li>
                   )}
-                  {brightness && (
+                  {l && l.state === "on" && brightness && (
                     <li>{brightness} %</li>
                   )}
                 </ul>
