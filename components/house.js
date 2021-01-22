@@ -367,6 +367,10 @@ class House extends React.Component {
                     <li>{brightness} %</li>
                   )}
                 </ul>
+                <div>
+                  <button>Preset Read</button>
+                  <button>Preset Artic</button>
+                </div>
               </div>
             </div>
           )
