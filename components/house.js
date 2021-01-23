@@ -30,6 +30,7 @@ class House extends React.Component {
     this.handlePinClick = this.handlePinClick.bind(this)
     this.handleChangeClimate = this.handleChangeClimate.bind(this)
     this.handleToggleLight = this.handleToggleLight.bind(this)
+    this.handleChangeLightPreset = this.handleChangeLightPreset.bind(this)
   }
 
   componentDidMount() {
@@ -118,6 +119,17 @@ class House extends React.Component {
       entity_id: light.entityId,
       enabled,
     }))
+  }
+
+  handleChangeLightPreset(event, preset) {
+    event.preventDefault()
+
+    // preset
+
+    // dispatch(switchLight({
+    //   entity_id: light.entityId,
+    //   enabled,
+    // }))
   }
 
   render() {
@@ -368,8 +380,8 @@ class House extends React.Component {
                   )}
                 </ul>
                 <div>
-                  <button>Preset Read</button>
-                  <button>Preset Artic</button>
+                  <button onClick={(e) => this.handleChangeLightPreset(e, 'read')}>Preset Read</button>
+                  <button onClick={(e) => this.handleChangeLightPreset(e, 'artic')}>Preset Artic</button>
                 </div>
               </div>
             </div>
