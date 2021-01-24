@@ -125,10 +125,21 @@ class House extends React.Component {
     event.preventDefault()
 
     // preset
+    let rgb_color = [255, 168, 90]
+    let brightness_pct = 100
+    if (preset === "read") {
+      rgb_color = [255, 168, 90]
+      brightness_pct = 100
+    } else if (preset === "artic") {
+      rgb_color = [63, 79, 255]
+      brightness_pct = 54
+    }
 
     // dispatch(switchLight({
     //   entity_id: light.entityId,
     //   enabled,
+    //   rgb_color,
+    //   brightness_pct,
     // }))
   }
 
