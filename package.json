@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@iconify/icons-wi": "^1.1.0",
-    "@iconify/react": "^1.1.3"
+    "@iconify/react": "^1.1.3",
+    "@tailwindcss/custom-forms": "^0.2.1"
   }
 }
