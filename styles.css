@@ -203,3 +203,11 @@ h1, h2, h3, h4 {
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
 }
+
+.Switch:checked {
+  right: 0;
+  border-color: #68D391;
+}
+.Switch:checked + .Switch__label {
+  background-color: #68D391;
+}
