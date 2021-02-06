@@ -6,6 +6,8 @@ import { formatTemperature, formatNumber, formatClimatePresetMode } from '../lib
 import { miredToRGB } from '../lib/color'
 import { dispatch } from '../lib/store'
 import { switchLight } from '../actions'
+import Switch from './switch'
+import RadioButton from './radio-button'
 
 const elementsPerFloor = homeConfig.floors
 const floors = elementsPerFloor.length
@@ -107,6 +109,10 @@ class House extends React.Component {
       newTemp = Math.min(Math.max(newTemp, climate.min_temp), climate.max_temp)
 
       // dispatch action to climate
+      dispatch(setThermostatTemperature({
+        entity_id: climate.entityId,
+        temperature: newTemp,
+      }))
     }
   }
 
@@ -121,26 +127,27 @@ class House extends React.Component {
     }))
   }
 
-  handleChangeLightPreset(event, preset) {
+  handleChangeLightPreset(event, light, preset) {
     event.preventDefault()
 
-    // preset
-    let rgb_color = [255, 168, 90]
+    // preset (default: read)
+    let rgb_color = [255, 210, 129]
     let brightness_pct = 100
-    if (preset === "read") {
-      rgb_color = [255, 168, 90]
-      brightness_pct = 100
-    } else if (preset === "artic") {
+
+    if (preset === "artic") {
       rgb_color = [63, 79, 255]
       brightness_pct = 54
+    } else if (preset === "dimmed") {
+      rgb_color = [255, 168, 89]
+      brightness_pct = 30
     }
 
-    // dispatch(switchLight({
-    //   entity_id: light.entityId,
-    //   enabled,
-    //   rgb_color,
-    //   brightness_pct,
-    // }))
+    dispatch(switchLight({
+      entity_id: light.entityId,
+      enabled: light.state === "on",
+      rgb_color,
+      brightness_pct,
+    }))
   }
 
   render() {
@@ -372,11 +379,11 @@ class House extends React.Component {
                 <ul className="w-1/4">
                   {l && l.state && (
                     <li>
-                      <button onClick={(e) => this.handleToggleLight(e, l)}>{l.state}</button>
+                      <Switch onChange={(e) => this.handleToggleLight(e, l)} isActive={l.state === "on"} />
                     </li>
                   )}
                   {l && l.effect && (
-                    <li>{l.effect}</li>
+                    <li>effect: {l.effect}</li>
                   )}
                   {l && (l.rgb_color || l.color_temp) && (
                     <li className="flex items-center">
@@ -391,8 +398,9 @@ class House extends React.Component {
                   )}
                 </ul>
                 <div>
-                  <button onClick={(e) => this.handleChangeLightPreset(e, 'read')}>Preset Read</button>
-                  <button onClick={(e) => this.handleChangeLightPreset(e, 'artic')}>Preset Artic</button>
+                  <RadioButton name="light-preset" onChange={(e) => this.handleChangeLightPreset(e, l, 'read')} isChecked={true}>Read</RadioButton>
+                  <RadioButton name="light-preset" onChange={(e) => this.handleChangeLightPreset(e, l, 'artic')} isChecked={false}>Artic</RadioButton>
+                  <RadioButton name="light-preset" onChange={(e) => this.handleChangeLightPreset(e, l, 'dimmed')} isChecked={false}>Dimmed</RadioButton>
                 </div>
               </div>
             </div>

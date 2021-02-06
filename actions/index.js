@@ -157,12 +157,19 @@ const _callService = (message) => {
   }
 }
 
-export const switchLight = ({ entity_id, enabled }) => {
+export const switchLight = ({
+  entity_id,
+  enabled,
+  rgb_color,
+  brightness_pct,
+}) => {
   const message = {
     domain: 'light',
     service: enabled ? 'turn_on' : 'turn_off',
     service_data: {
       entity_id,
+      rgb_color,
+      brightness_pct,
     },
   }
 
