@@ -5,7 +5,7 @@ import homeConfig from '../home-config.json'
 import { formatTemperature, formatNumber, formatClimatePresetMode } from '../lib/text'
 import { miredToRGB } from '../lib/color'
 import { dispatch } from '../lib/store'
-import { switchLight } from '../actions'
+import { setThermostatTemperature, switchLight } from '../actions'
 import Switch from './switch'
 import RadioButton from './radio-button'
 
@@ -127,8 +127,10 @@ class House extends React.Component {
     }))
   }
 
-  handleChangeLightPreset(event, light, preset) {
+  handleChangeLightPreset(event, light) {
     event.preventDefault()
+
+    const preset = event.target.value
 
     // preset (default: read)
     let rgb_color = [255, 210, 129]
@@ -341,13 +343,6 @@ class House extends React.Component {
           const l = light[pin.type]
 
           let brightness = null
-          if (l) {
-            if (isNaN(l.brightness)) {
-              brightness = 0
-            } else {
-              brightness = Math.round(l.brightness / 255 * 100)
-            }
-          }
 
           let [
             red,
@@ -356,16 +351,24 @@ class House extends React.Component {
             alpha,
           ] = [0, 0, 0, 0.1]
 
-          if (l && l.rgb_color) {
-            [
-              red,
-              blue,
-              green
-            ] = l.rgb_color
-            alpha = 1
-          } else if (l && l.color_temp) {
-            [red, blue, green] = miredToRGB(l.color_temp)
-            alpha = 1
+          if (l) {
+            if (isNaN(l.brightness)) {
+              brightness = 0
+            } else {
+              brightness = Math.round(l.brightness / 255 * 100)
+            }
+
+            if (l.rgb_color) {
+              [
+                red,
+                blue,
+                green
+              ] = l.rgb_color
+              alpha = 1
+            } else if (l.color_temp) {
+              [red, blue, green] = miredToRGB(l.color_temp)
+              alpha = 1
+            }
           }
 
           const data = (
@@ -375,34 +378,36 @@ class House extends React.Component {
                   <span>{pin.name || "Module"}</span>
                 </div>
               </div>
-              <div className="flex items-start px-6 py-4">
-                <ul className="w-1/4">
-                  {l && l.state && (
-                    <li>
-                      <Switch onChange={(e) => this.handleToggleLight(e, l)} isActive={l.state === "on"} />
-                    </li>
-                  )}
-                  {l && l.effect && (
-                    <li>effect: {l.effect}</li>
-                  )}
-                  {l && (l.rgb_color || l.color_temp) && (
-                    <li className="flex items-center">
-                      <div className="mr-2">Couleur</div>
-                      <div className="border border-white w-5 h-5 rounded-full" style={{
-                        backgroundColor: `rgba(${red}, ${blue}, ${green}, ${alpha})`
-                      }} />
-                    </li>
-                  )}
-                  {l && l.state === "on" && brightness && (
-                    <li>{brightness} %</li>
-                  )}
-                </ul>
-                <div>
-                  <RadioButton name="light-preset" onChange={(e) => this.handleChangeLightPreset(e, l, 'read')} isChecked={true}>Read</RadioButton>
-                  <RadioButton name="light-preset" onChange={(e) => this.handleChangeLightPreset(e, l, 'artic')} isChecked={false}>Artic</RadioButton>
-                  <RadioButton name="light-preset" onChange={(e) => this.handleChangeLightPreset(e, l, 'dimmed')} isChecked={false}>Dimmed</RadioButton>
+              {l && (
+                <div className="flex items-start px-6 py-4">
+                  <ul className="w-1/4">
+                    {l.state && (
+                      <li>
+                        <Switch id={`toggle-${l.entityId}`} onChange={(e) => this.handleToggleLight(e, l)} isActive={l.state === "on"} />
+                      </li>
+                    )}
+                    {l.effect && (
+                      <li>effect: {l.effect}</li>
+                    )}
+                    {(l.rgb_color || l.color_temp) && (
+                      <li className="flex items-center">
+                        <div className="mr-2">Couleur</div>
+                        <div className="border border-white w-5 h-5 rounded-full" style={{
+                          backgroundColor: `rgba(${red}, ${blue}, ${green}, ${alpha})`
+                        }} />
+                      </li>
+                    )}
+                    {l.state === "on" && brightness && (
+                      <li>{brightness} %</li>
+                    )}
+                  </ul>
+                  <div className="flex flex-col">
+                    <RadioButton id={`preset-${l.entityId}-read`} name="light-preset" value="read" onChange={(e) => this.handleChangeLightPreset(e, l)}>Read</RadioButton>
+                    <RadioButton id={`preset-${l.entityId}-artic`} name="light-preset" value="artic" onChange={(e) => this.handleChangeLightPreset(e, l)}>Artic</RadioButton>
+                    <RadioButton id={`preset-${l.entityId}-dimmed`} name="light-preset" value="dimmed" onChange={(e) => this.handleChangeLightPreset(e, l)}>Dimmed</RadioButton>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )
           pinsPerFloor[pin.floor].push({
