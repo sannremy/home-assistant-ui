@@ -42,64 +42,35 @@ class HomeView extends React.Component {
     } = this.state
 
     return (
-      <div className="relative">
-        <div className="absolute top-0 right-0 w-full h-full">
-          <div className="relative flex flex-col">
-            <DateTime
-              date={currentDate}
-              weather={weather}
-            />
-            <div className="flex justify-end mt-4">
-              <Horizon sun={sun} />
-            </div>
-          </div>
-        </div>
-        <div className="absolute top-0 left-0 w-full h-full">
-          <House
-            sensors={sensor}
-            climate={climate}
-            light={light}
-            ui={ui}
+      <div className="relative w-full h-full">
+        <House
+          sensors={sensor}
+          climate={climate}
+          light={light}
+          ui={ui}
+        />
+        {/* Top right */}
+        <div className="absolute top-0 right-0">
+          <DateTime
+            date={currentDate}
+            weather={weather}
           />
+          <div className="flex justify-end mt-4">
+            <Horizon sun={sun} />
+          </div>
         </div>
-
-        {/* Cols */}
-        {/* <div className="flex items-stretch -mx-3 mt-3">
-          <div className="w-3/12 px-3">
-            <div>
-              <div>
-                {(climate.temperature && (
-                  <Thermostat {...climate} />
-                ))}
-              </div>
-              <div>
-                <ul>
-                  {Object.keys(homeConfig.areas).map(area => (
-                    <li key={area} className="my-4">
-                      {sensor[area] && (
-                        <AreaSensor
-                          config={homeConfig.areas[area]}
-                          data={sensor[area]}
-                        />
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+        {/* Bottom left */}
+        <div className="absolute bottom-0 left-0">
+          <div className="relative flex flex-col">
+            oui
           </div>
-          <div className="w-6/12 px-3">
-            <div className="flex flex-wrap -mx-3">
-              <div className="relative House House--floor0-selected">
-                <div className="Floor Floor--level0 transition duration-500 ease-in-out"></div>
-                <div className="Floor Floor--level1 transition duration-500 ease-in-out"></div>
-                <div className="Floor Floor--level2 transition duration-500 ease-in-out"></div>
-              </div>
-            </div>
+        </div>
+        {/* Bottom right */}
+        <div className="absolute bottom-0 right-0">
+          <div className="relative flex flex-col">
+            oui
           </div>
-          <div className="w-3/12 px-3">
-          </div>
-        </div> */}
+        </div>
       </div>
     )
   }
