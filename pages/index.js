@@ -26,7 +26,6 @@ class Index extends React.Component {
   }
 
   handleClickOutside(event) {
-    console.log(event.target)
     if (event.target.classList.contains("viewWrapper")) {
       dispatch(clickOutside({
         hasClickedOutside: true,
